@@ -9,13 +9,13 @@ class ContactPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 2.0,
-
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text("About Me"),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+        padding: EdgeInsets.symmetric(
+          horizontal: 4.0,
+          vertical: 4.0,
+        ),
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
@@ -165,14 +165,18 @@ class CircularButtonState extends State<CircularButton> with SingleTickerProvide
     animation = Tween(begin: 4.0, end: 0.0).animate(curve);
 
     controller.addStatusListener((status) async {
-      if (status == AnimationStatus.completed) {
-        await Future.delayed(Duration(seconds: 1));
-        if (controller != null) {
-          controller.reset();
+      try {
+        if (status == AnimationStatus.completed) {
+          await Future.delayed(Duration(seconds: 1));
+          if (controller != null) {
+            controller.reset();
+            controller.forward();
+          }
+        } else if (status == AnimationStatus.dismissed) {
           controller.forward();
         }
-      } else if (status == AnimationStatus.dismissed) {
-        controller.forward();
+      } catch (e) {
+        print(e);
       }
     });
 

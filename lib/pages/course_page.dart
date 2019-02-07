@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teaching_notes/main.dart';
 import 'package:flutter_teaching_notes/model/course_model.dart';
-import 'package:flutter_teaching_notes/utils/toast_utils.dart';
+import 'package:flutter_teaching_notes/widgets/note_card.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CoursePage extends StatelessWidget {

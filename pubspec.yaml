@@ -25,6 +25,7 @@ dependencies:
   url_launcher: ^4.2.0+1
   font_awesome_flutter: ^8.2.0
   fluttertoast: ^2.2.11
+  firebase_analytics: ^2.0.0
 
 dev_dependencies:
   flutter_test:

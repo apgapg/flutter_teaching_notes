@@ -1,11 +1,17 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_teaching_notes/bloc/bloc_provider.dart';
 import 'package:flutter_teaching_notes/bloc/home_bloc.dart';
 import 'package:flutter_teaching_notes/model/course_model.dart';
 import 'package:flutter_teaching_notes/pages/contact_page.dart';
 import 'package:flutter_teaching_notes/pages/home/course_list_page.dart';
+import 'package:flutter_teaching_notes/utils/log_utils.dart';
 
 class HomePage extends StatefulWidget {
+  final FirebaseAnalytics analytics;
+
+  HomePage(this.analytics);
+
   @override
   HomePageState createState() {
     return new HomePageState();
@@ -18,6 +24,11 @@ class HomePageState extends State<HomePage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    _setAnalyticsCollectionEnabled();
+  }
+
+  Future<void> _setAnalyticsCollectionEnabled() async {
+    await widget.analytics.android?.setAnalyticsCollectionEnabled(!isDebug);
   }
 
   @override
