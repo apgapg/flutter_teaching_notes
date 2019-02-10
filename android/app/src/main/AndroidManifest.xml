@@ -17,6 +17,9 @@
         android:icon="@mipmap/ic_launcher_square"
         android:label="IIT-JEE Notes"
         android:roundIcon="@mipmap/ic_launcher_circle">
+        <meta-data
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="false" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -32,6 +32,12 @@ class HomePageState extends State<HomePage> {
   }
 
   @override
+  void dispose() {
+    _bloc.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       bloc: _bloc,
