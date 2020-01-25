@@ -16,7 +16,7 @@ class HomeBloc extends BaseBloc {
   Sink get dataSink => _dataSubject.sink;
 
   HomeBloc() {
-    _init();
+    //_init();
   }
 
   void _init() async {

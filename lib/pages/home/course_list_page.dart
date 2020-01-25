@@ -62,7 +62,7 @@ class CourseCard extends StatelessWidget {
                     child: CachedNetworkImage(
                       fit: BoxFit.cover,
                       imageUrl: _item.cover,
-                      placeholder: Container(
+                      placeholder: (context, url) => Container(
                         alignment: Alignment.center,
                         child: Container(
                           height: 32.0,
@@ -72,7 +72,8 @@ class CourseCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      errorWidget: new Icon(Icons.error),
+                      errorWidget: (context, url, error) =>
+                          new Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -81,21 +82,28 @@ class CourseCard extends StatelessWidget {
                   color: Colors.grey[400],
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal:12.0,vertical: 8.0),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Text(
                         _item.name,
-                        style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700, color: Colors.black87),
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black87),
                       ),
                       SizedBox(
                         height: 2.0,
                       ),
                       Text(
                         _item.description,
-                        style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500, color: Colors.black54),
+                        style: TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black54),
                       ),
                     ],
                   ),

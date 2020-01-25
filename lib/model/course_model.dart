@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 part 'course_model.g.dart';
+
 class CourseModel {
   List<CourseItem> list;
 
@@ -11,7 +12,8 @@ class CourseModel {
   }
 
   factory CourseModel.fromMapList({List<dynamic> list}) {
-    final items = list.cast<Map<String, Object>>().map((Map<String, Object> item) {
+    final items =
+        list.cast<Map<String, Object>>().map((Map<String, Object> item) {
       return CourseItem.fromJson(item);
     }).toList();
 
@@ -28,8 +30,32 @@ class CourseItem {
   final String pdfLink;
   final String coursePreffix;
   final String suffix;
+  final String videoLink;
+  final List<NotesItem> notes;
 
-  CourseItem(this.name, this.description, this.cover, this.count, this.pdfLink, this.coursePreffix, this.suffix);
+  CourseItem(
+    this.name,
+    this.description,
+    this.cover,
+    this.count,
+    this.pdfLink,
+    this.coursePreffix,
+    this.suffix,
+    this.notes,
+    this.videoLink,
+  );
 
-  factory CourseItem.fromJson(Map<String, dynamic> json) => _$CourseItemFromJson(json);
+  factory CourseItem.fromJson(Map<dynamic, dynamic> json) =>
+      _$CourseItemFromJson(json);
+}
+
+@JsonSerializable()
+class NotesItem {
+  final String name;
+  final String url;
+
+  NotesItem(this.name, this.url);
+
+  factory NotesItem.fromJson(Map<dynamic, dynamic> json) =>
+      _$NotesItemFromJson(json);
 }

@@ -1,16 +1,13 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_teaching_notes/bloc/bloc_provider.dart';
 import 'package:flutter_teaching_notes/bloc/home_bloc.dart';
 import 'package:flutter_teaching_notes/model/course_model.dart';
 import 'package:flutter_teaching_notes/pages/contact_page.dart';
 import 'package:flutter_teaching_notes/pages/home/course_list_page.dart';
-import 'package:flutter_teaching_notes/utils/log_utils.dart';
 
 class HomePage extends StatefulWidget {
-  final FirebaseAnalytics analytics;
-
-  HomePage(this.analytics);
+  HomePage();
 
   @override
   HomePageState createState() {
@@ -22,13 +19,8 @@ class HomePageState extends State<HomePage> {
   final _bloc = HomeBloc();
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _setAnalyticsCollectionEnabled();
-  }
-
-  Future<void> _setAnalyticsCollectionEnabled() async {
-    await widget.analytics.android?.setAnalyticsCollectionEnabled(!isDebug);
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -45,25 +37,31 @@ class HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: Text("IIT-JEE Notes"),
           elevation: 2.0,
-          actions: <Widget>[IconButton(icon: Icon(Icons.info_outline), onPressed: onInfoTap)],
+          actions: <Widget>[
+            IconButton(icon: Icon(Icons.info_outline), onPressed: onInfoTap)
+          ],
         ),
         body: StreamBuilder(
-          builder: (context, AsyncSnapshot<List<CourseItem>> snapshot) {
-            if (snapshot.hasData) {
-              return CourseListPage(snapshot.data);
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              final list = snapshot.data.documents
+                  .map((document) => CourseItem.fromJson(document.data))
+                  .toList();
+              return CourseListPage(list);
             } else if (snapshot.hasError)
               return ErrorPage(snapshot.error.toString());
             else
               return LoadingPage();
           },
-          stream: _bloc.dataStream,
+          stream: Firestore.instance.collection('courses').snapshots(),
         ),
       ),
     );
   }
 
   void onInfoTap() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ContactPage()));
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => ContactPage()));
   }
 }
 

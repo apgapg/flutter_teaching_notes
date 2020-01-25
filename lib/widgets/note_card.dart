@@ -32,7 +32,7 @@ class NoteCard extends StatelessWidget {
               child: CachedNetworkImage(
                 fit: BoxFit.contain,
                 imageUrl: url,
-                placeholder: Container(
+                placeholder: (context, url) => Container(
                   alignment: Alignment.center,
                   padding: EdgeInsets.symmetric(vertical: 100.0),
                   child: Container(
@@ -43,7 +43,9 @@ class NoteCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                errorWidget: Container(padding: EdgeInsets.symmetric(vertical: 100.0), child: NetworkImageError()),
+                errorWidget: (context, url, error) => Container(
+                    padding: EdgeInsets.symmetric(vertical: 100.0),
+                    child: NetworkImageError()),
               ),
             ),
           ),
@@ -51,7 +53,10 @@ class NoteCard extends StatelessWidget {
             bottom: 4.0,
             child: Text(
               "©ayushpgupta",
-              style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w700, color: Colors.blueGrey[500].withOpacity(0.7)),
+              style: TextStyle(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.blueGrey[500].withOpacity(0.7)),
             ),
           ),
           Positioned(
@@ -61,7 +66,8 @@ class NoteCard extends StatelessWidget {
               height: 18.0,
               width: 18.0,
               alignment: Alignment.center,
-              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.black26),
+              decoration:
+                  BoxDecoration(shape: BoxShape.circle, color: Colors.black26),
               child: Text(
                 (index + 1).toString(),
                 style: TextStyle(fontSize: 10.0, color: Colors.white),
