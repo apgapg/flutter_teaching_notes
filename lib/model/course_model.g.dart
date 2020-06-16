@@ -17,7 +17,7 @@ CourseItem _$CourseItemFromJson(Map<String, dynamic> json) {
     json['suffix'] as String,
     (json['notes'] as List)
         ?.map((e) =>
-            e == null ? null : NotesItem.fromJson(e as Map<dynamic, dynamic>))
+            e == null ? null : NotesItem.fromJson(e as Map<String, dynamic>))
         ?.toList(),
     json['videoLink'] as String,
   );
@@ -32,12 +32,18 @@ Map<String, dynamic> _$CourseItemToJson(CourseItem instance) =>
       'pdfLink': instance.pdfLink,
       'coursePreffix': instance.coursePreffix,
       'suffix': instance.suffix,
-      'notes': instance.notes
+      'videoLink': instance.videoLink,
+      'notes': instance.notes,
     };
 
-NotesItem _$NotesItemFromJson(Map<dynamic, dynamic> json) {
-  return NotesItem(json['name'] as String, json['url'] as String);
+NotesItem _$NotesItemFromJson(Map<String, dynamic> json) {
+  return NotesItem(
+    json['name'] as String,
+    json['url'] as String,
+  );
 }
 
-Map<String, dynamic> _$NotesItemToJson(NotesItem instance) =>
-    <String, dynamic>{'name': instance.name, 'url': instance.url};
+Map<String, dynamic> _$NotesItemToJson(NotesItem instance) => <String, dynamic>{
+      'name': instance.name,
+      'url': instance.url,
+    };

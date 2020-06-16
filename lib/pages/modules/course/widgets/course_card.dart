@@ -1,26 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_teaching_notes/model/course_model.dart';
-import 'package:flutter_teaching_notes/pages/course_page.dart';
 
-class CourseListPage extends StatelessWidget {
-  final List<CourseItem> data;
-
-  CourseListPage(this.data);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-        padding: EdgeInsets.symmetric(vertical: 4.0),
-        itemBuilder: (context, index) {
-          return CourseCard(data.elementAt(index));
-        },
-        itemCount: data.length,
-      ),
-    );
-  }
-}
+import '../pages/course_page.dart';
 
 class CourseCard extends StatelessWidget {
   final CourseItem _item;
