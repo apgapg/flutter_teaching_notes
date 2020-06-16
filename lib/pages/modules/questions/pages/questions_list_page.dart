@@ -54,7 +54,7 @@ class _QuestionsListPageState extends State<QuestionsListPage>
                     Text("Subject  "),
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.pink,
+                        color: Colors.blue,
                         borderRadius: BorderRadius.circular(4),
                       ),
                       padding: EdgeInsets.symmetric(
@@ -65,7 +65,7 @@ class _QuestionsListPageState extends State<QuestionsListPage>
                         vertical: 2,
                       ),
                       child: Text(
-                        'All',
+                        'Physics',
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.white,
