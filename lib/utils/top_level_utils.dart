@@ -4,6 +4,12 @@ bool checkIfNotEmpty(String value) {
   return value != null && value.isNotEmpty && value != "null";
 }
 
+bool get isDebug {
+  bool inDebugMode = false;
+  assert(inDebugMode = true);
+  return inDebugMode;
+}
+
 bool checkIfListIsNotEmpty(List list) {
   return list != null && list.isNotEmpty;
 }

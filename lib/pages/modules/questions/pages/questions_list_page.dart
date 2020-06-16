@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -19,12 +21,13 @@ class _QuestionsListPageState extends State<QuestionsListPage>
     with AutomaticKeepAliveClientMixin {
   int _selectedLevel = 0;
 
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      builder: (context, snapshot) {
-        if (snapshot.hasData && snapshot.data != null) {
-          var list = snapshot.data.documents
+  StreamTransformer<QuerySnapshot, List<Question>> get streamTransformer =>
+      StreamTransformer<QuerySnapshot, List<Question>>.fromHandlers(
+          handleData: (query, sink) {
+        if (!checkIfListIsNotEmpty(query.documents)) {
+          return null;
+        } else {
+          var list = query.documents
               .map((document) => Question.fromJson(document.data))
               .toList();
           if (_selectedLevel != 0) {
@@ -32,7 +35,16 @@ class _QuestionsListPageState extends State<QuestionsListPage>
                 .where((element) => element.level == _selectedLevel)
                 .toList();
           }
+          list.sort((a, b) => (b.createdAt ?? 0).compareTo(a.createdAt ?? 0));
+          return sink.add(list);
+        }
+      });
 
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<List<Question>>(
+      builder: (context, snapshot) {
+        if (snapshot.hasData && snapshot.data != null) {
           return Column(
             children: [
               Container(
@@ -130,8 +142,8 @@ class _QuestionsListPageState extends State<QuestionsListPage>
               ),
               Expanded(
                 child: ListView.builder(
-                  itemBuilder: (_, index) => QuestionCard(list[index]),
-                  itemCount: list.length,
+                  itemBuilder: (_, index) => QuestionCard(snapshot.data[index]),
+                  itemCount: snapshot.data.length,
                 ),
               )
             ],
@@ -142,7 +154,10 @@ class _QuestionsListPageState extends State<QuestionsListPage>
           return LoadingPage();
         }
       },
-      stream: Firestore.instance.collection('numericals').snapshots(),
+      stream: Firestore.instance
+          .collection('numericals')
+          .snapshots()
+          .transform(streamTransformer),
     );
   }
 

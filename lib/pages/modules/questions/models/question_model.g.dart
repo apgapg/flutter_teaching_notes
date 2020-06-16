@@ -19,6 +19,7 @@ Question _$QuestionFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : Solution.fromJson(e as Map<String, dynamic>))
         ?.toList(),
+    json['createdAt'] as int,
   );
 }
 
@@ -31,6 +32,7 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'topic': instance.topic,
       'images': instance.images,
       'solutions': instance.solutions,
+      'createdAt': instance.createdAt,
     };
 
 Solution _$SolutionFromJson(Map<String, dynamic> json) {

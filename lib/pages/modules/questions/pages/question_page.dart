@@ -109,8 +109,9 @@ class _QuestionPageState extends State<QuestionPage> {
                           fit: BoxFit.contain,
                           imageUrl: image,
                           placeholder: (context, url) => PlaceholderImage(),
-                          errorWidget: (context, url, error) =>
-                              new Icon(Icons.error),
+                          errorWidget: (context, url, error) => SizedBox(
+                            height: 0,
+                          ),
                         ),
                     ],
                   ),

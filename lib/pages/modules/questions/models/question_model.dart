@@ -12,6 +12,7 @@ class Question {
   final String topic;
   final List<String> images;
   final List<Solution> solutions;
+  final int createdAt;
 
   Question(
     this.id,
@@ -22,6 +23,7 @@ class Question {
     this.images,
     this.topic,
     this.solutions,
+    this.createdAt,
   );
 
   factory Question.fromJson(Map<dynamic, dynamic> json) =>

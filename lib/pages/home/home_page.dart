@@ -3,6 +3,8 @@ import 'package:flutter_teaching_notes/bloc/bloc_provider.dart';
 import 'package:flutter_teaching_notes/bloc/home_bloc.dart';
 import 'package:flutter_teaching_notes/pages/contact_page.dart';
 import 'package:flutter_teaching_notes/pages/modules/questions/pages/questions_list_page.dart';
+import 'package:flutter_teaching_notes/pages/upload/data_upload_page.dart';
+import 'package:flutter_teaching_notes/utils/log_utils.dart';
 
 import '../modules/course/pages/course_list_page.dart';
 
@@ -40,7 +42,10 @@ class HomePageState extends State<HomePage> {
             title: Text("IIT-JEE Notes"),
             elevation: 2.0,
             actions: <Widget>[
-              IconButton(icon: Icon(Icons.info_outline), onPressed: onInfoTap)
+              if (isDebug)
+                IconButton(
+                    icon: Icon(Icons.device_unknown), onPressed: onUploadTap),
+              IconButton(icon: Icon(Icons.info_outline), onPressed: onInfoTap),
             ],
             bottom: TabBar(
               tabs: [
@@ -63,6 +68,11 @@ class HomePageState extends State<HomePage> {
   void onInfoTap() {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => ContactPage()));
+  }
+
+  void onUploadTap() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => DataUploadPage()));
   }
 }
 
