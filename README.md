@@ -1,20 +1,15 @@
 # flutter_teaching_notes
 
-A new Flutter project.
+A Flutter project containing questions/answers and notes of IIT JEE preparation prepared by Ayush P Gupta.
+These notes are published as video on Unacademy platform.
+This app serves the slides/notes used in those videos.
 
-## Getting Started
+Playstore App: [https://play.google.com/store/apps/details?id=com.coddu.flutter.iitjee.notes](https://play.google.com/store/apps/details?id=com.coddu.flutter.iitjee.notes)
 
-This project is a starting point for a Flutter application.
+## Extras
 
-A few resources to get you started if this is your first Flutter project:
+Building Android app bundle
+```flutter clean && flutter build appbundle```
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
-
-flutter clean && flutter build appbundle
-
-flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs
+Building json
+```flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs```
