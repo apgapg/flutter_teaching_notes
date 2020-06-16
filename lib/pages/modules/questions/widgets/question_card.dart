@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_teaching_notes/pages/modules/questions/models/question_model.dart';
+import 'package:flutter_teaching_notes/pages/modules/questions/pages/question_page.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/placeholder_image.dart';
 
@@ -38,12 +39,14 @@ class QuestionCard extends StatelessWidget {
                 child: Stack(
                   children: [
                     if (item.images != null && item.images.isNotEmpty)
-                      CachedNetworkImage(
-                        fit: BoxFit.cover,
-                        imageUrl: item.images[0],
-                        placeholder: (context, url) => PlaceholderImage(),
-                        errorWidget: (context, url, error) =>
-                            new Icon(Icons.error),
+                      Positioned.fill(
+                        child: CachedNetworkImage(
+                          fit: BoxFit.contain,
+                          imageUrl: item.images[0],
+                          placeholder: (context, url) => PlaceholderImage(),
+                          errorWidget: (context, url, error) =>
+                              new Icon(Icons.error),
+                        ),
                       ),
                     if (checkIfNotEmpty(item.subject))
                       Positioned(
@@ -89,7 +92,7 @@ class QuestionCard extends StatelessWidget {
                         bottom: 4,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: _getColor(item.level),
+                            color: getLevelColor(item.level),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           padding: EdgeInsets.symmetric(
@@ -165,22 +168,10 @@ class QuestionCard extends StatelessWidget {
   }
 
   void onCourseTap() {
-    /*  Navigator.of(context).push(
+    Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => CoursePage(_item),
+        builder: (context) => QuestionPage(item),
       ),
-    );*/
-  }
-
-  Color _getColor(int level) {
-    if (level == 1) {
-      return Colors.green;
-    } else if (level == 2) {
-      return Colors.orange;
-    } else if (level == 3) {
-      return Colors.red;
-    } else {
-      return Colors.grey;
-    }
+    );
   }
 }

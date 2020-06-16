@@ -4,6 +4,7 @@ part 'question_model.g.dart';
 
 @JsonSerializable()
 class Question {
+  final String id;
   final int level;
   final String title;
   final String description;
@@ -13,6 +14,7 @@ class Question {
   final List<Solution> solutions;
 
   Question(
+    this.id,
     this.level,
     this.title,
     this.description,
@@ -30,10 +32,12 @@ class Question {
 class Solution {
   final int id;
   final List<String> images;
+  final String video;
 
   Solution(
     this.id,
     this.images,
+    this.video,
   );
 
   factory Solution.fromJson(Map<dynamic, dynamic> json) =>
