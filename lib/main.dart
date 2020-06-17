@@ -25,9 +25,17 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'IIT-JEE Notes by Ayush P Gupta',
       theme: ThemeData(
-        scaffoldBackgroundColor: Color(0xfff5f6f8),
+        scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Nunito',
         primarySwatch: Colors.deepPurple,
+        appBarTheme: AppBarTheme(
+          color: Colors.white,
+          textTheme: Theme.of(context).textTheme,
+          iconTheme: IconThemeData(
+            color: Colors.blueGrey[900],
+            size: 20,
+          ),
+        ),
       ),
       home: HomePage(),
     );

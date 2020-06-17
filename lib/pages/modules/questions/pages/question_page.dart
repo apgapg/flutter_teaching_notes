@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_teaching_notes/pages/modules/questions/models/question_model.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/images/my_image.dart';
+import 'package:flutter_teaching_notes/widgets/my_divider.dart';
 import 'package:flutter_teaching_notes/widgets/primary_raised_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -55,7 +56,14 @@ class _QuestionPageState extends State<QuestionPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               if (checkIfListIsNotEmpty(widget.item.images))
-                for (String image in widget.item.images) MyImage(image),
+                for (String image in widget.item.images)
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      MyImage(image),
+                      MyDivider(),
+                    ],
+                  ),
               if (checkIfListIsNotEmpty(widget.item.solutions))
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 16),
@@ -73,13 +81,30 @@ class _QuestionPageState extends State<QuestionPage> {
                   ),
                 )
               else
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 16),
-                  child: PrimaryRaisedButton(
-                    icon: Icons.code,
-                    text: "NO SOLUTIONS",
-                    onTap: null,
-                  ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 16),
+                      child: PrimaryRaisedButton(
+                        icon: Icons.code,
+                        text: "NO SOLUTIONS",
+                        onTap: null,
+                      ),
+                    ),
+                    Image.asset(
+                      'assets/images/empty.png',
+                      height: 200,
+                    ),
+                    Text(
+                      'Don\'t worry! We will update\nthe answer update soon.',
+                      style: Theme.of(context)
+                          .textTheme
+                          .display1
+                          .copyWith(fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
               if (_showSolution && checkIfListIsNotEmpty(widget.item.solutions))
                 for (final soln in widget.item.solutions)
@@ -101,18 +126,35 @@ class _QuestionPageState extends State<QuestionPage> {
                               },
                             ),
                           ),
-                        for (String image in soln.images) MyImage(image),
+                        MyDivider(),
+                        for (String image in soln.images)
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              MyImage(image),
+                              MyDivider(),
+                            ],
+                          ),
                       ],
                     ),
               if (!_showSolution &&
                   checkIfListIsNotEmpty(widget.item.solutions))
-                Text(
-                  'It\'s is good if you try solving yourself first.\nRead again and again.',
-                  style: Theme.of(context)
-                      .textTheme
-                      .display1
-                      .copyWith(fontSize: 14),
-                  textAlign: TextAlign.center,
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      'assets/images/write.jpg',
+                      height: 200,
+                    ),
+                    Text(
+                      'It\'s is good if you try solving yourself first.\nRead again and again.',
+                      style: Theme.of(context)
+                          .textTheme
+                          .display1
+                          .copyWith(fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
             ],
           ),

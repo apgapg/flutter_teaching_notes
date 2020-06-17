@@ -15,7 +15,9 @@ class MyImage extends StatelessWidget {
             fit: BoxFit.contain,
             imageUrl: url,
             placeholder: (context, url) => PlaceholderImage(),
-            errorWidget: (context, url, error) => new Icon(Icons.error),
+            errorWidget: (context, url, error) => SizedBox(
+              height: 0,
+            ),
           )
         : Image.network(
             url,

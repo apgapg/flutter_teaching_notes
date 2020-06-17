@@ -189,7 +189,16 @@ class _QuestionsListPageState extends State<QuestionsListPage>
                       if (snapshot.data.isEmpty)
                         Expanded(
                           child: Center(
-                            child: Text("No questions found"),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
+                                  'assets/images/empty.png',
+                                  height: 200,
+                                ),
+                                Text("No questions found"),
+                              ],
+                            ),
                           ),
                         )
                       else
@@ -327,9 +336,18 @@ class _QuestionsListPageState extends State<QuestionsListPage>
                       ),
                       if (snapshot.data.isEmpty)
                         Container(
-                          height: MediaQuery.of(context).size.height / 3.5,
+                          margin: EdgeInsets.only(top: 40),
                           child: Center(
-                            child: Text("No questions found"),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
+                                  'assets/images/empty.png',
+                                  height: 100,
+                                ),
+                                Text("No question(s) found"),
+                              ],
+                            ),
                           ),
                         )
                     ],
