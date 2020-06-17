@@ -14,6 +14,12 @@ Website: [https://apgapg.github.io/flutter_teaching_notes/](https://apgapg.githu
 
 <img src="https://raw.githubusercontent.com/apgapg/flutter_teaching_notes/master/res/s1.png"  height = "400" alt="iitjee"> <img src="https://raw.githubusercontent.com/apgapg/flutter_teaching_notes/master/res/s2.png"  height = "400" alt="iitjee"> <img src="https://raw.githubusercontent.com/apgapg/flutter_teaching_notes/master/res/s3.png"  height = "400" alt="iitjee"> <img src="https://raw.githubusercontent.com/apgapg/flutter_teaching_notes/master/res/s4.png"  height = "400" alt="iitjee"> <img src="https://raw.githubusercontent.com/apgapg/flutter_teaching_notes/master/res/s5.png"  height = "400" alt="iitjee">
 
+## Data from scrapping Unacademy website
+
+The data used is fetched by scrapping [unacademy.com/@ayushpgupta](https://unacademy.com/@ayushpgupta) page using [web_scraper](https://pub.dev/packages/web_scraper) pub package.
+
+See code: [data_upload_page.dart](https://github.com/apgapg/flutter_teaching_notes/blob/master/lib/pages/upload/data_upload_page.dart)
+
 ## Auto deploy to gh-pages and Firebase Hosting
 
 This repo uses Github action CI/CD whose workflow file can be seen below
