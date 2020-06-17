@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'IIT-JEE Notes by Ayush P Gupta',
       theme: ThemeData(
         scaffoldBackgroundColor: Color(0xfff5f6f8),
         fontFamily: 'Nunito',
