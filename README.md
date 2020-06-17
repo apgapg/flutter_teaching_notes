@@ -2,6 +2,8 @@
 
 ### Flutter📱 + Firebase🔥
 
+<img src="https://raw.githubusercontent.com/apgapg/flutter_teaching_notes/master/res/logo.png"  height = "200" alt="iitjee">
+
 A Flutter project containing questions/answers and notes of IIT JEE preparation prepared by Ayush P Gupta.
 
 These notes are published as video on Unacademy platform.
