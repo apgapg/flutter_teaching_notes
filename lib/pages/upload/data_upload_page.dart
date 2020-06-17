@@ -72,9 +72,9 @@ class _DataUploadPageState extends State<DataUploadPage> {
   void init2() async {
     final level = 3;
     final subject = "Physics";
-    final topic = "Ray Optics";
+    final topic = "Simple Harmonic Motion";
     final rawUrl =
-        'https://unacademy.com/lesson/quality-numerical-005-silvered-convex-lens/GKYQCGRN';
+        'https://unacademy.com/lesson/quality-numerical-007-008/9C3UTMJB';
 
     //
     //

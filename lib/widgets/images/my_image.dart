@@ -11,19 +11,15 @@ class MyImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return !kIsWeb
-        ? Positioned.fill(
-            child: CachedNetworkImage(
-              fit: BoxFit.contain,
-              imageUrl: url,
-              placeholder: (context, url) => PlaceholderImage(),
-              errorWidget: (context, url, error) => new Icon(Icons.error),
-            ),
+        ? CachedNetworkImage(
+            fit: BoxFit.contain,
+            imageUrl: url,
+            placeholder: (context, url) => PlaceholderImage(),
+            errorWidget: (context, url, error) => new Icon(Icons.error),
           )
-        : Positioned.fill(
-            child: Image.network(
-              url,
-              fit: BoxFit.contain,
-            ),
+        : Image.network(
+            url,
+            fit: BoxFit.contain,
           );
   }
 }

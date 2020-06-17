@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/my_popup_menu_button.dart';
 import 'package:flutter_teaching_notes/widgets/search/search_text_field.dart';
@@ -211,6 +212,7 @@ class _QuestionsListPageState extends State<QuestionsListPage>
               else
                 Expanded(
                   child: ListView(
+                    padding: EdgeInsets.symmetric(vertical: 2),
                     children: [
                       Container(
                         margin: const EdgeInsets.only(
@@ -320,7 +322,7 @@ class _QuestionsListPageState extends State<QuestionsListPage>
                       ...snapshot.data.map(
                         (e) => Container(
                           child: QuestionCard(e),
-                          height: MediaQuery.of(context).size.height / 3.5,
+                          height: MediaQuery.of(context).size.height / 3.2,
                         ),
                       ),
                       if (snapshot.data.isEmpty)

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_teaching_notes/pages/modules/questions/models/question_model.dart';
 import 'package:flutter_teaching_notes/pages/modules/questions/pages/question_page.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
@@ -14,7 +15,6 @@ class QuestionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     this.context = context;
-    print(item.title);
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 4.0,
@@ -36,6 +36,7 @@ class QuestionCard extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Stack(
+                  alignment: Alignment.center,
                   children: [
                     if (item.images != null && item.images.isNotEmpty)
                       MyImage(item.images[0]),
