@@ -147,7 +147,7 @@ class _QuestionPageState extends State<QuestionPage> {
                       height: 200,
                     ),
                     Text(
-                      'It\'s is good if you try solving yourself first.\nRead again and again.',
+                      'It\'s good if you try solving first yourself.\nRead again and again.',
                       style: Theme.of(context)
                           .textTheme
                           .display1
