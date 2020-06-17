@@ -26,6 +26,8 @@ jobs:
       run: flutter pub get
 #    - name: 'Run Test(s)'
 #      run: flutter test
+    - name: Enable flutter web
+      run: flutter config --enable-web
     - name: 'Build Demo Apk'
       run: flutter build web
     - name: deploy
