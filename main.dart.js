@@ -51899,7 +51899,7 @@ X.Bg.prototype={}
 X.M2.prototype={}
 F.C8.prototype={
 F:function(a){var t=null
-return new S.tn(new X.rN(t),"Flutter Demo",X.a5W(t,t,t,"Nunito",C.zI,new P.x(4294309624),t),!1,t)}}
+return new S.tn(new X.rN(t),"IIT-JEE Notes by Ayush P Gupta",X.a5W(t,t,t,"Nunito",C.zI,new P.x(4294309624),t),!1,t)}}
 Z.qM.prototype={
 gay:function(a){return this.a}}
 Z.eC.prototype={

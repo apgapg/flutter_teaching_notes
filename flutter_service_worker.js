@@ -14,7 +14,7 @@ const RESOURCES = {
 "assets/packages/font_awesome_flutter/lib/fonts/fa-regular-400.ttf": "2bca5ec802e40d3f4b60343e346cedde",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "115e937bb829a890521f72d2e664b632",
 "assets/AssetManifest.json": "6c5e700f02a1e0bd5d4cde583363e4e8",
-"main.dart.js": "8c14d6f38851a8c5d656fe20be380a5b",
+"main.dart.js": "b4a536ffe8f522c82467b012a7f9fc53",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "manifest.json": "19879b99add80d3ba69c0c5de8c72874",
