@@ -160,6 +160,7 @@ class QuestionCard extends StatelessWidget {
   }
 
   void onCourseTap() {
+    FocusScope.of(context).requestFocus(FocusNode());
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => QuestionPage(item),
