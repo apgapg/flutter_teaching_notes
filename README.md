@@ -8,6 +8,8 @@ This app serves the slides/notes used in those videos.
 
 Playstore App: [https://play.google.com/store/apps/details?id=com.coddu.flutter.iitjee.notes](https://play.google.com/store/apps/details?id=com.coddu.flutter.iitjee.notes)
 
+Website: [https://apgapg.github.io/flutter_teaching_notes/](https://apgapg.github.io/flutter_teaching_notes/)
+
 ## Extras
 
 Building Android app bundle 
