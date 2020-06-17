@@ -22,16 +22,22 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         channel: 'dev'
-    - name: 'Running flutter pub get'
+    - name: 'Run flutter pub get'
       run: flutter pub get
 #    - name: 'Run Test(s)'
 #      run: flutter test
     - name: Enable flutter web
       run: flutter config --enable-web
-    - name: 'Build Demo Apk'
+    - name: 'Build Web App'
       run: flutter build web
     - name: deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.TOKEN }}
         publish_dir: ./build/web
+    - name: Deploy to Firebase Hosting
+      uses: w9jds/firebase-action@master
+      with:
+        args: deploy --only hosting
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
