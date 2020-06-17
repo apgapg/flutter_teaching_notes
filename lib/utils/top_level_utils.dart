@@ -4,7 +4,7 @@ bool checkIfNotEmpty(String value) {
   return value != null && value.isNotEmpty && value != "null";
 }
 
-bool get isDebug {
+bool get isDebugMode {
   bool inDebugMode = false;
   assert(inDebugMode = true);
   return inDebugMode;
@@ -12,6 +12,10 @@ bool get isDebug {
 
 bool checkIfListIsNotEmpty(List list) {
   return list != null && list.isNotEmpty;
+}
+
+bool isTab(BuildContext context) {
+  return MediaQuery.of(context).size.width >= 600;
 }
 
 Color getLevelColor(int level) {

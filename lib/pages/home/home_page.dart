@@ -4,7 +4,7 @@ import 'package:flutter_teaching_notes/bloc/home_bloc.dart';
 import 'package:flutter_teaching_notes/pages/contact_page.dart';
 import 'package:flutter_teaching_notes/pages/modules/questions/pages/questions_list_page.dart';
 import 'package:flutter_teaching_notes/pages/upload/data_upload_page.dart';
-import 'package:flutter_teaching_notes/utils/log_utils.dart';
+import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 
 import '../modules/course/pages/course_list_page.dart';
 
@@ -19,6 +19,8 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   final _bloc = HomeBloc();
+
+  var _scrollViewController = ScrollController();
 
   @override
   void initState() {
@@ -38,11 +40,47 @@ class HomePageState extends State<HomePage> {
       child: BlocProvider(
         bloc: _bloc,
         child: Scaffold(
-          appBar: AppBar(
-            title: Text("IIT-JEE Notes"),
+          body: NestedScrollView(
+            controller: _scrollViewController,
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return <Widget>[
+                SliverAppBar(
+                  title: Text(
+                    isTab(context)
+                        ? "IIT-JEE Notes by Ayush P Gupta"
+                        : "IIT-JEE Notes",
+                  ),
+                  pinned: true,
+                  floating: true,
+                  forceElevated: innerBoxIsScrolled,
+                  elevation: 2.0,
+                  actions: <Widget>[
+                    if (isDebugMode)
+                      IconButton(
+                          icon: Icon(Icons.device_unknown),
+                          onPressed: onUploadTap),
+                    IconButton(
+                        icon: Icon(Icons.info_outline), onPressed: onInfoTap),
+                  ],
+                  bottom: const TabBar(
+                    tabs: [
+                      Tab(text: "QUESTIONS"),
+                      Tab(text: "NOTES"),
+                    ],
+                  ),
+                ),
+              ];
+            },
+
+            /* appBar: AppBar(
+            title: Text(
+              isTab(context)
+                  ? "IIT-JEE Notes by Ayush P Gupta"
+                  : "IIT-JEE Notes",
+            ),
             elevation: 2.0,
             actions: <Widget>[
-              if (isDebug)
+              if (isDebugMode)
                 IconButton(
                     icon: Icon(Icons.device_unknown), onPressed: onUploadTap),
               IconButton(icon: Icon(Icons.info_outline), onPressed: onInfoTap),
@@ -53,12 +91,13 @@ class HomePageState extends State<HomePage> {
                 Tab(text: "NOTES"),
               ],
             ),
-          ),
-          body: TabBarView(
-            children: [
-              QuestionsListPage(),
-              CourseListPage(),
-            ],
+          ),*/
+            body: TabBarView(
+              children: [
+                QuestionsListPage(),
+                CourseListPage(),
+              ],
+            ),
           ),
         ),
       ),

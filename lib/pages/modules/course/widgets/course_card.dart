@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_teaching_notes/model/course_model.dart';
+import 'package:flutter_teaching_notes/widgets/images/my_image.dart';
 
 import '../pages/course_page.dart';
 
@@ -41,22 +41,7 @@ class CourseCard extends StatelessWidget {
                       topLeft: Radius.circular(8.0),
                       topRight: Radius.circular(8.0),
                     ),
-                    child: CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      imageUrl: _item.cover,
-                      placeholder: (context, url) => Container(
-                        alignment: Alignment.center,
-                        child: Container(
-                          height: 32.0,
-                          width: 32.0,
-                          child: new CircularProgressIndicator(
-                            strokeWidth: 1.0,
-                          ),
-                        ),
-                      ),
-                      errorWidget: (context, url, error) =>
-                          new Icon(Icons.error),
-                    ),
+                    child: MyImage(_item.cover),
                   ),
                 ),
                 Divider(

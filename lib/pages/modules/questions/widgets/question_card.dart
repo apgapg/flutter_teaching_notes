@@ -1,9 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_teaching_notes/pages/modules/questions/models/question_model.dart';
 import 'package:flutter_teaching_notes/pages/modules/questions/pages/question_page.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
-import 'package:flutter_teaching_notes/widgets/placeholder_image.dart';
+import 'package:flutter_teaching_notes/widgets/images/my_image.dart';
 
 class QuestionCard extends StatelessWidget {
   final Question item;
@@ -15,6 +14,7 @@ class QuestionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     this.context = context;
+    print(item.title);
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 4.0,
@@ -34,20 +34,11 @@ class QuestionCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height / 4,
+              Expanded(
                 child: Stack(
                   children: [
                     if (item.images != null && item.images.isNotEmpty)
-                      Positioned.fill(
-                        child: CachedNetworkImage(
-                          fit: BoxFit.contain,
-                          imageUrl: item.images[0],
-                          placeholder: (context, url) => PlaceholderImage(),
-                          errorWidget: (context, url, error) =>
-                              new Icon(Icons.error),
-                        ),
-                      ),
+                      MyImage(item.images[0]),
                     if (checkIfNotEmpty(item.subject))
                       Positioned(
                         right: 8,

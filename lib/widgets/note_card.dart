@@ -1,5 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_teaching_notes/widgets/images/my_image.dart';
 
 class NoteCard extends StatelessWidget {
   final String url;
@@ -29,24 +29,7 @@ class NoteCard extends StatelessWidget {
               borderRadius: BorderRadius.all(
                 Radius.circular(4.0),
               ),
-              child: CachedNetworkImage(
-                fit: BoxFit.contain,
-                imageUrl: url,
-                placeholder: (context, url) => Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(vertical: 100.0),
-                  child: Container(
-                    height: 32.0,
-                    width: 32.0,
-                    child: new CircularProgressIndicator(
-                      strokeWidth: 1.0,
-                    ),
-                  ),
-                ),
-                errorWidget: (context, url, error) => Container(
-                    padding: EdgeInsets.symmetric(vertical: 100.0),
-                    child: NetworkImageError()),
-              ),
+              child: MyImage(url),
             ),
           ),
           Positioned(
