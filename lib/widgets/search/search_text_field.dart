@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 
 class SearchTextField extends StatelessWidget {
   final TextEditingController controller;
+  final String hint;
 
-  SearchTextField(this.controller);
+  SearchTextField(
+    this.controller, {
+    this.hint,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +16,7 @@ class SearchTextField extends StatelessWidget {
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(8),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-        hintText: 'Search question here...',
+        hintText: hint ?? 'Search here...',
         prefixIcon: Icon(Icons.search),
       ),
     );

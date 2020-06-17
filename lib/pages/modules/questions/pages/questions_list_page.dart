@@ -180,7 +180,11 @@ class _QuestionsListPageState extends State<QuestionsListPage>
                         ),
                       ),
                       Container(
-                        child: SearchTextField(_controller),
+                        child: SearchTextField(
+                          _controller,
+                          hint:
+                              'Search among ${snapshot.data.length} questions',
+                        ),
                         margin: EdgeInsets.symmetric(
                           horizontal: 12,
                           vertical: 4,
@@ -322,7 +326,11 @@ class _QuestionsListPageState extends State<QuestionsListPage>
                         ),
                       ),
                       Container(
-                        child: SearchTextField(_controller),
+                        child: SearchTextField(
+                          _controller,
+                          hint:
+                              'Search among ${snapshot.data.length} questions',
+                        ),
                         margin: EdgeInsets.symmetric(
                           horizontal: 12,
                           vertical: 4,
