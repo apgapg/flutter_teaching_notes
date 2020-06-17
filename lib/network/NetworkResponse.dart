@@ -8,7 +8,8 @@ class NetworkResponse {
     _logRequest(_response);
   }
 
-  bool get isSuccess => (_response.statusCode >= 200 && _response.statusCode <= 300);
+  bool get isSuccess =>
+      (_response.statusCode >= 200 && _response.statusCode <= 300);
 
   String get body => _response.body;
 

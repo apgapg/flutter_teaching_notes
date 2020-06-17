@@ -75,11 +75,14 @@ class ContactPage extends StatelessWidget {
                     ),
                     Row(
                       children: <Widget>[
-                        CircularButton(FontAwesomeIcons.mediumM, "https://medium.com/@ayushpguptaapg"),
+                        CircularButton(FontAwesomeIcons.mediumM,
+                            "https://medium.com/@ayushpguptaapg"),
                         HorizontalSpacing(),
-                        CircularButton(FontAwesomeIcons.instagram, "https://www.instagram.com/ayushpgupta/"),
+                        CircularButton(FontAwesomeIcons.instagram,
+                            "https://www.instagram.com/ayushpgupta/"),
                         HorizontalSpacing(),
-                        CircularButton(FontAwesomeIcons.github, "https://github.com/apgapg"),
+                        CircularButton(FontAwesomeIcons.github,
+                            "https://github.com/apgapg"),
                       ],
                       mainAxisSize: MainAxisSize.min,
                     ),
@@ -88,9 +91,11 @@ class ContactPage extends StatelessWidget {
                     ),
                     Row(
                       children: <Widget>[
-                        CircularButton(FontAwesomeIcons.facebookF, "https://www.facebook.com/ayushpgupta"),
+                        CircularButton(FontAwesomeIcons.facebookF,
+                            "https://www.facebook.com/ayushpgupta"),
                         HorizontalSpacing(),
-                        CircularButton(FontAwesomeIcons.googlePlusG, "https://medium.com/@ayushpguptaapg"),
+                        CircularButton(FontAwesomeIcons.googlePlusG,
+                            "https://medium.com/@ayushpguptaapg"),
                       ],
                       mainAxisSize: MainAxisSize.min,
                     ),
@@ -153,15 +158,18 @@ class CircularButton extends StatefulWidget {
   }
 }
 
-class CircularButtonState extends State<CircularButton> with SingleTickerProviderStateMixin {
+class CircularButtonState extends State<CircularButton>
+    with SingleTickerProviderStateMixin {
   Animation animation;
   AnimationController controller;
 
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(duration: Duration(milliseconds: 300), vsync: this);
-    final Animation curve = CurvedAnimation(parent: controller, curve: Curves.bounceOut);
+    controller =
+        AnimationController(duration: Duration(milliseconds: 300), vsync: this);
+    final Animation curve =
+        CurvedAnimation(parent: controller, curve: Curves.bounceOut);
     animation = Tween(begin: 4.0, end: 0.0).animate(curve);
 
     controller.addStatusListener((status) async {

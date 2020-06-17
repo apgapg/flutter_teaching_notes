@@ -22,7 +22,11 @@ class ApiHelper {
     return NetworkResponse(response);
   }
 
-  Future<NetworkResponse> post({@required String endpoint, String url, bool includeToken = true, @required String body}) async {
+  Future<NetworkResponse> post(
+      {@required String endpoint,
+      String url,
+      bool includeToken = true,
+      @required String body}) async {
     http.Response response = await http.post(baseUrl + endpoint, body: body);
     return NetworkResponse(response);
   }
