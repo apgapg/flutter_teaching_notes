@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_teaching_notes/bloc/bloc_provider.dart';
 import 'package:flutter_teaching_notes/bloc/home_bloc.dart';
+import 'package:flutter_teaching_notes/modules/chapterwise/index.dart';
+import 'package:flutter_teaching_notes/modules/course/pages/course_list_page.dart';
+import 'package:flutter_teaching_notes/modules/questions/pages/questions_list_page.dart';
 import 'package:flutter_teaching_notes/pages/contact_page.dart';
-import 'package:flutter_teaching_notes/pages/modules/questions/pages/questions_list_page.dart';
 import 'package:flutter_teaching_notes/pages/upload/data_upload_page.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
-
-import '../modules/course/pages/course_list_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage();
@@ -100,6 +100,7 @@ class HomePageState extends State<HomePage> {
           physics: NeverScrollableScrollPhysics(),
           children: [
             QuestionsListPage(),
+            ChapterListPage(),
             CourseListPage(),
           ],
         ),
@@ -112,10 +113,17 @@ class HomePageState extends State<HomePage> {
             });
             _controller.jumpToPage(index);
           },
-          items: [
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Octicons.question),
-              title: Text("Questions"),
+              title: Text("Mixed"),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                SimpleLineIcons.docs,
+                size: 20,
+              ),
+              title: Text("Chapterwise"),
             ),
             BottomNavigationBarItem(
               icon: Icon(Octicons.book),
@@ -135,47 +143,5 @@ class HomePageState extends State<HomePage> {
   void onUploadTap() {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => DataUploadPage()));
-  }
-}
-
-class ErrorPage extends StatelessWidget {
-  final String text;
-
-  ErrorPage(this.text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(text),
-      ),
-    );
-  }
-}
-
-class LoadingPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              height: 32.0,
-              width: 32.0,
-              child: CircularProgressIndicator(
-                strokeWidth: 1.0,
-              ),
-            ),
-            SizedBox(
-              height: 24.0,
-            ),
-            Text("Fetching data...")
-          ],
-        ),
-      ),
-    );
   }
 }

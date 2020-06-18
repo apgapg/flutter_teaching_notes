@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_teaching_notes/pages/modules/questions/models/question_model.dart';
-import 'package:flutter_teaching_notes/pages/modules/questions/pages/question_page.dart';
-import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
-import 'package:flutter_teaching_notes/widgets/images/my_image.dart';
+import 'package:flutter_teaching_notes/modules/questions/models/question_model.dart';
+import 'package:flutter_teaching_notes/modules/questions/pages/question_page.dart';
+
+import '../../../utils/top_level_utils.dart';
+import '../../../widgets/images/my_image.dart';
 
 class QuestionCard extends StatelessWidget {
   final Question item;

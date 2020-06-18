@@ -51,6 +51,7 @@ class _CheckedPopupMenuItemState<T>
     with SingleTickerProviderStateMixin {
   static const Duration _fadeDuration = Duration(milliseconds: 150);
   AnimationController _controller;
+
   Animation<double> get _opacity => _controller.view;
 
   @override
@@ -58,7 +59,9 @@ class _CheckedPopupMenuItemState<T>
     super.initState();
     _controller = AnimationController(duration: _fadeDuration, vsync: this)
       ..value = widget.checked ? 1.0 : 0.0
-      ..addListener(() => setState(() {/* animation changed */}));
+      ..addListener(() => setState(() {
+            /* animation changed */
+          }));
   }
 
   @override

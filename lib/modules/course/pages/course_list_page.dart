@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_teaching_notes/model/course_model.dart';
-import 'package:flutter_teaching_notes/pages/modules/course/widgets/course_card.dart';
-
-import '../../../home/home_page.dart';
+import 'package:flutter_teaching_notes/modules/course/widgets/course_card.dart';
+import 'package:flutter_teaching_notes/widgets/error_widget.dart';
+import 'package:flutter_teaching_notes/widgets/loading_widget.dart';
 
 class CourseListPage extends StatefulWidget {
   CourseListPage();
@@ -31,10 +31,11 @@ class _CourseListPageState extends State<CourseListPage>
               itemCount: list.length,
             ),
           );
-        } else if (snapshot.hasError)
+        } else if (snapshot.hasError) {
           return ErrorPage(snapshot.error.toString());
-        else
+        } else {
           return LoadingPage();
+        }
       },
       stream: Firestore.instance.collection('courses').snapshots(),
     );
