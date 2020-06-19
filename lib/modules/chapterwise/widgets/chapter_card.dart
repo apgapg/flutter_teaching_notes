@@ -37,7 +37,7 @@ class ChapterCard extends StatelessWidget {
               title: Text(
                 item.title,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
