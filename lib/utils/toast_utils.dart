@@ -1,15 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:bot_toast/bot_toast.dart';
 
 class ToastUtils {
+  ToastUtils._();
+
+  static void show(String message) {
+    BotToast.showText(text: message);
+  }
+
   static void showToast(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      timeInSecForIos: 1,
-      backgroundColor: Colors.black54,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
+    BotToast.showText(text: message);
   }
 }

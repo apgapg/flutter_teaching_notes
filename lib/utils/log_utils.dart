@@ -1,12 +1,42 @@
-printLog(dynamic o, {bool upload = false, StackTrace stackTrace}) {
-  if (isDebug) {
-    print(o.toString() ?? "");
-    if (stackTrace != null) print(stackTrace);
-  } //else if (upload) CrashUtils.logError(error: o.toString(), stackTrace: stackTrace);
-}
+import 'log/i_log.dart';
+import 'log/my_logger.dart';
 
-bool get isDebug {
-  bool inDebugMode = false;
-  assert(inDebugMode = true);
-  return inDebugMode;
+final logger = LogUtils();
+
+class LogUtils implements ILog {
+  ILog _logger;
+
+  LogUtils() {
+    _logger = MyLogger();
+  }
+
+  @override
+  void d(dynamic object) {
+    _logger.d(object);
+  }
+
+  @override
+  void e(dynamic object, StackTrace s) {
+    _logger.e(object, s);
+  }
+
+  @override
+  void i(dynamic object) {
+    _logger.i(object);
+  }
+
+  @override
+  void v(dynamic object) {
+    _logger.v(object);
+  }
+
+  @override
+  void w(dynamic object) {
+    _logger.w(object);
+  }
+
+  @override
+  void wtf(dynamic object) {
+    _logger.wtf(object);
+  }
 }

@@ -28,37 +28,39 @@ class ChapterCard extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         elevation: 2.0,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ListTile(
-              onTap: onCourseTap,
-              trailing: Icon(Icons.keyboard_arrow_right),
-              title: Text(
-                item.title,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+        child: InkWell(
+          onTap: onCourseTap,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                trailing: Icon(Icons.keyboard_arrow_right),
+                title: Text(
+                  item.title,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
+                subtitle: checkIfNotEmpty(item.description)
+                    ? Text(item.description)
+                    : null,
               ),
-              subtitle: checkIfNotEmpty(item.description)
-                  ? Text(item.description)
-                  : null,
-            ),
-            if (checkIfNotEmpty(item.subject))
-              Container(
-                margin: EdgeInsets.only(bottom: 8, left: 16),
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(4),
+              if (checkIfNotEmpty(item.subject))
+                Container(
+                  margin: EdgeInsets.only(bottom: 8, left: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  child: Text(
+                    item.subject,
+                    style: TextStyle(fontSize: 12, color: Colors.white),
+                  ),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                child: Text(
-                  item.subject,
-                  style: TextStyle(fontSize: 12, color: Colors.white),
-                ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );

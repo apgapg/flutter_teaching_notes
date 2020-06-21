@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'di/injector.dart';
 import 'pages/home/home_page.dart';
 
 // Sets a platform override for desktop to avoid exceptions. See
@@ -13,8 +15,12 @@ void _enablePlatformOverrideForDesktop() {
   }
 }
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   _enablePlatformOverrideForDesktop();
+  await Injector().init();
+
   runApp(MyApp());
 }
 
@@ -24,6 +30,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'IIT-JEE Notes by Ayush P Gupta',
+      builder: BotToastInit(),
+      //1. call BotToastInit
+      navigatorObservers: [BotToastNavigatorObserver()],
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Nunito',

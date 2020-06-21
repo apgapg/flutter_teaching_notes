@@ -17,7 +17,7 @@ class QuestionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     this.context = context;
     return Container(
-      padding: const EdgeInsets.symmetric(
+      margin: const EdgeInsets.symmetric(
         horizontal: 4.0,
         vertical: 1.0,
       ),
@@ -29,7 +29,7 @@ class QuestionCard extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         elevation: 2.0,
-        child: GestureDetector(
+        child: InkWell(
           onTap: onCourseTap,
           child: Column(
             mainAxisSize: MainAxisSize.min,
