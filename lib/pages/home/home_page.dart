@@ -89,25 +89,31 @@ class HomePageState extends State<HomePage> {
               stream: injector<UserRepository>().getUserStream(),
               builder: (context, snapshot) {
                 if (snapshot.hasData && snapshot.data != null) {
-                  return IconButton(
-                    icon: Icon(FontAwesomeIcons.bookmark),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => BookmarkPage(),
-                        ),
-                      );
-                    },
-                    iconSize: 20,
+                  return Tooltip(
+                    message: "Bookmarks",
+                    child: IconButton(
+                      icon: Icon(FontAwesomeIcons.bookmark),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => BookmarkPage(),
+                          ),
+                        );
+                      },
+                      iconSize: 20,
+                    ),
                   );
                 } else {
                   return Container();
                 }
               }),
-          IconButton(
-            icon: Icon(Icons.info_outline),
-            onPressed: onInfoTap,
-            iconSize: 26,
+          Tooltip(
+            message: "About",
+            child: IconButton(
+              icon: Icon(Icons.info_outline),
+              onPressed: onInfoTap,
+              iconSize: 26,
+            ),
           ),
           SizedBox(
             width: 8,
