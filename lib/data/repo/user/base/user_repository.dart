@@ -13,4 +13,8 @@ abstract class UserRepository {
   void logoutUser() {}
 
   bool isComplete() {}
+
+  void saveBookmark(String id);
+
+  void removeBookmark(String id);
 }

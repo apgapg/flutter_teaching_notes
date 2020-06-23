@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_teaching_notes/data/model/user.dart';
+import 'package:flutter_teaching_notes/data/repo/user/base/user_repository.dart';
+import 'package:flutter_teaching_notes/di/injector.dart';
 import 'package:flutter_teaching_notes/modules/questions/models/question_model.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/images/my_image.dart';
@@ -160,6 +163,79 @@ class _QuestionPageState extends State<QuestionPage> {
           ),
         ),
       ),
+      bottomNavigationBar: StreamBuilder<User>(
+          stream: injector<UserRepository>().getUserStream(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              final user = snapshot.data;
+              return BottomAppBar(
+                child: InkWell(
+                  onTap: () {
+                    if (checkIfListIsNotEmpty(user.bookmarks) &&
+                        user.bookmarks.contains(widget.item.id)) {
+                      injector<UserRepository>().removeBookmark(widget.item.id);
+                    } else {
+                      injector<UserRepository>().saveBookmark(widget.item.id);
+                    }
+                  },
+                  child: checkIfListIsNotEmpty(user.bookmarks) &&
+                          user.bookmarks.contains(widget.item.id)
+                      ? Container(
+                          height: 40,
+                          alignment: Alignment.center,
+                          color: Theme.of(context).primaryColor,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.bookmark,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                "Added to Bookmarks",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(
+                          height: 40,
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.bookmark_border,
+                                size: 20,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                "Add to Bookmarks",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                ),
+              );
+            } else {
+              return SizedBox(
+                height: 0,
+                width: 0,
+              );
+            }
+          }),
     );
   }
 }

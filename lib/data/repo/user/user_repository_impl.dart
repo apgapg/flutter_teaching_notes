@@ -9,7 +9,6 @@ import 'package:flutter_teaching_notes/data/model/result.dart';
 import 'package:flutter_teaching_notes/data/model/user.dart';
 import 'package:flutter_teaching_notes/di/injector.dart';
 import 'package:flutter_teaching_notes/utils/log_utils.dart';
-import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'base/user_repository.dart';
@@ -38,7 +37,13 @@ class UserRepositoryImpl implements UserRepository {
       if (userDocument != null && userDocument.exists) {
         //Do nothing
       } else {
-        await userDocument.reference.setData(user.toJson());
+        final userMap = {
+          ...user.toJson(),
+          "createdAt": _getCurrentEpoch(),
+          "updatedAt": _getCurrentEpoch(),
+        };
+
+        await userDocument.reference.setData(userMap);
       }
       prefsHelper.isLogin = true;
       await init();
@@ -62,7 +67,7 @@ class UserRepositoryImpl implements UserRepository {
           .document(firebaseUser.uid)
           .snapshots()
           .listen((event) async {
-        if (event != null) {
+        if (event?.data != null) {
           _userSubject.add(User.fromJson(event.data));
           final _firebaseMessaging = FirebaseMessaging();
           _firebaseMessaging.setAutoInitEnabled(true);
@@ -70,7 +75,10 @@ class UserRepositoryImpl implements UserRepository {
           await firestore
               .collection('users')
               .document(firebaseUser.uid)
-              .updateData({'fcmToken': _fcmToken});
+              .updateData({
+            'fcmToken': _fcmToken,
+            'updatedAt': _getCurrentEpoch(),
+          });
         } else {
           _userSubject.add(null);
         }
@@ -93,8 +101,7 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   bool isComplete() {
-    return checkIfNotEmpty(getLoggedInUser().tagline) &&
-        checkIfListIsNotEmpty(getLoggedInUser().educations);
+    return false;
   }
 
   @override
@@ -107,7 +114,24 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   String getFcmToken() {
-    // TODO: implement getFcmToken
     return _fcmToken;
+  }
+
+  int _getCurrentEpoch() {
+    return DateTime.now().millisecondsSinceEpoch ~/ 1000;
+  }
+
+  @override
+  void saveBookmark(String id) {
+    firestore.collection('users').document(_userSubject.value.id).updateData({
+      'bookmarks': FieldValue.arrayUnion([id]),
+    });
+  }
+
+  @override
+  void removeBookmark(String id) {
+    firestore.collection('users').document(_userSubject.value.id).updateData({
+      'bookmarks': FieldValue.arrayRemove([id]),
+    });
   }
 }

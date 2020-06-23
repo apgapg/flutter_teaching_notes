@@ -34,6 +34,7 @@ dependencies:
   bot_toast: ^3.0.0
   freezed_annotation:
   logger: 0.7.0+2
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:

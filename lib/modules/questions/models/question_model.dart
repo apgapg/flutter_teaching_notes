@@ -1,47 +1,34 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'question_model.freezed.dart';
 part 'question_model.g.dart';
 
-@JsonSerializable()
-class Question {
-  final String id;
-  final int level;
-  final String title;
-  final String description;
-  final String subject;
-  final String topic;
-  final List<String> images;
-  final List<Solution> solutions;
-  final int createdAt;
+@freezed
+abstract class Question with _$Question {
+  factory Question({
+    String id,
+    @JsonKey(defaultValue: 0) int level,
+    String title,
+    String description,
+    String subject,
+    String topic,
+    List<String> images,
+    List<Solution> solutions,
+    @JsonKey(defaultValue: 0) int createdAt,
+  }) = _Question;
 
-  Question(
-    this.id,
-    this.level,
-    this.title,
-    this.description,
-    this.subject,
-    this.images,
-    this.topic,
-    this.solutions,
-    this.createdAt,
-  );
-
-  factory Question.fromJson(Map<dynamic, dynamic> json) =>
+  factory Question.fromJson(Map<String, dynamic> json) =>
       _$QuestionFromJson(json);
 }
 
-@JsonSerializable()
-class Solution {
-  final int id;
-  final List<String> images;
-  final String video;
+@freezed
+abstract class Solution with _$Solution {
+  factory Solution({
+    int id,
+    List<String> images,
+    String video,
+  }) = _Solution;
 
-  Solution(
-    this.id,
-    this.images,
-    this.video,
-  );
-
-  factory Solution.fromJson(Map<dynamic, dynamic> json) =>
+  factory Solution.fromJson(Map<String, dynamic> json) =>
       _$SolutionFromJson(json);
 }

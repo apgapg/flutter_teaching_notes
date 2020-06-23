@@ -6,24 +6,25 @@ part of 'question_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Question _$QuestionFromJson(Map<String, dynamic> json) {
-  return Question(
-    json['id'] as String,
-    json['level'] as int,
-    json['title'] as String,
-    json['description'] as String,
-    json['subject'] as String,
-    (json['images'] as List)?.map((e) => e as String)?.toList(),
-    json['topic'] as String,
-    (json['solutions'] as List)
+_$_Question _$_$_QuestionFromJson(Map<String, dynamic> json) {
+  return _$_Question(
+    id: json['id'] as String,
+    level: json['level'] as int ?? 0,
+    title: json['title'] as String,
+    description: json['description'] as String,
+    subject: json['subject'] as String,
+    topic: json['topic'] as String,
+    images: (json['images'] as List)?.map((e) => e as String)?.toList(),
+    solutions: (json['solutions'] as List)
         ?.map((e) =>
             e == null ? null : Solution.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-    json['createdAt'] as int,
+    createdAt: json['createdAt'] as int ?? 0,
   );
 }
 
-Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
+Map<String, dynamic> _$_$_QuestionToJson(_$_Question instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'level': instance.level,
       'title': instance.title,
@@ -35,15 +36,16 @@ Map<String, dynamic> _$QuestionToJson(Question instance) => <String, dynamic>{
       'createdAt': instance.createdAt,
     };
 
-Solution _$SolutionFromJson(Map<String, dynamic> json) {
-  return Solution(
-    json['id'] as int,
-    (json['images'] as List)?.map((e) => e as String)?.toList(),
-    json['video'] as String,
+_$_Solution _$_$_SolutionFromJson(Map<String, dynamic> json) {
+  return _$_Solution(
+    id: json['id'] as int,
+    images: (json['images'] as List)?.map((e) => e as String)?.toList(),
+    video: json['video'] as String,
   );
 }
 
-Map<String, dynamic> _$SolutionToJson(Solution instance) => <String, dynamic>{
+Map<String, dynamic> _$_$_SolutionToJson(_$_Solution instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'images': instance.images,
       'video': instance.video,

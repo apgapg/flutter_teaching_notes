@@ -36,7 +36,8 @@ class _QuestionsListPageState extends State<QuestionsListPage>
           return null;
         } else {
           var list = query.documents
-              .map((document) => Question.fromJson(document.data))
+              .map((document) => Question.fromJson(document.data)
+                  .copyWith(id: document.documentID))
               .toList();
           if (_selectedLevel != 0) {
             list = list
