@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_teaching_notes/data/repo/user/base/user_repository.dart';
+import 'package:flutter_teaching_notes/di/injector.dart';
 import 'package:flutter_teaching_notes/modules/questions/models/question_model.dart';
 import 'package:flutter_teaching_notes/modules/questions/pages/question_page.dart';
 
@@ -124,19 +126,33 @@ class QuestionCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(
                   horizontal: 12.0,
-                  vertical: 8.0,
+                  vertical: 10.0,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    Text(
-                      item.title,
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black87,
-                      ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            item.title,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w700,
+                              color: _isbookmarked()
+                                  ? Theme.of(context).primaryColor
+                                  : null,
+                            ),
+                          ),
+                        ),
+                        if (_isbookmarked())
+                          Icon(
+                            Icons.bookmark,
+                            color: Theme.of(context).primaryColor,
+                            size: 20,
+                          ),
+                      ],
                     ),
                     SizedBox(
                       height: 2.0,
@@ -144,11 +160,10 @@ class QuestionCard extends StatelessWidget {
                     if (checkIfNotEmpty(item.description))
                       Text(
                         item.description,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black54,
-                        ),
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w500,
+                            ),
                       ),
                   ],
                 ),
@@ -167,5 +182,14 @@ class QuestionCard extends StatelessWidget {
         builder: (context) => QuestionPage(item),
       ),
     );
+  }
+
+  bool _isbookmarked() {
+    return injector<UserRepository>()
+            .getUserStream()
+            .value
+            ?.bookmarks
+            ?.contains(item.id) ??
+        false;
   }
 }

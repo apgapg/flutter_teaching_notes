@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_teaching_notes/data/repo/user/base/user_repository.dart';
+import 'package:flutter_teaching_notes/di/injector.dart';
 import 'package:flutter_teaching_notes/modules/questions/models/question_model.dart';
 import 'package:flutter_teaching_notes/modules/questions/widgets/question_card.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
@@ -22,14 +24,15 @@ class _BookmarkPageState extends State<BookmarkPage> {
 
   final _textSubject = BehaviorSubject<String>.seeded("");
 
-  StreamTransformer<QuerySnapshot, List<Question>> get levelTransformer =>
+  StreamTransformer<QuerySnapshot, List<Question>> get parseTransformer =>
       StreamTransformer<QuerySnapshot, List<Question>>.fromHandlers(
           handleData: (query, sink) {
         if (!checkIfListIsNotEmpty(query.documents)) {
           return sink.add([]);
         } else {
           var list = query.documents
-              .map((document) => Question.fromJson(document.data))
+              .map((document) => Question.fromJson(document.data)
+                  .copyWith(id: document.documentID))
               .toList();
           list.sort((a, b) => (b.createdAt ?? 0).compareTo(a.createdAt ?? 0));
           return sink.add(list);
@@ -48,6 +51,21 @@ class _BookmarkPageState extends State<BookmarkPage> {
           return sink.add(list1);
         } else {
           return sink.add(list);
+        }
+      });
+
+  StreamTransformer<List<Question>, List<Question>> get bookmarkTransformer =>
+      StreamTransformer<List<Question>, List<Question>>.fromHandlers(
+          handleData: (list, sink) {
+        final bookmarks =
+            injector<UserRepository>().getUserStream().value?.bookmarks;
+        if (checkIfListIsNotEmpty(bookmarks)) {
+          var list1 = list.where((item) {
+            return bookmarks.contains(item.id);
+          }).toList();
+          return sink.add(list1);
+        } else {
+          return sink.add([]);
         }
       });
 
@@ -168,8 +186,9 @@ class _BookmarkPageState extends State<BookmarkPage> {
         },
         stream: Rx.combineLatest2<QuerySnapshot, String, QuerySnapshot>(
                 _getStream(), _textSubject, (a, b) => a)
-            .transform(levelTransformer)
-            .transform(searchTransformer),
+            .transform(parseTransformer)
+            .transform(searchTransformer)
+            .transform(bookmarkTransformer),
       ),
     );
   }

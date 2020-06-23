@@ -9,6 +9,7 @@ import 'package:flutter_teaching_notes/data/model/result.dart';
 import 'package:flutter_teaching_notes/data/model/user.dart';
 import 'package:flutter_teaching_notes/di/injector.dart';
 import 'package:flutter_teaching_notes/utils/log_utils.dart';
+import 'package:flutter_teaching_notes/utils/toast_utils.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'base/user_repository.dart';
@@ -95,8 +96,8 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Stream<User> getUserStream() {
-    return _userSubject.stream;
+  BehaviorSubject<User> getUserStream() {
+    return _userSubject;
   }
 
   @override
@@ -110,6 +111,8 @@ class UserRepositoryImpl implements UserRepository {
     await injector<GoogleLoginRepository>().logout();
     prefsHelper.isLogin = false;
     prefsHelper.userData = null;
+    _userSubject.sink.add(null);
+    ToastUtils.show("Successfully logout!");
   }
 
   @override

@@ -1,10 +1,12 @@
+import 'package:rxdart/rxdart.dart';
+
 import '../../../model/result.dart';
 import '../../../model/user.dart';
 
 abstract class UserRepository {
   Future<Result<User>> register(User user);
 
-  Stream<User> getUserStream();
+  BehaviorSubject<User> getUserStream();
 
   User getLoggedInUser();
 

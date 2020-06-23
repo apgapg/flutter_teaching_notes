@@ -1,16 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_teaching_notes/data/model/user.dart';
 import 'package:flutter_teaching_notes/data/repo/user/base/user_repository.dart';
 import 'package:flutter_teaching_notes/data/repo/user/google_login_repository.dart';
 import 'package:flutter_teaching_notes/di/injector.dart';
+import 'package:flutter_teaching_notes/modules/bookmark/index.dart';
 import 'package:flutter_teaching_notes/modules/profile/widgets/profile_header.dart';
 import 'package:flutter_teaching_notes/utils/dialog_utils.dart';
 import 'package:flutter_teaching_notes/utils/toast_utils.dart';
 import 'package:flutter_teaching_notes/widgets/error_widget.dart';
 import 'package:flutter_teaching_notes/widgets/loading_widget.dart';
 import 'package:flutter_teaching_notes/widgets/my_divider.dart';
-import 'package:flutter_teaching_notes/widgets/primary_raised_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
@@ -87,26 +88,78 @@ class _ProfilePageState extends State<ProfilePage>
                     ),
                   ),
                   MyDivider(),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "${user.bookmarks?.length ?? 0}",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          "Bookmark(s)",
-                          style: Theme.of(context).textTheme.headline4.copyWith(
-                                fontSize: 14,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => BookmarkPage(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(14.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "${user.bookmarks?.length ?? 0}",
+                                style: TextStyle(fontSize: 18),
                               ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 2.0),
+                                child: Icon(
+                                  FontAwesomeIcons.bookmark,
+                                  size: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                "Bookmark(s)",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline4
+                                    .copyWith(
+                                      fontSize: 14,
+                                    ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
+                  MyDivider(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          injector<UserRepository>().logoutUser();
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(14.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "LOGOUT",
+                                style: TextStyle(color: Colors.red[300]),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   MyDivider(),
                 ],
@@ -119,14 +172,34 @@ class _ProfilePageState extends State<ProfilePage>
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text("Signin to avail new set of features"),
+                  Image.asset(
+                    'assets/images/auth.png',
+                    height: 150,
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Text("Unlock premium set of features"),
                   SizedBox(
                     height: 24,
                   ),
-                  PrimaryRaisedButton(
-                    icon: SimpleLineIcons.social_google,
-                    text: "Sign in with Google",
-                    onTap: _login,
+                  RaisedButton(
+                    color: Colors.white,
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          'assets/images/google_logo.png',
+                          height: 24,
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text("Sign in with Google"),
+                      ],
+                    ),
+                    onPressed: _login,
                   ),
                 ],
               ),

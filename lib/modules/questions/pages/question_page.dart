@@ -181,7 +181,7 @@ class _QuestionPageState extends State<QuestionPage> {
                   child: checkIfListIsNotEmpty(user.bookmarks) &&
                           user.bookmarks.contains(widget.item.id)
                       ? Container(
-                          height: 40,
+                          height: 44,
                           alignment: Alignment.center,
                           color: Theme.of(context).primaryColor,
                           child: Row(
@@ -205,7 +205,7 @@ class _QuestionPageState extends State<QuestionPage> {
                           ),
                         )
                       : Container(
-                          height: 40,
+                          height: 44,
                           alignment: Alignment.center,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,

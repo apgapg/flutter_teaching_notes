@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_teaching_notes/data/model/user.dart';
+import 'package:flutter_teaching_notes/data/repo/user/base/user_repository.dart';
+import 'package:flutter_teaching_notes/di/injector.dart';
+import 'package:flutter_teaching_notes/modules/bookmark/pages/bookmark_page.dart';
 import 'package:flutter_teaching_notes/modules/chapterwise/index.dart';
 import 'package:flutter_teaching_notes/modules/course/pages/course_list_page.dart';
 import 'package:flutter_teaching_notes/modules/profile/index.dart';
@@ -8,6 +12,7 @@ import 'package:flutter_teaching_notes/modules/questions/pages/questions_list_pa
 import 'package:flutter_teaching_notes/pages/contact_page.dart';
 import 'package:flutter_teaching_notes/pages/upload/data_upload_page.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
   HomePage();
@@ -80,10 +85,29 @@ class HomePageState extends State<HomePage> {
               iconSize: 20,
               onPressed: onUploadTap,
             ),
+          StreamBuilder<User>(
+              stream: injector<UserRepository>().getUserStream(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData && snapshot.data != null) {
+                  return IconButton(
+                    icon: Icon(FontAwesomeIcons.bookmark),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => BookmarkPage(),
+                        ),
+                      );
+                    },
+                    iconSize: 20,
+                  );
+                } else {
+                  return Container();
+                }
+              }),
           IconButton(
-            icon: Icon(SimpleLineIcons.info),
+            icon: Icon(Icons.info_outline),
             onPressed: onInfoTap,
-            iconSize: 20,
+            iconSize: 26,
           ),
           SizedBox(
             width: 8,
