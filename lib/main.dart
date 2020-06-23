@@ -5,6 +5,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'di/injector.dart';
 import 'pages/home/home_page.dart';
@@ -34,7 +35,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'IIT-JEE Notes by Ayush P Gupta',
-      builder: BotToastInit(),
+      builder: (context, widget) {
+        ErrorWidget.builder = (errorDetails) {
+          return buildError(context, errorDetails);
+        };
+        final botToastBuilder = BotToastInit();
+        final myWidget = botToastBuilder(context, widget);
+        return myWidget;
+      },
       navigatorObservers: [
         BotToastNavigatorObserver(),
         FirebaseAnalyticsObserver(analytics: analytics),
@@ -52,10 +60,25 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: LayoutBuilder(
-        builder: (_, constraints) {
-          return HomePage();
-        },
+      home: HomePage(),
+    );
+  }
+
+  Widget buildError(BuildContext context, FlutterErrorDetails error) {
+    return Scaffold(
+      body: Align(
+        alignment: Alignment.topCenter,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "--Error Occurred--\n\n${error.exceptionAsString()}",
+              style: const TextStyle(color: Colors.red),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teaching_notes/model/course_model.dart';
 import 'package:flutter_teaching_notes/widgets/note_card.dart';
+import 'package:flutter_teaching_notes/widgets/responsive_container.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CoursePage extends StatefulWidget {
@@ -44,7 +45,7 @@ class _CoursePageState extends State<CoursePage> {
           )
         ],
       ),
-      body: Center(
+      body: ResponsiveContainer(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: ListView.builder(

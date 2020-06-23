@@ -8,6 +8,7 @@ import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/images/my_image.dart';
 import 'package:flutter_teaching_notes/widgets/my_divider.dart';
 import 'package:flutter_teaching_notes/widgets/primary_raised_button.dart';
+import 'package:flutter_teaching_notes/widgets/responsive_container.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class QuestionPage extends StatefulWidget {
@@ -52,8 +53,7 @@ class _QuestionPageState extends State<QuestionPage> {
           )
         ],*/
       ),
-      body: Container(
-        alignment: Alignment.topCenter,
+      body: ResponsiveContainer(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

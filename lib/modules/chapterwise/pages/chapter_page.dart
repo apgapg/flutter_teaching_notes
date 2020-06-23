@@ -12,6 +12,7 @@ import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/error_widget.dart';
 import 'package:flutter_teaching_notes/widgets/loading_widget.dart';
 import 'package:flutter_teaching_notes/widgets/primary_raised_button.dart';
+import 'package:flutter_teaching_notes/widgets/responsive_container.dart';
 import 'package:flutter_teaching_notes/widgets/search/search_text_field.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -71,123 +72,129 @@ class _ChapterPageState extends State<ChapterPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.item.title ?? "NA"),
+        elevation: 2.0,
       ),
-      body: StreamBuilder<List<Question>>(
-        builder: (context, snapshot) {
-          if (snapshot.hasData && snapshot.data != null) {
-            return Column(
-              children: [
-                if (isTab(context))
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Container(
-                          child: SearchTextField(
-                            _controller,
-                            hint:
-                                'Search among ${snapshot.data.length} questions',
+      body: ResponsiveContainer(
+        child: StreamBuilder<List<Question>>(
+          builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              return Column(
+                children: [
+                  if (isTab(context))
+                    Expanded(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 8,
                           ),
-                          margin: EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 4,
-                          ),
-                        ),
-                        if (snapshot.data.isEmpty)
-                          Expanded(
-                            child: Center(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/empty.png',
-                                    height: 200,
-                                  ),
-                                  Text("No questions found"),
-                                ],
-                              ),
-                            ),
-                          )
-                        else
-                          Expanded(
-                            child: GridView.builder(
-                              gridDelegate:
-                                  SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 500,
-                                childAspectRatio: 1.4,
-                              ),
-                              scrollDirection: Axis.vertical,
-                              itemBuilder: (_, index) =>
-                                  QuestionCard(snapshot.data[index]),
-                              itemCount: snapshot.data.length,
-                            ),
-                          ),
-                      ],
-                    ),
-                  )
-                else
-                  Expanded(
-                    child: ListView(
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      children: [
-                        if (checkIfNotEmpty(widget.item.video))
-                          Column(
-                            children: [
-                              PrimaryRaisedButton(
-                                icon: SimpleLineIcons.graduation,
-                                text: "Full Video Lectures".toUpperCase(),
-                                color: Colors.green,
-                                onTap: () {},
-                              ),
-                            ],
-                          ),
-                        Container(
-                          child: SearchTextField(
-                            _controller,
-                            hint:
-                                'Search among ${snapshot.data.length} questions',
-                          ),
-                          margin: EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 4,
-                          ),
-                        ),
-                        ...snapshot.data.map(
-                          (e) => Container(
-                            child: QuestionCard(e),
-                            height: MediaQuery.of(context).size.height / 3.2,
-                          ),
-                        ),
-                        if (snapshot.data.isEmpty)
                           Container(
-                            margin: EdgeInsets.only(top: 40),
-                            child: Center(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/empty.png',
-                                    height: 100,
-                                  ),
-                                  Text("No question(s) found"),
-                                ],
+                            child: SearchTextField(
+                              _controller,
+                              hint:
+                                  'Search among ${snapshot.data.length} questions',
+                            ),
+                            margin: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 4,
+                            ),
+                          ),
+                          if (snapshot.data.isEmpty)
+                            Expanded(
+                              child: Center(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/empty.png',
+                                      height: 200,
+                                    ),
+                                    Text("No questions found"),
+                                  ],
+                                ),
+                              ),
+                            )
+                          else
+                            Expanded(
+                              child: GridView.builder(
+                                gridDelegate:
+                                    SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 500,
+                                  childAspectRatio: 1.4,
+                                ),
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (_, index) =>
+                                    QuestionCard(snapshot.data[index]),
+                                itemCount: snapshot.data.length,
                               ),
                             ),
-                          )
-                      ],
-                    ),
-                  )
-              ],
-            );
-          } else if (snapshot.hasError) {
-            return ErrorPage(snapshot.error.toString());
-          } else {
-            return LoadingPage();
-          }
-        },
-        stream: Rx.combineLatest2<QuerySnapshot, String, QuerySnapshot>(
-                _getStream(), _textSubject, (a, b) => a)
-            .transform(levelTransformer)
-            .transform(searchTransformer),
+                        ],
+                      ),
+                    )
+                  else
+                    Expanded(
+                      child: ListView(
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        children: [
+                          if (checkIfNotEmpty(widget.item.video))
+                            Column(
+                              children: [
+                                PrimaryRaisedButton(
+                                  icon: SimpleLineIcons.graduation,
+                                  text: "Full Video Lectures".toUpperCase(),
+                                  color: Colors.green,
+                                  onTap: () {},
+                                ),
+                              ],
+                            ),
+                          Container(
+                            child: SearchTextField(
+                              _controller,
+                              hint:
+                                  'Search among ${snapshot.data.length} questions',
+                            ),
+                            margin: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 4,
+                            ),
+                          ),
+                          ...snapshot.data.map(
+                            (e) => Container(
+                              child: QuestionCard(e),
+                              height: MediaQuery.of(context).size.height / 3.2,
+                            ),
+                          ),
+                          if (snapshot.data.isEmpty)
+                            Container(
+                              margin: EdgeInsets.only(top: 40),
+                              child: Center(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/empty.png',
+                                      height: 100,
+                                    ),
+                                    Text("No question(s) found"),
+                                  ],
+                                ),
+                              ),
+                            )
+                        ],
+                      ),
+                    )
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return ErrorPage(snapshot.error.toString());
+            } else {
+              return LoadingPage();
+            }
+          },
+          stream: Rx.combineLatest2<QuerySnapshot, String, QuerySnapshot>(
+                  _getStream(), _textSubject, (a, b) => a)
+              .transform(levelTransformer)
+              .transform(searchTransformer),
+        ),
       ),
     );
   }

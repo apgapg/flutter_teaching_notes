@@ -12,6 +12,7 @@ import 'package:flutter_teaching_notes/modules/questions/pages/questions_list_pa
 import 'package:flutter_teaching_notes/pages/contact_page.dart';
 import 'package:flutter_teaching_notes/pages/upload/data_upload_page.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
+import 'package:flutter_teaching_notes/widgets/responsive_container.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
@@ -120,15 +121,17 @@ class HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body: PageView(
-        controller: _controller,
-        physics: NeverScrollableScrollPhysics(),
-        children: [
-          QuestionsListPage(),
-          ChapterListPage(),
-          CourseListPage(),
-          ProfilePage(),
-        ],
+      body: ResponsiveContainer(
+        child: PageView(
+          controller: _controller,
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            QuestionsListPage(),
+            ChapterListPage(),
+            CourseListPage(),
+            ProfilePage(),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teaching_notes/widgets/responsive_container.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
@@ -11,93 +12,95 @@ class ContactPage extends StatelessWidget {
         elevation: 2.0,
         title: Text("About Me"),
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 4.0,
-          vertical: 4.0,
-        ),
-        child: Stack(
-          children: <Widget>[
-            Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Material(
-                    elevation: 8.0,
-                    shape: CircleBorder(),
-                    color: Colors.transparent,
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/avatar.png'),
-                      radius: 44.0,
+      body: ResponsiveContainer(
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 4.0,
+            vertical: 4.0,
+          ),
+          child: Stack(
+            children: <Widget>[
+              Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Material(
+                      elevation: 8.0,
+                      shape: CircleBorder(),
+                      color: Colors.transparent,
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage('assets/images/avatar.png'),
+                        radius: 44.0,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 28.0,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        "ayushpguptaapg@gmail.com",
+                    SizedBox(
+                      height: 28.0,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          "ayushpguptaapg@gmail.com",
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ],
+                      mainAxisSize: MainAxisSize.min,
+                    ),
+                    SizedBox(
+                      height: 48.0,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        CircularButton(FontAwesomeIcons.mediumM,
+                            "https://medium.com/@ayushpguptaapg"),
+                        HorizontalSpacing(),
+                        CircularButton(FontAwesomeIcons.instagram,
+                            "https://www.instagram.com/ayushpgupta/"),
+                        HorizontalSpacing(),
+                        CircularButton(FontAwesomeIcons.github,
+                            "https://github.com/apgapg"),
+                      ],
+                      mainAxisSize: MainAxisSize.min,
+                    ),
+                    SizedBox(
+                      height: 12.0,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        CircularButton(FontAwesomeIcons.facebookF,
+                            "https://www.facebook.com/ayushpgupta"),
+                        HorizontalSpacing(),
+                        CircularButton(FontAwesomeIcons.googlePlusG,
+                            "https://medium.com/@ayushpguptaapg"),
+                      ],
+                      mainAxisSize: MainAxisSize.min,
+                    ),
+                    SizedBox(
+                      height: 48.0,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        _launchURL("https://unacademy.com/user/ayushpgupta");
+                      },
+                      child: Text(
+                        "https://unacademy.com/user/ayushpgupta",
                         style: TextStyle(
+                          decoration: TextDecoration.underline,
                           color: Colors.black87,
                           fontWeight: FontWeight.w700,
                           fontSize: 20.0,
                         ),
+                        textAlign: TextAlign.center,
                       ),
-                    ],
-                    mainAxisSize: MainAxisSize.min,
-                  ),
-                  SizedBox(
-                    height: 48.0,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      CircularButton(FontAwesomeIcons.mediumM,
-                          "https://medium.com/@ayushpguptaapg"),
-                      HorizontalSpacing(),
-                      CircularButton(FontAwesomeIcons.instagram,
-                          "https://www.instagram.com/ayushpgupta/"),
-                      HorizontalSpacing(),
-                      CircularButton(
-                          FontAwesomeIcons.github, "https://github.com/apgapg"),
-                    ],
-                    mainAxisSize: MainAxisSize.min,
-                  ),
-                  SizedBox(
-                    height: 12.0,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      CircularButton(FontAwesomeIcons.facebookF,
-                          "https://www.facebook.com/ayushpgupta"),
-                      HorizontalSpacing(),
-                      CircularButton(FontAwesomeIcons.googlePlusG,
-                          "https://medium.com/@ayushpguptaapg"),
-                    ],
-                    mainAxisSize: MainAxisSize.min,
-                  ),
-                  SizedBox(
-                    height: 48.0,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      _launchURL("https://unacademy.com/user/ayushpgupta");
-                    },
-                    child: Text(
-                      "https://unacademy.com/user/ayushpgupta",
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20.0,
-                      ),
-                      textAlign: TextAlign.center,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
