@@ -176,7 +176,8 @@ class MyPrinter extends LogPrinter {
     return _levelEmojis[level];
   }
 
-  void formatAndPrint(Level level, String message, String time, String error, String stacktrace) {
+  void formatAndPrint(Level level, String message, String time, String error,
+      String stacktrace) {
     var color = _getLevelColor(level);
 
     var emoji = _getEmoji(level);
@@ -194,7 +195,10 @@ class MyPrinter extends LogPrinter {
       var errorColor = _getErrorColor(level);
       for (var line in error.split('\n')) {
         println(
-          color('$verticalLine ') + errorColor.resetForeground + errorColor(line) + errorColor.resetBackground,
+          color('$verticalLine ') +
+              errorColor.resetForeground +
+              errorColor(line) +
+              errorColor.resetBackground,
         );
       }
     }

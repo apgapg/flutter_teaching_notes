@@ -16,7 +16,6 @@ import 'package:flutter_teaching_notes/widgets/search/search_text_field.dart';
 import 'package:rxdart/rxdart.dart';
 
 class BookmarkPage extends StatefulWidget {
-
   @override
   _BookmarkPageState createState() => _BookmarkPageState();
 }
@@ -126,7 +125,6 @@ class _BookmarkPageState extends State<BookmarkPage> {
                     child: ListView(
                       padding: EdgeInsets.symmetric(vertical: 8),
                       children: [
-
                         Container(
                           child: SearchTextField(
                             _controller,

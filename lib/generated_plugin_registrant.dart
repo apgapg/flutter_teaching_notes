@@ -20,7 +20,8 @@ void registerPlugins(PluginRegistry registry) {
   FirebaseAuthWeb.registerWith(registry.registrarFor(FirebaseAuthWeb));
   FirebaseCoreWeb.registerWith(registry.registrarFor(FirebaseCoreWeb));
   GoogleSignInPlugin.registerWith(registry.registrarFor(GoogleSignInPlugin));
-  SharedPreferencesPlugin.registerWith(registry.registrarFor(SharedPreferencesPlugin));
+  SharedPreferencesPlugin.registerWith(
+      registry.registrarFor(SharedPreferencesPlugin));
   UrlLauncherPlugin.registerWith(registry.registrarFor(UrlLauncherPlugin));
   registry.registerMessageHandler();
 }

@@ -19,7 +19,8 @@ class DialogUtils {
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).accentColor),
                     strokeWidth: 1.5,
                   ),
                 ),
@@ -48,7 +49,8 @@ class DialogUtils {
       padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Center(
         child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
+          valueColor:
+              AlwaysStoppedAnimation<Color>(Theme.of(context).accentColor),
           strokeWidth: 1.5,
         ),
       ),
