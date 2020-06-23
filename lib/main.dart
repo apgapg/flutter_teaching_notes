@@ -52,7 +52,11 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: HomePage(),
+      home: LayoutBuilder(
+        builder: (_, constraints) {
+          return HomePage();
+        },
+      ),
     );
   }
 }

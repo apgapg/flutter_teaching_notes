@@ -5,11 +5,13 @@
   <title>IIT-JEE Notes by Ayush P Gupta</title>
 </head>
 <body>
-<script src="https://www.gstatic.com/firebasejs/7.15.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.15.1/firebase-firestore.js"></script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-firestore.js"></script>
 
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-analytics.js"></script>
 
 <script>
   // Your web app's Firebase configuration
@@ -20,11 +22,13 @@
     projectId: "teaching-6b309",
     storageBucket: "teaching-6b309.appspot.com",
     messagingSenderId: "456215663346",
-    appId: "1:456215663346:web:19588e2cb75a65086cb66b"
+    appId: "1:456215663346:web:19588e2cb75a65086cb66b",
+    measurementId: "G-2593FV3HFY"
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
 </script>
-  <script src="main.dart.js" type="application/javascript"></script>
+<script src="main.dart.js" type="application/javascript"></script>
 </body>
 </html>
