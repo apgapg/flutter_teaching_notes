@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -25,14 +27,18 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final analytics = FirebaseAnalytics();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'IIT-JEE Notes by Ayush P Gupta',
       builder: BotToastInit(),
-      //1. call BotToastInit
-      navigatorObservers: [BotToastNavigatorObserver()],
+      navigatorObservers: [
+        BotToastNavigatorObserver(),
+        FirebaseAnalyticsObserver(analytics: analytics),
+      ],
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         fontFamily: 'Nunito',
