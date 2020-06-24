@@ -23,7 +23,7 @@ dependencies:
   font_awesome_flutter: ^8.8.1
   firebase_storage: ^3.1.6
   cloud_firestore: ^0.13.7
-  web_scraper: ^0.0.5
+  web_scraper: ^0.0.6
   flutter_icons: ^1.1.0
   firebase_messaging: ^6.0.16
   shared_preferences: ^0.5.7+3

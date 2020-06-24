@@ -16,7 +16,8 @@ class _DataUploadPageState extends State<DataUploadPage> {
     super.initState();
     //init();
 
-    init2();
+    //init2();
+    initCourseScrap();
   }
 
   @override
@@ -26,7 +27,7 @@ class _DataUploadPageState extends State<DataUploadPage> {
         child: PrimaryRaisedButton(
           text: "Refresh",
           onTap: () {
-            init2();
+            initChapterScrap();
           },
         ),
       ),
@@ -80,11 +81,11 @@ class _DataUploadPageState extends State<DataUploadPage> {
   }
 */
 
-  void init2() async {
+  Future<void> initChapterScrap({String chapterUrl}) async {
     final level = 2;
     final subject = "Physics";
-    final topic = "Waves Motion";
-    final rawUrl =
+    final topic = "Simple Harmonic Motion";
+    final rawUrl = chapterUrl ??
         'https://unacademy.com/lesson/quality-numerical-009-interference-of-sound-waves/2WAY15Y2';
 
     //
@@ -115,11 +116,6 @@ class _DataUploadPageState extends State<DataUploadPage> {
 
       final video = rawUrl;
 
-      //
-
-      //
-      //
-      //
       final firestore = Firestore.instance;
 
       final doc = await firestore
@@ -144,7 +140,8 @@ class _DataUploadPageState extends State<DataUploadPage> {
             'solutions': [
               {
                 'images': [
-                  for (int i = 3; i < 12; i++)
+                  //for (int i = 3; i < 12; i++)
+                  for (int i = 0; i < 12; i++)
                     'https://edge.uacdn.net/$id/images/$i.jpeg'
                 ],
                 'video': video,
@@ -156,6 +153,46 @@ class _DataUploadPageState extends State<DataUploadPage> {
         );
         ToastUtils.showToast("Added $id successfully!");
       }
+    }
+  }
+
+  void initCourseScrap() async {
+    final rawUrl =
+        'https://unacademy.com/course/simple-harmonic-motion-for-iit-jee/8U80RYEN';
+
+    //
+    //
+
+    final webScraper = WebScraper('https://unacademy.com');
+    if (await webScraper
+        .loadWebPage(rawUrl.replaceAll(r'https://unacademy.com', ''))) {
+      List<Map<String, dynamic>> elements = webScraper.getElement(
+          'div.Week__Wrapper-sc-1qeje5a-2 > a.Link__StyledAnchor-sc-1n9f3wx-0',
+          ['href']);
+      final listUrls = <String>[];
+      elements.forEach((element) {
+        final url = element['attributes']['href'];
+        print(url);
+        if (url.toString().contains('quality-numerical')) listUrls.add(url);
+      });
+      listUrls.forEach((element) async {
+        await initChapterScrap(chapterUrl: 'https://unacademy.com' + element);
+      });
+
+      /*  final rawtitle =
+          elements[0]['title'].toString().replaceAll(r'Quality Numerical ', '');
+
+      List<Map<String, dynamic>> elements2 = webScraper
+          .getElement('div.FreeLessonFrame__InnerDiv-ef4326-2', ['data-url']);
+      final uuid = elements2[0]['attributes']['data-url']
+          .toString()
+          .replaceAll(
+              r'https://player.uacdn.net/lesson-raw/player/v585/player-min.html?uuid=',
+              '')
+          .replaceAll(r'&use_imgix=1', '');
+
+*/
+
     }
   }
 }

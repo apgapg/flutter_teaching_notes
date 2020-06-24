@@ -134,6 +134,11 @@ class _QuestionPageState extends State<QuestionPage> {
                           Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
+                              if (isDebugMode)
+                                Text(
+                                  image,
+                                  style: TextStyle(fontSize: 12),
+                                ),
                               MyImage(image),
                               MyDivider(),
                             ],
