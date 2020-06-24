@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_teaching_notes/data/model/user.dart';
@@ -63,7 +64,10 @@ class _QuestionPageState extends State<QuestionPage> {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      MyImage(image),
+                      MyImage(
+                        image,
+                        tapEnabled: true,
+                      ),
                       MyDivider(),
                     ],
                   ),
@@ -139,7 +143,10 @@ class _QuestionPageState extends State<QuestionPage> {
                                   image,
                                   style: TextStyle(fontSize: 12),
                                 ),
-                              MyImage(image),
+                              MyImage(
+                                image,
+                                tapEnabled: true,
+                              ),
                               MyDivider(),
                             ],
                           ),
