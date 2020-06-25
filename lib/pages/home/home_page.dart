@@ -14,6 +14,7 @@ import 'package:flutter_teaching_notes/pages/upload/data_upload_page.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/responsive_container.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   HomePage();
@@ -122,14 +123,51 @@ class HomePageState extends State<HomePage> {
         ],
       ),
       body: ResponsiveContainer(
-        child: PageView(
-          controller: _controller,
-          physics: NeverScrollableScrollPhysics(),
+        child: Column(
           children: [
-            QuestionsListPage(),
-            ChapterListPage(),
-            CourseListPage(),
-            ProfilePage(),
+            Expanded(
+              child: PageView(
+                controller: _controller,
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  QuestionsListPage(),
+                  ChapterListPage(),
+                  CourseListPage(),
+                  ProfilePage(),
+                ],
+              ),
+            ),
+            if (kIsWeb)
+              GestureDetector(
+                onTap: () {
+                  launch('https://play.google.com/store/apps/'
+                      'details?id=com.coddu.flutter.iitjee.notes');
+                },
+                child: Container(
+                  height: 36,
+                  alignment: Alignment.center,
+                  color: Theme.of(context).primaryColor,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.phone_android,
+                        size: 16,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        "OPEN IN APP",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
           ],
         ),
       ),
