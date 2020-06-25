@@ -20,15 +20,13 @@ class MyImage extends StatelessWidget {
         ? GestureDetector(
             onTap: !tapEnabled
                 ? null
-                : kIsWeb
-                    ? null
-                    : () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => ImagePreviewPage(url: url),
-                          ),
-                        );
-                      },
+                : () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => ImagePreviewPage(url: url),
+                      ),
+                    );
+                  },
             child: CachedNetworkImage(
               fit: BoxFit.contain,
               imageUrl: url,
