@@ -7,6 +7,7 @@ import 'package:flutter_teaching_notes/data/repo/user/google_login_repository.da
 import 'package:flutter_teaching_notes/di/injector.dart';
 import 'package:flutter_teaching_notes/modules/bookmark/index.dart';
 import 'package:flutter_teaching_notes/modules/profile/widgets/profile_header.dart';
+import 'package:flutter_teaching_notes/modules/profile/widgets/review_card.dart';
 import 'package:flutter_teaching_notes/utils/dialog_utils.dart';
 import 'package:flutter_teaching_notes/utils/toast_utils.dart';
 import 'package:flutter_teaching_notes/widgets/error_widget.dart';
@@ -137,6 +138,8 @@ class _ProfilePageState extends State<ProfilePage>
                       ),
                     ],
                   ),
+                  MyDivider(),
+                  ReviewCard(),
                   MyDivider(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
