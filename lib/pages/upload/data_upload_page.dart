@@ -1,6 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_teaching_notes/modules/questions/models/question_model.dart';
+import 'package:flutter_teaching_notes/utils/log_utils.dart';
 import 'package:flutter_teaching_notes/utils/toast_utils.dart';
+import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/primary_raised_button.dart';
 import 'package:web_scraper/web_scraper.dart';
 
@@ -14,10 +19,10 @@ class _DataUploadPageState extends State<DataUploadPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    //init();
-
     //init2();
-    initCourseScrap();
+    //initCoverImageCopy();
+    //initCourseScrap();
+    initSolutionsImageCopy();
   }
 
   @override
@@ -81,12 +86,83 @@ class _DataUploadPageState extends State<DataUploadPage> {
   }
 */
 
+  Future<void> initCoverImageCopy() async {
+    final firestore = Firestore.instance;
+
+    final doc = await firestore.collection('numericals').getDocuments();
+
+    doc.documents.forEach((element) async {
+      final q = Question.fromJson(element.data);
+      logger.d(element.documentID);
+      logger.d(q.title);
+      final newImages = <String>[];
+      for (final image in q.images) {
+        final rawfile = await DefaultCacheManager().getSingleFile(image);
+
+        final StorageReference storageReference = FirebaseStorage().ref().child(
+            '${q.subject}/${q.topic}/${element.documentID}/question_${q.images.indexOf(image)}.jpeg');
+        final uploadTask = storageReference.putFile(rawfile);
+        await uploadTask.onComplete;
+        logger.d('File Uploaded');
+        final imageurl = await storageReference.getDownloadURL();
+        newImages.add(imageurl);
+      }
+      if (checkIfListIsNotEmpty(newImages)) {
+        await element.reference.updateData({'images': newImages});
+        logger.d("Updated ${element.documentID}");
+      } else {
+        throw Exception("newImages cannot be empty");
+      }
+    });
+  }
+
+  Future<void> initSolutionsImageCopy() async {
+    final firestore = Firestore.instance;
+
+    final doc = await firestore.collection('numericals').getDocuments();
+
+    doc.documents.sublist(5, 20).forEach((element) async {
+      final q = Question.fromJson(element.data);
+      logger.d(element.documentID);
+      logger.d(q.title);
+      if (q.solutions?.elementAt(0)?.images?.isNotEmpty ?? false) {
+        final newImages = <String>[];
+        for (final image in q.solutions.elementAt(0).images) {
+          try {
+            final rawfile = await DefaultCacheManager().getSingleFile(image);
+            final StorageReference storageReference = FirebaseStorage().ref().child(
+                '${q.subject}/${q.topic}/${element.documentID}/solution_${q.solutions.elementAt(0).images.indexOf(image)}.jpeg');
+            final uploadTask = storageReference.putFile(rawfile);
+            await uploadTask.onComplete;
+            logger.d('File Uploaded');
+            final imageurl = await storageReference.getDownloadURL();
+            newImages.add(imageurl);
+          } catch (e, s) {
+            logger.e(e, s);
+          }
+        }
+        if (checkIfListIsNotEmpty(newImages)) {
+          logger.d(newImages);
+          final soln = q.solutions[0];
+          final newSoln = soln.copyWith(images: newImages);
+          await element.reference.updateData({
+            'solutions': [newSoln.toJson()]
+          });
+          logger.d("Updated ${element.documentID}");
+        } else {
+          throw Exception("newImages cannot be empty");
+        }
+      } else {
+        return;
+      }
+    });
+  }
+
   Future<void> initChapterScrap({String chapterUrl}) async {
     final level = 2;
     final subject = "Physics";
-    final topic = "Simple Harmonic Motion";
-    final rawUrl = chapterUrl ??
-        'https://unacademy.com/lesson/quality-numerical-009-interference-of-sound-waves/2WAY15Y2';
+    final topic = "Projectile Motion";
+    final rawUrl = chapterUrl;
 
     //
     //
@@ -158,7 +234,7 @@ class _DataUploadPageState extends State<DataUploadPage> {
 
   void initCourseScrap() async {
     final rawUrl =
-        'https://unacademy.com/course/simple-harmonic-motion-for-iit-jee/8U80RYEN';
+        'https://unacademy.com/course/projectile-motion-for-iit-jee/AF1MBSF6';
 
     //
     //

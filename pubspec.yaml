@@ -38,6 +38,8 @@ dependencies:
   firebase_analytics: ^5.0.15
   photo_view: ^0.9.2
   share: ^0.6.4+3
+  flutter_cache_manager: ^1.4.1
+
 
 dev_dependencies:
   flutter_test:
