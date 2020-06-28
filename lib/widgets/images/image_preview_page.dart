@@ -15,7 +15,7 @@ class ImagePreviewPage extends StatelessWidget {
         imageProvider: CachedNetworkImageProvider(
           url,
         ),
-        initialScale: 1,
+        initialScale: 1.0,
       ),
     );
   }
