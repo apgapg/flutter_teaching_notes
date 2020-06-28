@@ -3,12 +3,12 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "main.dart.js": "5831d19f6b2c1e60b129899bb9611458",
+  "main.dart.js": "557c04d5f49cd93fe128e3835f53cf22",
 "favicon.png": "0b08facae49ae6ae314b263c75841a79",
 "manifest.json": "19879b99add80d3ba69c0c5de8c72874",
 "assets/fonts/MaterialIcons-Regular.ttf": "56d3ffdef7a25659eab6a68a3fbfaf16",
 "assets/FontManifest.json": "22dc7fd9e293da2dfb71c3df703c6a67",
-"assets/NOTICES": "57a79f8b338e9c895f4dd1042f3489fe",
+"assets/NOTICES": "fbf90c172e67c93c37482d8be4330060",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "115e937bb829a890521f72d2e664b632",
 "assets/packages/flutter_icons/fonts/MaterialCommunityIcons.ttf": "3c851d60ad5ef3f2fe43ebd263490d78",
 "assets/packages/flutter_icons/fonts/MaterialIcons.ttf": "a37b0c01c0baf1888ca812cc0508f6e2",
@@ -36,8 +36,9 @@ const RESOURCES = {
 "assets/assets/images/logo.png": "ccae26cc4ee5770b0f6aa882e37dc323",
 "assets/assets/images/write.jpg": "1d1b37642572f005c9649bbd5a7343d3",
 "assets/assets/images/google_logo.png": "138e8e7c1b7cbaf2aac66e76c83fd487",
+"assets/assets/images/review.png": "613db31016429e96c23ae16e34904764",
 "assets/assets/images/empty.png": "b897f308e62e3daaeb251308a09a95b9",
-"assets/AssetManifest.json": "f5ceb875f4f0b51fbf8dc736d96a5e7b",
+"assets/AssetManifest.json": "6ed2b1f4ba60dad567bede023c7925fb",
 "icons/Icon-512.png": "dc093dab78690cb4be58e3bddcf7e719",
 "icons/Icon-192.png": "ccae26cc4ee5770b0f6aa882e37dc323",
 "index.html": "be3ef3d352e6e338ae169cf9f54a5a38",
@@ -155,7 +156,7 @@ self.addEventListener("fetch", (event) => {
 self.addEventListener('message', (event) => {
   // SkipWaiting can be used to immediately activate a waiting service worker.
   // This will also require a page refresh triggered by the main worker.
-  if (event.message == 'skipWaiting') {
+  if (event.data == 'skipWaiting') {
     return self.skipWaiting();
   }
 
