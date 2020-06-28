@@ -93,10 +93,15 @@ class HomePageState extends State<HomePage> {
             child: IconButton(
               icon: Icon(Icons.share),
               onPressed: () {
-                Share.share(
-                    'https://play.google.com/store/apps/'
-                    'details?id=com.coddu.flutter.iitjee.notes',
-                    subject: "Share App Link");
+                if (kIsWeb) {
+                  launch('https://play.google.com/store/apps/'
+                      'details?id=com.coddu.flutter.iitjee.notes');
+                } else {
+                  Share.share(
+                      'https://play.google.com/store/apps/'
+                      'details?id=com.coddu.flutter.iitjee.notes',
+                      subject: "Share App Link");
+                }
               },
               iconSize: 24,
             ),
@@ -214,17 +219,16 @@ class HomePageState extends State<HomePage> {
             icon: Icon(Octicons.book),
             title: Text("Notes"),
           ),
-          if (!kIsWeb)
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Icon(
-                  SimpleLineIcons.user,
-                  size: 20,
-                ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Icon(
+                SimpleLineIcons.user,
+                size: 20,
               ),
-              title: Text("Profile"),
             ),
+            title: Text("Profile"),
+          ),
         ],
       ),
     );
