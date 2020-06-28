@@ -14,6 +14,7 @@ import 'package:flutter_teaching_notes/pages/upload/data_upload_page.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/responsive_container.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -87,6 +88,19 @@ class HomePageState extends State<HomePage> {
               iconSize: 20,
               onPressed: onUploadTap,
             ),
+          Tooltip(
+            message: "Share App",
+            child: IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () {
+                Share.share(
+                    'https://play.google.com/store/apps/'
+                    'details?id=com.coddu.flutter.iitjee.notes',
+                    subject: "Share App Link");
+              },
+              iconSize: 24,
+            ),
+          ),
           StreamBuilder<User>(
               stream: injector<UserRepository>().getUserStream(),
               builder: (context, snapshot) {

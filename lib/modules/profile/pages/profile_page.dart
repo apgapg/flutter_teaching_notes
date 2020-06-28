@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_teaching_notes/data/model/user.dart';
 import 'package:flutter_teaching_notes/data/repo/user/base/user_repository.dart';
 import 'package:flutter_teaching_notes/data/repo/user/google_login_repository.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_teaching_notes/widgets/loading_widget.dart';
 import 'package:flutter_teaching_notes/widgets/my_divider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:share/share.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -140,6 +142,47 @@ class _ProfilePageState extends State<ProfilePage>
                   ),
                   MyDivider(),
                   ReviewCard(),
+                  MyDivider(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Share.share(
+                              'https://play.google.com/store/apps/'
+                              'details?id=com.coddu.flutter.iitjee.notes',
+                              subject: "Share App Link");
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 4.0),
+                                child: Icon(
+                                  SimpleLineIcons.share,
+                                  size: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                "Share App with Others",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline4
+                                    .copyWith(
+                                      fontSize: 14,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   MyDivider(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
