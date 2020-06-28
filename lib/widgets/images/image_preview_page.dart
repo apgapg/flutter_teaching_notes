@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
@@ -15,7 +16,7 @@ class ImagePreviewPage extends StatelessWidget {
         imageProvider: CachedNetworkImageProvider(
           url,
         ),
-        initialScale: 1.0,
+        initialScale: kIsWeb ? 1.0 : null,
       ),
     );
   }
