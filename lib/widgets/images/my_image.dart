@@ -16,29 +16,29 @@ class MyImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return !kIsWeb
-        ? GestureDetector(
-            onTap: !tapEnabled
-                ? null
-                : () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => ImagePreviewPage(url: url),
-                      ),
-                    );
-                  },
-            child: CachedNetworkImage(
+    return GestureDetector(
+      onTap: !tapEnabled
+          ? null
+          : () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => ImagePreviewPage(url: url),
+                ),
+              );
+            },
+      child: !kIsWeb
+          ? CachedNetworkImage(
               fit: BoxFit.contain,
               imageUrl: url,
               placeholder: (context, url) => PlaceholderImage(),
               errorWidget: (context, url, error) => SizedBox(
                 height: 0,
               ),
+            )
+          : Image.network(
+              url,
+              fit: BoxFit.contain,
             ),
-          )
-        : Image.network(
-            url,
-            fit: BoxFit.contain,
-          );
+    );
   }
 }
