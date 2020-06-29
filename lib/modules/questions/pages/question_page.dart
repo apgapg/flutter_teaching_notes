@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -5,6 +8,7 @@ import 'package:flutter_teaching_notes/data/model/user.dart';
 import 'package:flutter_teaching_notes/data/repo/user/base/user_repository.dart';
 import 'package:flutter_teaching_notes/di/injector.dart';
 import 'package:flutter_teaching_notes/modules/questions/models/question_model.dart';
+import 'package:flutter_teaching_notes/utils/toast_utils.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/images/my_image.dart';
 import 'package:flutter_teaching_notes/widgets/my_divider.dart';
@@ -29,9 +33,37 @@ class _QuestionPageState extends State<QuestionPage> {
 
   bool _showSolution = false;
 
+  Question item;
+
+  StreamSubscription<DocumentSnapshot> subs;
+
   @override
   void initState() {
     super.initState();
+    item = widget.item;
+    if (widget.item.id != null) {
+      subs = injector<Firestore>()
+          .document('numericals/${item.id}')
+          .snapshots()
+          .listen((event) {
+        if (event?.data != null) {
+          if (mounted) {
+            setState(() {
+              item =
+                  Question.fromJson(event.data).copyWith(id: event.documentID);
+            });
+          }
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    if (subs != null) {
+      subs.cancel();
+    }
+    super.dispose();
   }
 
   @override
@@ -43,7 +75,7 @@ class _QuestionPageState extends State<QuestionPage> {
 
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.item?.title ?? "NA"),
+        title: Text(item?.title ?? "NA"),
         /* actions: <Widget>[
           Tooltip(
             message: "Download PDF",
@@ -59,8 +91,8 @@ class _QuestionPageState extends State<QuestionPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (checkIfListIsNotEmpty(widget.item.images))
-                for (String image in widget.item.images)
+              if (checkIfListIsNotEmpty(item.images))
+                for (String image in item.images)
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -71,7 +103,7 @@ class _QuestionPageState extends State<QuestionPage> {
                       MyDivider(),
                     ],
                   ),
-              if (checkIfListIsNotEmpty(widget.item.solutions))
+              if (checkIfListIsNotEmpty(item.solutions))
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 16),
                   child: PrimaryRaisedButton(
@@ -113,8 +145,8 @@ class _QuestionPageState extends State<QuestionPage> {
                     ),
                   ],
                 ),
-              if (_showSolution && checkIfListIsNotEmpty(widget.item.solutions))
-                for (final soln in widget.item.solutions)
+              if (_showSolution && checkIfListIsNotEmpty(item.solutions))
+                for (final soln in item.solutions)
                   if (checkIfListIsNotEmpty(soln.images))
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -143,17 +175,24 @@ class _QuestionPageState extends State<QuestionPage> {
                                   image,
                                   style: TextStyle(fontSize: 12),
                                 ),
-                              MyImage(
-                                image,
-                                tapEnabled: true,
+                              GestureDetector(
+                                onLongPress:
+                                    isDebugMode && checkIfNotEmpty(item.id)
+                                        ? () async {
+                                            await removeImage(soln, image);
+                                          }
+                                        : null,
+                                child: MyImage(
+                                  image,
+                                  tapEnabled: true,
+                                ),
                               ),
                               MyDivider(),
                             ],
                           ),
                       ],
                     ),
-              if (!_showSolution &&
-                  checkIfListIsNotEmpty(widget.item.solutions))
+              if (!_showSolution && checkIfListIsNotEmpty(item.solutions))
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -184,14 +223,14 @@ class _QuestionPageState extends State<QuestionPage> {
                 child: InkWell(
                   onTap: () {
                     if (checkIfListIsNotEmpty(user.bookmarks) &&
-                        user.bookmarks.contains(widget.item.id)) {
-                      injector<UserRepository>().removeBookmark(widget.item.id);
+                        user.bookmarks.contains(item.id)) {
+                      injector<UserRepository>().removeBookmark(item.id);
                     } else {
-                      injector<UserRepository>().saveBookmark(widget.item.id);
+                      injector<UserRepository>().saveBookmark(item.id);
                     }
                   },
                   child: checkIfListIsNotEmpty(user.bookmarks) &&
-                          user.bookmarks.contains(widget.item.id)
+                          user.bookmarks.contains(item.id)
                       ? Container(
                           height: 48,
                           alignment: Alignment.center,
@@ -259,5 +298,30 @@ class _QuestionPageState extends State<QuestionPage> {
             }
           }),
     );
+  }
+
+  Future<void> removeImage(Solution soln, String image) async {
+    await showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+              title: Text("Remove image?"),
+              content: Text("$image"),
+              actions: [
+                FlatButton(
+                  child: Text("YES"),
+                  onPressed: () async {
+                    final newSoln = soln.images;
+                    newSoln.remove(image);
+                    injector<Firestore>()
+                        .document('numericals/${item.id}')
+                        .updateData({
+                      'solutions': [soln.toJson()]
+                    });
+                    ToastUtils.show("Removed");
+                    Navigator.pop(context);
+                  },
+                )
+              ],
+            ));
   }
 }

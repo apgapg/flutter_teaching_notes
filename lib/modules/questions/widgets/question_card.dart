@@ -32,7 +32,7 @@ class QuestionCard extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         elevation: 2.0,
         child: InkWell(
-          onTap: onCourseTap,
+          onTap: onTap,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -182,7 +182,7 @@ class QuestionCard extends StatelessWidget {
     );
   }
 
-  void onCourseTap() {
+  void onTap() {
     FocusScope.of(context).requestFocus(FocusNode());
     Navigator.of(context).push(
       MaterialPageRoute(
