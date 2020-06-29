@@ -62,6 +62,15 @@ class _ProfilePageState extends State<ProfilePage>
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    Container(
+                      height: 150,
+                      child: Image.asset('assets/images/share.png'),
+                    ),
+                    ListTile(
+                      title: Text("Share App with Friends"),
+                      subtitle:
+                          Text("Let your freinds know about this awesome app."),
+                    ),
                     InkWell(
                       onTap: () {
                         if (kIsWeb) {
@@ -90,7 +99,7 @@ class _ProfilePageState extends State<ProfilePage>
                               width: 8,
                             ),
                             Text(
-                              "Share App with Others",
+                              "Share App Link",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline4
@@ -207,6 +216,15 @@ class _ProfilePageState extends State<ProfilePage>
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
+                          Container(
+                            height: 150,
+                            child: Image.asset('assets/images/share.png'),
+                          ),
+                          ListTile(
+                            title: Text("Share App with Friends"),
+                            subtitle: Text(
+                                "Let your freinds know about this awesome app."),
+                          ),
                           InkWell(
                             onTap: () {
                               if (kIsWeb) {
@@ -235,7 +253,7 @@ class _ProfilePageState extends State<ProfilePage>
                                     width: 8,
                                   ),
                                   Text(
-                                    "Share App with Others",
+                                    "Share App Link",
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline4

@@ -10,18 +10,12 @@ class ReviewCard extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 56,
-          ),
+          height: 150,
           child: Image.asset('assets/images/review.png'),
         ),
         ListTile(
           title: Text(
             "Help us to improve!",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
           ),
           subtitle: Text(
             "Your feedback matters. Let us know what you think about our app "

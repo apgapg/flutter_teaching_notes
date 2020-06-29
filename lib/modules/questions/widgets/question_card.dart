@@ -138,7 +138,7 @@ class QuestionCard extends StatelessWidget {
                           child: Text(
                             item.title,
                             style: TextStyle(
-                              fontSize: 18.0,
+                              fontSize: 16.0,
                               fontWeight: FontWeight.w700,
                               color: _isbookmarked()
                                   ? Theme.of(context).primaryColor
