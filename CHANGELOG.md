@@ -1,3 +1,14 @@
+## [3.8.0] 29/06/20
+- Fix image preview initial scale
+- Enable profile and fix share url on web
+- Fix image preview for mobile
+- Add iitjeenotes subdomain
+- Change fonts to notoSans
+- Reduce font size of titles
+- Add share image
+- Add dark mode
+- Sort by level asc in chapter wise
+
 ## [3.7.0] 28/06/20
 - Fix web app not working due to firebase error
 - Limit width to 900
