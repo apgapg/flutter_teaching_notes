@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "iitjeenotes",
     "public": "build/web",
     "ignore": [
       "firebase.json",
