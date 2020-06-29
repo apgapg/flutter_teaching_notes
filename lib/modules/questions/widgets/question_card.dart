@@ -53,7 +53,7 @@ class QuestionCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4),
                           ),
                           padding:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                              EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                           child: Text(
                             item.subject,
                             style: TextStyle(fontSize: 12, color: Colors.white),
@@ -70,13 +70,14 @@ class QuestionCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4),
                           ),
                           padding: EdgeInsets.symmetric(
-                            horizontal: 8,
+                            horizontal: 4,
                             vertical: 2,
                           ),
                           child: Text(
                             item.topic,
                             style: TextStyle(
                               fontSize: 12,
+                              color: Colors.black87,
                             ),
                           ),
                         ),
@@ -100,13 +101,13 @@ class QuestionCard extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(
+                              /*Icon(
                                 Icons.filter_list,
                                 size: 14,
                                 color: Colors.white,
-                              ),
+                              ),*/
                               Text(
-                                '${item.level}',
+                                'Level ${item.level}',
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.white,
@@ -141,7 +142,10 @@ class QuestionCard extends StatelessWidget {
                               fontSize: 16.0,
                               fontWeight: FontWeight.w700,
                               color: _isbookmarked()
-                                  ? Theme.of(context).primaryColor
+                                  ? MediaQuery.of(context).platformBrightness ==
+                                          Brightness.light
+                                      ? Theme.of(context).primaryColor
+                                      : null
                                   : null,
                             ),
                           ),
@@ -149,7 +153,10 @@ class QuestionCard extends StatelessWidget {
                         if (_isbookmarked())
                           Icon(
                             Icons.bookmark,
-                            color: Theme.of(context).primaryColor,
+                            color: MediaQuery.of(context).platformBrightness ==
+                                    Brightness.light
+                                ? Theme.of(context).primaryColor
+                                : null,
                             size: 20,
                           ),
                       ],

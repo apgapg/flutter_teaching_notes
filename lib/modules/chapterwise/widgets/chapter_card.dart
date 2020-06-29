@@ -53,7 +53,7 @@ class ChapterCard extends StatelessWidget {
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(4),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                   child: Text(
                     item.subject,
                     style: TextStyle(fontSize: 12, color: Colors.white),

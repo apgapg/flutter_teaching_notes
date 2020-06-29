@@ -31,9 +31,6 @@ class _CoursePageState extends State<CoursePage> {
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 2.0,
-
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.item?.name ?? "NA"),
         actions: <Widget>[
           Tooltip(

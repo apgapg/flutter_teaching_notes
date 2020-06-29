@@ -58,11 +58,31 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.notoSansTextTheme(
           Theme.of(context).textTheme,
         ),
+        bottomAppBarColor: Colors.white,
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          unselectedIconTheme: IconThemeData(
+            color: Colors.black87,
+          ),
+          unselectedItemColor: Colors.black87,
+        ),
         appBarTheme: AppBarTheme(
           color: Colors.white,
           textTheme: Theme.of(context).textTheme,
           iconTheme: IconThemeData(
             color: Colors.blueGrey[900],
+            size: 20,
+          ),
+        ),
+      ),
+      darkTheme: ThemeData(
+        primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.notoSansTextTheme(
+          ThemeData.dark().textTheme,
+        ),
+        brightness: Brightness.dark,
+        appBarTheme: AppBarTheme(
+          textTheme: ThemeData.dark().textTheme,
+          iconTheme: IconThemeData(
             size: 20,
           ),
         ),

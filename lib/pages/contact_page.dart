@@ -15,7 +15,7 @@ class ContactPage extends StatelessWidget {
       body: ResponsiveContainer(
         child: Container(
           padding: EdgeInsets.symmetric(
-            horizontal: 4.0,
+            horizontal: 16.0,
             vertical: 4.0,
           ),
           child: Stack(
@@ -41,9 +41,8 @@ class ContactPage extends StatelessWidget {
                         Text(
                           "ayushpguptaapg@gmail.com",
                           style: TextStyle(
-                            color: Colors.black87,
                             fontWeight: FontWeight.w700,
-                            fontSize: 20.0,
+                            fontSize: 16.0,
                           ),
                         ),
                       ],
@@ -89,9 +88,8 @@ class ContactPage extends StatelessWidget {
                         "https://unacademy.com/user/ayushpgupta",
                         style: TextStyle(
                           decoration: TextDecoration.underline,
-                          color: Colors.black87,
                           fontWeight: FontWeight.w700,
-                          fontSize: 20.0,
+                          fontSize: 16.0,
                         ),
                         textAlign: TextAlign.center,
                       ),

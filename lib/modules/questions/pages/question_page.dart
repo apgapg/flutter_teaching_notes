@@ -193,7 +193,7 @@ class _QuestionPageState extends State<QuestionPage> {
                   child: checkIfListIsNotEmpty(user.bookmarks) &&
                           user.bookmarks.contains(widget.item.id)
                       ? Container(
-                          height: 44,
+                          height: 48,
                           alignment: Alignment.center,
                           color: Theme.of(context).primaryColor,
                           child: Row(
@@ -211,13 +211,14 @@ class _QuestionPageState extends State<QuestionPage> {
                                 "Added to Bookmarks",
                                 style: TextStyle(
                                   color: Colors.white,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
                           ),
                         )
                       : Container(
-                          height: 44,
+                          height: 48,
                           alignment: Alignment.center,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -225,7 +226,11 @@ class _QuestionPageState extends State<QuestionPage> {
                               Icon(
                                 Icons.bookmark_border,
                                 size: 20,
-                                color: Theme.of(context).primaryColor,
+                                color:
+                                    MediaQuery.of(context).platformBrightness ==
+                                            Brightness.light
+                                        ? Theme.of(context).primaryColor
+                                        : null,
                               ),
                               SizedBox(
                                 width: 8,
@@ -233,7 +238,12 @@ class _QuestionPageState extends State<QuestionPage> {
                               Text(
                                 "Add to Bookmarks",
                                 style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
+                                  color: MediaQuery.of(context)
+                                              .platformBrightness ==
+                                          Brightness.light
+                                      ? Theme.of(context).primaryColor
+                                      : null,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],

@@ -115,8 +115,11 @@ class _QuestionsListPageState extends State<QuestionsListPage>
                             ),
                             Spacer(),
                             PopupMenuButton(
-                              onSelected: (value) =>
-                                  setState(() => _selectedLevel = value),
+                              onSelected: (value) {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                setState(() => _selectedLevel = value);
+                              },
                               itemBuilder: (_) => [
                                 MyPopupMenuItem(
                                   checked: _selectedLevel == 0,

@@ -22,7 +22,7 @@ class _DataUploadPageState extends State<DataUploadPage> {
     //init2();
     //initCoverImageCopy();
     //initCourseScrap();
-    initSolutionsImageCopy();
+    //initSolutionsImageCopy();
   }
 
   @override
@@ -32,7 +32,7 @@ class _DataUploadPageState extends State<DataUploadPage> {
         child: PrimaryRaisedButton(
           text: "Refresh",
           onTap: () {
-            initChapterScrap();
+            // initChapterScrap();
           },
         ),
       ),
@@ -121,7 +121,8 @@ class _DataUploadPageState extends State<DataUploadPage> {
 
     final doc = await firestore.collection('numericals').getDocuments();
 
-    doc.documents.sublist(5, 20).forEach((element) async {
+    doc.documents.sublist(115, 126).forEach((element) async {
+      await Future.delayed(Duration(milliseconds: 500));
       final q = Question.fromJson(element.data);
       logger.d(element.documentID);
       logger.d(q.title);

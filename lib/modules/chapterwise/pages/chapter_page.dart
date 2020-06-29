@@ -39,7 +39,7 @@ class _ChapterPageState extends State<ChapterPage> {
           var list = query.documents
               .map((document) => Question.fromJson(document.data))
               .toList();
-          list.sort((a, b) => (b.createdAt ?? 0).compareTo(a.createdAt ?? 0));
+          list.sort((a, b) => (a.level ?? 0).compareTo(b.level ?? 0));
           return sink.add(list);
         }
       });

@@ -29,6 +29,7 @@ class _ChapterListPageState extends State<ChapterListPage>
             var list = query.documents
                 .map((document) => Chapter.fromJson(document.data))
                 .toList();
+            list.sort((a, b) => a.title.compareTo(b.title));
             return sink.add(list);
           }
         },

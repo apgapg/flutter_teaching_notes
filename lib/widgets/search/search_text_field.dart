@@ -12,6 +12,7 @@ class SearchTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      autofocus: false,
       controller: controller,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(8),
