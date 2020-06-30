@@ -10,7 +10,13 @@ class ImagePreviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(
+        invertColors:
+            MediaQuery.of(context).platformBrightness == Brightness.dark
+                ? true
+                : false,
+      ),
       child: PhotoView(
         heroAttributes: PhotoViewHeroAttributes(tag: url),
         imageProvider: CachedNetworkImageProvider(

@@ -27,12 +27,20 @@ class MyImage extends StatelessWidget {
               );
             },
       child: !kIsWeb
-          ? CachedNetworkImage(
-              fit: BoxFit.contain,
-              imageUrl: url,
-              placeholder: (context, url) => PlaceholderImage(),
-              errorWidget: (context, url, error) => SizedBox(
-                height: 0,
+          ? MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                invertColors:
+                    MediaQuery.of(context).platformBrightness == Brightness.dark
+                        ? true
+                        : false,
+              ),
+              child: CachedNetworkImage(
+                fit: BoxFit.contain,
+                imageUrl: url,
+                placeholder: (context, url) => PlaceholderImage(),
+                errorWidget: (context, url, error) => SizedBox(
+                  height: 0,
+                ),
               ),
             )
           : Image.network(

@@ -327,7 +327,12 @@ class _ProfilePageState extends State<ProfilePage>
                             SizedBox(
                               width: 12,
                             ),
-                            Text("Sign in with Google"),
+                            Text(
+                              "Sign in with Google",
+                              style: TextStyle(
+                                color: Colors.black87,
+                              ),
+                            ),
                           ],
                         ),
                         onPressed: _login,
