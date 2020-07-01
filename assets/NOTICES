@@ -4791,6 +4791,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 cloud_firestore_web
 firebase_analytics
+firebase_analytics_web
 firebase_auth
 firebase_auth_platform_interface
 firebase_auth_web
