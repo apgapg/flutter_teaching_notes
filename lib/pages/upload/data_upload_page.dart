@@ -26,7 +26,7 @@ class _DataUploadPageState extends State<DataUploadPage> {
     //initCourseScrap();
     //initSolutionsImageCopy();
     //initImageUrlsOfChapter(chapterId: "M5KOIVB52U4RBO9YVCMY");
-    initCourseImagesScrap();
+    //initCourseImagesScrap();
   }
 
   @override

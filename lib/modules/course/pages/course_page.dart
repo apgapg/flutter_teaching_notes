@@ -1,5 +1,11 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_teaching_notes/di/injector.dart';
 import 'package:flutter_teaching_notes/model/course_model.dart';
+import 'package:flutter_teaching_notes/utils/toast_utils.dart';
+import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/note_card.dart';
 import 'package:flutter_teaching_notes/widgets/responsive_container.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -19,10 +25,40 @@ class _CoursePageState extends State<CoursePage> {
 
   List<String> _imagesList;
 
+  CourseItem item;
+
+  StreamSubscription<DocumentSnapshot> subs;
+
   @override
   void initState() {
     super.initState();
+    item = widget.item;
+    if (item.images != null) {
+      subs = injector<Firestore>()
+          .document('courses/${item.videoLink.split('/').last}')
+          .snapshots()
+          .listen((event) {
+        if (event?.data != null) {
+          if (mounted) {
+            setState(() {
+              item = CourseItem.fromJson(event.data);
+              if (checkIfListIsNotEmpty(item.images)) {
+                _imagesList = item.images;
+              }
+            });
+          }
+        }
+      });
+    }
     init();
+  }
+
+  @override
+  void dispose() {
+    if (subs != null) {
+      subs.cancel();
+    }
+    super.dispose();
   }
 
   @override
@@ -31,7 +67,7 @@ class _CoursePageState extends State<CoursePage> {
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 2.0,
-        title: Text(widget.item?.name ?? "NA"),
+        title: Text(item?.name ?? "NA"),
         actions: <Widget>[
           Tooltip(
             message: "Download PDF",
@@ -52,7 +88,16 @@ class _CoursePageState extends State<CoursePage> {
           ),
           // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, childAspectRatio: 1.5),
           itemBuilder: (context, index) {
-            return NoteCard(index, _imagesList[index]);
+            return GestureDetector(
+              onLongPress: isDebugMode &&
+                      checkIfNotEmpty(item.videoLink) &&
+                      checkIfListIsNotEmpty(item.images)
+                  ? () async {
+                      await removeImage(_imagesList[index]);
+                    }
+                  : null,
+              child: NoteCard(index, _imagesList[index]),
+            );
           },
           itemCount: _imagesList.length,
         ),
@@ -60,8 +105,8 @@ class _CoursePageState extends State<CoursePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.videocam),
         onPressed: () async {
-          if (await canLaunch(widget.item.videoLink)) {
-            await launch(widget.item.videoLink);
+          if (await canLaunch(item.videoLink)) {
+            await launch(item.videoLink);
           }
         },
       ),
@@ -69,11 +114,11 @@ class _CoursePageState extends State<CoursePage> {
   }
 
   Future<void> init() async {
-    if (widget.item.images != null && widget.item.images.isNotEmpty) {
-      _imagesList = widget.item.images;
+    if (item.images != null && item.images.isNotEmpty) {
+      _imagesList = item.images;
       return;
     }
-    final list1 = widget.item.notes
+    final list1 = item.notes
         .map((item) =>
             NotesItem(item.name.split("/").last.split('.')[0], item.url))
         .where((item) =>
@@ -87,8 +132,8 @@ class _CoursePageState extends State<CoursePage> {
   }
 
   void onDownloadTap() async {
-    if (await canLaunch(widget.item?.pdfLink)) {
-      await launch(widget.item.pdfLink);
+    if (await canLaunch(item?.pdfLink)) {
+      await launch(item.pdfLink);
     } else
       _scaffoldKey.currentState.showSnackBar(
         SnackBar(
@@ -101,5 +146,33 @@ class _CoursePageState extends State<CoursePage> {
     final list = <String>[]..addAll(_notifier.value);
     list.add(url);
     _notifier.value = list;
+  }
+
+  Future<void> removeImage(String image) async {
+    await showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+              title: Text("Remove image?"),
+              content: Text("$image"),
+              actions: [
+                FlatButton(
+                  child: Text("YES"),
+                  onPressed: () async {
+                    final uid = item.videoLink.split('/').last;
+
+                    print(uid);
+                    final newSoln = item.images;
+                    newSoln.remove(image);
+                    injector<Firestore>()
+                        .document('courses/${uid}')
+                        .updateData({
+                      'images': newSoln,
+                    });
+                    ToastUtils.show("Removed");
+                    Navigator.pop(context);
+                  },
+                )
+              ],
+            ));
   }
 }

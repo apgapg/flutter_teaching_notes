@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/images/my_image.dart';
 
 class NoteCard extends StatelessWidget {
@@ -56,7 +57,8 @@ class NoteCard extends StatelessWidget {
                 style: TextStyle(fontSize: 10.0, color: Colors.white),
               ),
             ),
-          )
+          ),
+          if (isDebugMode) Positioned.fill(top: 0, child: Text(url))
         ],
       ),
     );
