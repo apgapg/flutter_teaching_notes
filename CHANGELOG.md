@@ -1,3 +1,7 @@
+## [3.9.0] 01/07/20
+- Make images dark on dark mode
+- Sort courses alphabetically
+
 ## [3.8.0] 29/06/20
 - Fix image preview initial scale
 - Enable profile and fix share url on web
