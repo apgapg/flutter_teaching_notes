@@ -20,6 +20,7 @@ CourseItem _$CourseItemFromJson(Map<String, dynamic> json) {
             e == null ? null : NotesItem.fromJson(e as Map<String, dynamic>))
         ?.toList(),
     json['videoLink'] as String,
+    (json['images'] as List)?.map((e) => e as String)?.toList(),
   );
 }
 
@@ -34,6 +35,7 @@ Map<String, dynamic> _$CourseItemToJson(CourseItem instance) =>
       'suffix': instance.suffix,
       'videoLink': instance.videoLink,
       'notes': instance.notes,
+      'images': instance.images,
     };
 
 NotesItem _$NotesItemFromJson(Map<String, dynamic> json) {

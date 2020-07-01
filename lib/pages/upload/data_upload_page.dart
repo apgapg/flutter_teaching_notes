@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,7 @@ import 'package:flutter_teaching_notes/utils/log_utils.dart';
 import 'package:flutter_teaching_notes/utils/toast_utils.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/primary_raised_button.dart';
+import 'package:http/http.dart' as http;
 import 'package:web_scraper/web_scraper.dart';
 
 class DataUploadPage extends StatefulWidget {
@@ -17,12 +20,13 @@ class DataUploadPage extends StatefulWidget {
 class _DataUploadPageState extends State<DataUploadPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     //init2();
     //initCoverImageCopy();
     //initCourseScrap();
     //initSolutionsImageCopy();
+    //initImageUrlsOfChapter(chapterId: "M5KOIVB52U4RBO9YVCMY");
+    initCourseImagesScrap();
   }
 
   @override
@@ -255,10 +259,92 @@ class _DataUploadPageState extends State<DataUploadPage> {
       listUrls.forEach((element) async {
         await initChapterScrap(chapterUrl: 'https://unacademy.com' + element);
       });
+    }
+  }
 
-      /*  final rawtitle =
-          elements[0]['title'].toString().replaceAll(r'Quality Numerical ', '');
+  Future<List<int>> initImageUrlsOfChapter({String chapterId}) async {
+    final eventUrl =
+        "https://player.uacdn.net/lesson-raw/$chapterId/events-data.json";
+    /* final metaDataUrl =
+        "https://player.uacdn.net/lesson-raw/M5KOIVB52U4RBO9YVCMY/meta.json";*/
+    final eventRes = await http.get(eventUrl);
+    //final metaRes = await http.get(metaDataUrl);
+    if (eventRes.statusCode == 200) {
+      final event = jsonDecode(eventRes.body) as List;
+      //final meta = jsonDecode(metaRes.body);
+      //print(event);
+      // print(meta);
 
+      /*  final imagesList = (meta['image_clips']['mapping'] as Map)
+          .values
+          .map((e) => (e as Map).keys)
+          .toList();*/
+      //print(imagesList);
+      final seqList = event
+          .where((e) => (e as Map).containsKey('i'))
+          .map((e) => e['i'] as int)
+          .toList();
+      print(seqList.toSet());
+      return seqList.toSet().toList();
+    }
+  }
+
+  Future<void> initCourseImagesScrap() async {
+    final courseName = 'Simple Harmonic Motion';
+    final courseId = '8U80RYEN';
+    final rawUrl =
+        'https://unacademy.com/course/simple-harmonic-motion-for-iit-jee/8U80RYEN';
+
+    //
+    //
+
+    final webScraper = WebScraper('https://unacademy.com');
+    if (await webScraper
+        .loadWebPage(rawUrl.replaceAll(r'https://unacademy.com', ''))) {
+      List<Map<String, dynamic>> elements = webScraper.getElement(
+          'div.Week__Wrapper-sc-1qeje5a-2 > a.Link__StyledAnchor-sc-1n9f3wx-0',
+          ['href']);
+      final listUrls = <String>[];
+      elements.forEach((element) {
+        final url = element['attributes']['href'];
+        print(url);
+        listUrls.add(url);
+      });
+      final chapterImages = <String>[];
+      for (final suburl in listUrls) {
+        await Future.delayed(Duration(milliseconds: 1000));
+        final uid = await initChapterUidScrap(
+            chapterUrl: 'https://unacademy.com$suburl');
+        final imagesIdList = await initImageUrlsOfChapter(chapterId: uid);
+        final imagesList = imagesIdList
+            .map((e) => 'https://edge.uacdn.net/$uid/images/$e.jpeg')
+            .toList();
+        chapterImages.addAll(imagesList);
+      }
+      print(chapterImages);
+      await Firestore.instance.collection('courses').document(courseId).setData(
+        {
+          'name': '$courseName',
+          'topic': '$courseName',
+          'subject': 'Physics',
+          'description': '--',
+          'videoLink': '$rawUrl',
+          'notes': [],
+          'images': chapterImages,
+          'cover': 'https://edge.uacdn.net/M5KOIVB52U4RBO9YVCMY/images/4.jpeg',
+          'createdAt': DateTime.now().millisecondsSinceEpoch,
+        },
+        merge: true,
+      );
+      ToastUtils.showToast("Added $rawUrl successfully!");
+    }
+  }
+
+  Future<String> initChapterUidScrap({String chapterUrl}) async {
+    final rawUrl = chapterUrl;
+    final webScraper = WebScraper('https://unacademy.com');
+    if (await webScraper
+        .loadWebPage(rawUrl.replaceAll(r'https://unacademy.com', ''))) {
       List<Map<String, dynamic>> elements2 = webScraper
           .getElement('div.FreeLessonFrame__InnerDiv-ef4326-2', ['data-url']);
       final uuid = elements2[0]['attributes']['data-url']
@@ -268,8 +354,9 @@ class _DataUploadPageState extends State<DataUploadPage> {
               '')
           .replaceAll(r'&use_imgix=1', '');
 
-*/
+      print(uuid);
 
+      return uuid;
     }
   }
 }

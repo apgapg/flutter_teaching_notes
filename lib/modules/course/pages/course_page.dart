@@ -17,7 +17,7 @@ class _CoursePageState extends State<CoursePage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _notifier = ValueNotifier<List<String>>([]);
 
-  List<String> list;
+  List<String> _imagesList;
 
   @override
   void initState() {
@@ -52,9 +52,9 @@ class _CoursePageState extends State<CoursePage> {
           ),
           // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, childAspectRatio: 1.5),
           itemBuilder: (context, index) {
-            return NoteCard(index, list[index]);
+            return NoteCard(index, _imagesList[index]);
           },
-          itemCount: list.length,
+          itemCount: _imagesList.length,
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -69,6 +69,10 @@ class _CoursePageState extends State<CoursePage> {
   }
 
   Future<void> init() async {
+    if (widget.item.images != null && widget.item.images.isNotEmpty) {
+      _imagesList = widget.item.images;
+      return;
+    }
     final list1 = widget.item.notes
         .map((item) =>
             NotesItem(item.name.split("/").last.split('.')[0], item.url))
@@ -79,7 +83,7 @@ class _CoursePageState extends State<CoursePage> {
             item.url.isNotEmpty)
         .toList();
     list1.sort((a, b) => int.parse(a.name).compareTo(int.parse(b.name)));
-    this.list = list1.map((item) => item.url).toList();
+    this._imagesList = list1.map((item) => item.url).toList();
   }
 
   void onDownloadTap() async {

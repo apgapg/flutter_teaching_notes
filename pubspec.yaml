@@ -40,6 +40,7 @@ dependencies:
   share: ^0.6.4+3
   flutter_cache_manager: ^1.4.1
   google_fonts: ^1.1.0
+  http: ^0.12.1
 
 
 dev_dependencies:

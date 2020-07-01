@@ -32,6 +32,7 @@ class CourseItem {
   final String suffix;
   final String videoLink;
   final List<NotesItem> notes;
+  final List<String> images;
 
   CourseItem(
     this.name,
@@ -43,6 +44,7 @@ class CourseItem {
     this.suffix,
     this.notes,
     this.videoLink,
+    this.images,
   );
 
   factory CourseItem.fromJson(Map<dynamic, dynamic> json) =>

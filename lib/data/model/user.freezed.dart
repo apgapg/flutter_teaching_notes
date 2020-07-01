@@ -8,7 +8,6 @@ part of 'user.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
-
 User _$UserFromJson(Map<String, dynamic> json) {
   return _User.fromJson(json);
 }
@@ -47,38 +46,27 @@ const $User = _$UserTearOff();
 
 mixin _$User {
   String get id;
-
   @JsonKey(includeIfNull: false)
   String get name;
-
   String get email;
-
   @JsonKey(includeIfNull: false)
   String get avatar;
-
   String get provider;
-
   int get updatedAt;
-
   int get createdAt;
-
   @JsonKey(includeIfNull: false)
   String get tagline;
-
   @JsonKey(includeIfNull: false, defaultValue: false)
   bool get isVerified;
-
   List<String> get bookmarks;
 
   Map<String, dynamic> toJson();
-
   $UserCopyWith<User> get copyWith;
 }
 
 abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
-
   $Res call(
       {String id,
       @JsonKey(includeIfNull: false) String name,
@@ -96,7 +84,6 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
   _$UserCopyWithImpl(this._value, this._then);
 
   final User _value;
-
   // ignore: unused_field
   final $Res Function(User) _then;
 
@@ -133,7 +120,6 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
 abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) then) =
       __$UserCopyWithImpl<$Res>;
-
   @override
   $Res call(
       {String id,
@@ -306,38 +292,28 @@ abstract class _User implements User {
 
   @override
   String get id;
-
   @override
   @JsonKey(includeIfNull: false)
   String get name;
-
   @override
   String get email;
-
   @override
   @JsonKey(includeIfNull: false)
   String get avatar;
-
   @override
   String get provider;
-
   @override
   int get updatedAt;
-
   @override
   int get createdAt;
-
   @override
   @JsonKey(includeIfNull: false)
   String get tagline;
-
   @override
   @JsonKey(includeIfNull: false, defaultValue: false)
   bool get isVerified;
-
   @override
   List<String> get bookmarks;
-
   @override
   _$UserCopyWith<_User> get copyWith;
 }
