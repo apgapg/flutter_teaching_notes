@@ -290,12 +290,12 @@ class _DataUploadPageState extends State<DataUploadPage> {
   }
 
   Future<void> initCourseImagesScrap() async {
-    final courseName = 'Ray Optics';
+    final courseName = 'Circular Motion';
     final courseDesc =
-        'This course starts with basic introduction to reflection, refraction to some advanced topics like lenses, prism etc.';
-    final courseId = 'CKR36AJ0';
+        'This course describes about circular motion, uniform circular motion, and motion in a vertical circle.';
+    final courseId = 'JOIESRBC';
     final rawUrl =
-        'https://unacademy.com/course/ray-optics-for-iit-jee/CKR36AJ0';
+        'https://unacademy.com/course/circular-motion-for-iit-jee/JOIESRBC';
 
     //
     //
