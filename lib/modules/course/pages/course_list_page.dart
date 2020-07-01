@@ -22,6 +22,7 @@ class _CourseListPageState extends State<CourseListPage>
           final list = snapshot.data.documents
               .map((document) => CourseItem.fromJson(document.data))
               .toList();
+          list.sort((a, b) => a.name.compareTo(b.name));
           return Container(
             child: ListView.builder(
               padding: EdgeInsets.symmetric(vertical: 4.0),

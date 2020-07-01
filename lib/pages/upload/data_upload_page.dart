@@ -26,7 +26,7 @@ class _DataUploadPageState extends State<DataUploadPage> {
     //initCourseScrap();
     //initSolutionsImageCopy();
     //initImageUrlsOfChapter(chapterId: "M5KOIVB52U4RBO9YVCMY");
-    //initCourseImagesScrap();
+    initCourseImagesScrap();
   }
 
   @override
@@ -290,10 +290,12 @@ class _DataUploadPageState extends State<DataUploadPage> {
   }
 
   Future<void> initCourseImagesScrap() async {
-    final courseName = 'Simple Harmonic Motion';
-    final courseId = '8U80RYEN';
+    final courseName = 'Ray Optics';
+    final courseDesc =
+        'This course starts with basic introduction to reflection, refraction to some advanced topics like lenses, prism etc.';
+    final courseId = 'CKR36AJ0';
     final rawUrl =
-        'https://unacademy.com/course/simple-harmonic-motion-for-iit-jee/8U80RYEN';
+        'https://unacademy.com/course/ray-optics-for-iit-jee/CKR36AJ0';
 
     //
     //
@@ -327,7 +329,7 @@ class _DataUploadPageState extends State<DataUploadPage> {
           'name': '$courseName',
           'topic': '$courseName',
           'subject': 'Physics',
-          'description': '--',
+          'description': '$courseDesc',
           'videoLink': '$rawUrl',
           'notes': [],
           'images': chapterImages,
