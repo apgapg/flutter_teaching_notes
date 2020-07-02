@@ -9,11 +9,13 @@ class MyImage extends StatelessWidget {
   final String url;
   final bool tapEnabled;
   final bool invertColors;
+  final BoxFit fit;
 
   MyImage(
     this.url, {
     this.tapEnabled = false,
     this.invertColors = true,
+    this.fit = BoxFit.contain,
   });
 
   @override
@@ -38,7 +40,7 @@ class MyImage extends StatelessWidget {
                     : false,
               ),
               child: CachedNetworkImage(
-                fit: BoxFit.contain,
+                fit: fit,
                 imageUrl: url,
                 placeholder: (context, url) => PlaceholderImage(),
                 errorWidget: (context, url, error) => SizedBox(

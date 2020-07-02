@@ -44,7 +44,7 @@ class _ChapterListPageState extends State<ChapterListPage>
             children: [
               Expanded(
                 child: ListView(
-                  padding: EdgeInsets.symmetric(vertical: 4),
+                  padding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
                   children: [
 /*                    Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -62,6 +62,12 @@ class _ChapterListPageState extends State<ChapterListPage>
                         ],
                       ),
                     )*/
+                    Align(
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text("Solve chapter wise numericals"),
+                      ),
+                    ),
                     ...snapshot.data.map(
                       (e) => ChapterCard(e, snapshot.data.indexOf(e)),
                     ),

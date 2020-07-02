@@ -23,14 +23,18 @@ class _CourseListPageState extends State<CourseListPage>
               .map((document) => CourseItem.fromJson(document.data))
               .toList();
           list.sort((a, b) => a.name.compareTo(b.name));
-          return Container(
-            child: ListView.builder(
-              padding: EdgeInsets.symmetric(vertical: 4.0),
-              itemBuilder: (context, index) {
-                return CourseCard(list.elementAt(index));
-              },
-              itemCount: list.length,
-            ),
+
+          return ListView(
+            padding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 8),
+            children: [
+              Align(
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text("Study chapter wise notes"),
+                ),
+              ),
+              ...list.map((e) => CourseCard(e))
+            ],
           );
         } else if (snapshot.hasError) {
           return ErrorPage(snapshot.error.toString());

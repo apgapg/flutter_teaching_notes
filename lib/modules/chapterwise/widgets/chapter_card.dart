@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_teaching_notes/modules/chapterwise/models/chapter.dart';
 import 'package:flutter_teaching_notes/modules/chapterwise/pages/chapter_page.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
+import 'package:flutter_teaching_notes/widgets/border_container.dart';
 
 class ChapterCard extends StatelessWidget {
   final Chapter item;
@@ -10,26 +11,22 @@ class ChapterCard extends StatelessWidget {
 
   BuildContext context;
 
-  ChapterCard(this.item, this.index);
+  ChapterCard(
+    this.item,
+    this.index,
+  );
 
   @override
   Widget build(BuildContext context) {
     this.context = context;
-    return Container(
+    return BorderContainer(
       margin: const EdgeInsets.symmetric(
-        horizontal: 4.0,
-        vertical: 1.0,
+        vertical: 4.0,
       ),
-      child: Card(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(4.0),
-          ),
-        ),
-        clipBehavior: Clip.antiAlias,
-        elevation: 2.0,
-        child: InkWell(
-          onTap: onCourseTap,
+      child: InkWell(
+        onTap: onCourseTap,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

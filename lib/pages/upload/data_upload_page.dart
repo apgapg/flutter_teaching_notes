@@ -290,12 +290,12 @@ class _DataUploadPageState extends State<DataUploadPage> {
   }
 
   Future<void> initCourseImagesScrap() async {
-    final courseName = 'Circular Motion';
+    final courseName = 'Gravitation';
     final courseDesc =
-        'This course describes about circular motion, uniform circular motion, and motion in a vertical circle.';
-    final courseId = 'JOIESRBC';
+        "This course deals with the theory behind the Gravitation chapter. The contents include Gravitation Law, Gravitational Field, Kepler Law, Motion of Satellites along with quality numerical";
+    final courseId = 'D5A8YSAJ';
     final rawUrl =
-        'https://unacademy.com/course/circular-motion-for-iit-jee/JOIESRBC';
+        'https://unacademy.com/course/gravitation-for-iit-jee/D5A8YSAJ';
 
     //
     //

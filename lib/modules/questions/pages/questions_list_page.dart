@@ -230,7 +230,7 @@ class _QuestionsListPageState extends State<QuestionsListPage>
               else
                 Expanded(
                   child: ListView(
-                    padding: EdgeInsets.symmetric(vertical: 2),
+                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                     children: [
                       Container(
                         margin: const EdgeInsets.only(
@@ -337,9 +337,12 @@ class _QuestionsListPageState extends State<QuestionsListPage>
                               'Search among ${snapshot.data.length} questions',
                         ),
                         margin: EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 4,
+                          horizontal: 4,
+                          vertical: 2,
                         ),
+                      ),
+                      SizedBox(
+                        height: 2,
                       ),
                       ...snapshot.data.map(
                         (e) => Container(
