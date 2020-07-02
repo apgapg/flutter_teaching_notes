@@ -41,7 +41,7 @@ class CourseCard extends StatelessWidget {
                       topLeft: Radius.circular(8.0),
                       topRight: Radius.circular(8.0),
                     ),
-                    child: MyImage(_item.cover),
+                    child: MyImage(_item.cover, invertColors: false),
                   ),
                 ),
                 Divider(

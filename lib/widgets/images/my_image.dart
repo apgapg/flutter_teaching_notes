@@ -8,10 +8,12 @@ import 'image_preview_page.dart';
 class MyImage extends StatelessWidget {
   final String url;
   final bool tapEnabled;
+  final bool invertColors;
 
   MyImage(
     this.url, {
     this.tapEnabled = false,
+    this.invertColors = true,
   });
 
   @override
@@ -29,10 +31,11 @@ class MyImage extends StatelessWidget {
       child: !kIsWeb
           ? MediaQuery(
               data: MediaQuery.of(context).copyWith(
-                invertColors:
-                    MediaQuery.of(context).platformBrightness == Brightness.dark
-                        ? true
-                        : false,
+                invertColors: (invertColors &&
+                        MediaQuery.of(context).platformBrightness ==
+                            Brightness.dark)
+                    ? true
+                    : false,
               ),
               child: CachedNetworkImage(
                 fit: BoxFit.contain,
