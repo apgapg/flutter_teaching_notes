@@ -1,3 +1,10 @@
+## [3.10.0] 03/07/20
+- Add description
+- Do not invert colors of course card
+- Add tabs to question page
+- Add unacademy video link
+- Remove solution video from web
+
 ## [3.9.0] 01/07/20
 - Make images dark on dark mode
 - Sort courses alphabetically
