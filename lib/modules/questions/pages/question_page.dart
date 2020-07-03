@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_teaching_notes/data/model/user.dart';
@@ -141,12 +142,13 @@ class _QuestionPageState extends State<QuestionPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            child: HtmlWidget(
-                              '''<iframe src='https://player.uacdn.net/lesson-raw/player/v585/player-min.html?uuid=${widget.item.id}&use_imgix=1&autoPlay=false&debug=false'></iframe>''',
-                              webView: true,
+                          if (!kIsWeb)
+                            Container(
+                              child: HtmlWidget(
+                                '''<iframe src='https://player.uacdn.net/lesson-raw/player/v585/player-min.html?uuid=${widget.item.id}&use_imgix=1&autoPlay=false&debug=false'></iframe>''',
+                                webView: true,
+                              ),
                             ),
-                          ),
                           if (!checkIfListIsNotEmpty(item.solutions))
                             Column(
                               mainAxisSize: MainAxisSize.min,
