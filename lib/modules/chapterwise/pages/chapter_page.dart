@@ -35,7 +35,8 @@ class _ChapterPageState extends State<ChapterPage> {
           return sink.add([]);
         } else {
           var list = query.documents
-              .map((document) => Question.fromJson(document.data))
+              .map((document) => Question.fromJson(document.data)
+                  .copyWith(id: document.documentID))
               .toList();
           list.sort((a, b) => (a.level ?? 0).compareTo(b.level ?? 0));
           return sink.add(list);

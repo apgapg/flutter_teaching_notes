@@ -84,7 +84,7 @@ class _CoursePageState extends State<CoursePage> {
         child: ListView.builder(
           padding: EdgeInsets.symmetric(
             vertical: 4.0,
-            horizontal: 2.0,
+            horizontal: 8.0,
           ),
           // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, childAspectRatio: 1.5),
           itemBuilder: (context, index) {

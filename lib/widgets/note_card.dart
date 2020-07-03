@@ -12,7 +12,7 @@ class NoteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(3.0),
+      margin: EdgeInsets.symmetric(vertical: 4),
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: <Widget>[

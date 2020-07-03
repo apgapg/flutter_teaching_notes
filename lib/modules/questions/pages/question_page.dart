@@ -13,6 +13,7 @@ import 'package:flutter_teaching_notes/widgets/images/my_image.dart';
 import 'package:flutter_teaching_notes/widgets/my_divider.dart';
 import 'package:flutter_teaching_notes/widgets/primary_raised_button.dart';
 import 'package:flutter_teaching_notes/widgets/responsive_container.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class QuestionPage extends StatefulWidget {
@@ -140,6 +141,12 @@ class _QuestionPageState extends State<QuestionPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          Container(
+                            child: HtmlWidget(
+                              '''<iframe src='https://player.uacdn.net/lesson-raw/player/v585/player-min.html?uuid=${widget.item.id}&use_imgix=1&autoPlay=false&debug=false'></iframe>''',
+                              webView: true,
+                            ),
+                          ),
                           if (!checkIfListIsNotEmpty(item.solutions))
                             Column(
                               mainAxisSize: MainAxisSize.min,
@@ -175,7 +182,9 @@ class _QuestionPageState extends State<QuestionPage> {
                                     if (checkIfNotEmpty(soln.video))
                                       Container(
                                         margin: EdgeInsets.only(
-                                            bottom: 16, top: 16),
+                                          bottom: 8,
+                                          top: 8,
+                                        ),
                                         child: PrimaryRaisedButton(
                                           icon: Icons.videocam,
                                           color: Colors.green,
