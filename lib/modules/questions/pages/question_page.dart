@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_teaching_notes/data/model/user.dart';
@@ -27,11 +26,9 @@ class QuestionPage extends StatefulWidget {
 
 class _QuestionPageState extends State<QuestionPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _notifier = ValueNotifier<List<String>>([]);
-
   List<String> list;
 
-  bool _showSolution = false;
+  //bool _showSolution = false;
 
   Question item;
 
@@ -68,235 +65,249 @@ class _QuestionPageState extends State<QuestionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        elevation: 2.0,
-
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(item?.title ?? "NA"),
-        /* actions: <Widget>[
-          Tooltip(
-            message: "Download PDF",
-            child: IconButton(
-              icon: Icon(Icons.arrow_downward),
-              onPressed: onDownloadTap,
-            ),
-          )
-        ],*/
-      ),
-      body: ResponsiveContainer(
-        child: SingleChildScrollView(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          elevation: 2.0,
+          title: Text(item?.title ?? "NA"),
+          bottom: TabBar(
+            indicatorWeight: 3,
+            tabs: [
+              Tab(
+                text: "Numerical".toUpperCase(),
+              ),
+              Tab(
+                text: "Solution".toUpperCase(),
+              ),
+            ],
+          ),
+          /* actions: <Widget>[
+            Tooltip(
+              message: "Download PDF",
+              child: IconButton(
+                icon: Icon(Icons.arrow_downward),
+                onPressed: onDownloadTap,
+              ),
+            )
+          ],*/
+        ),
+        body: ResponsiveContainer(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (checkIfListIsNotEmpty(item.images))
-                for (String image in item.images)
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      MyImage(
-                        image,
-                        tapEnabled: true,
-                      ),
-                      MyDivider(),
-                    ],
-                  ),
-              if (checkIfListIsNotEmpty(item.solutions))
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 16),
-                  child: PrimaryRaisedButton(
-                    icon: Icons.code,
-                    color: !_showSolution
-                        ? Theme.of(context).primaryColor
-                        : Colors.red,
-                    text: !_showSolution ? "VIEW SOLUTIONS" : "HIDE SOLUTIONS",
-                    onTap: () {
-                      setState(() {
-                        _showSolution = !_showSolution;
-                      });
-                    },
-                  ),
-                )
-              else
-                Column(
-                  mainAxisSize: MainAxisSize.min,
+              Expanded(
+                child: TabBarView(
                   children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 16),
-                      child: PrimaryRaisedButton(
-                        icon: Icons.code,
-                        text: "NO SOLUTIONS",
-                        onTap: null,
-                      ),
-                    ),
-                    Image.asset(
-                      'assets/images/empty.png',
-                      height: 200,
-                    ),
-                    Text(
-                      'Don\'t worry! We will update\nthe answer update soon.',
-                      style: Theme.of(context)
-                          .textTheme
-                          .display1
-                          .copyWith(fontSize: 14),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              if (_showSolution && checkIfListIsNotEmpty(item.solutions))
-                for (final soln in item.solutions)
-                  if (checkIfListIsNotEmpty(soln.images))
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        if (checkIfNotEmpty(soln.video))
-                          Container(
-                            margin: EdgeInsets.only(bottom: 16),
-                            child: PrimaryRaisedButton(
-                              icon: Icons.videocam,
-                              color: Colors.green,
-                              text: "VIDEO SOLUTION",
-                              onTap: () async {
-                                if (await canLaunch(soln.video)) {
-                                  await launch(soln.video);
-                                }
-                              },
-                            ),
-                          ),
-                        MyDivider(),
-                        for (String image in soln.images)
+                    SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          if (checkIfListIsNotEmpty(item.images))
+                            for (String image in item.images)
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  MyImage(
+                                    image,
+                                    tapEnabled: true,
+                                  ),
+                                  MyDivider(),
+                                ],
+                              ),
                           Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              if (isDebugMode)
-                                Text(
-                                  image,
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                              GestureDetector(
-                                onLongPress:
-                                    isDebugMode && checkIfNotEmpty(item.id)
-                                        ? () async {
-                                            await removeImage(soln, image);
-                                          }
-                                        : null,
-                                child: MyImage(
-                                  image,
-                                  tapEnabled: true,
-                                ),
+                              Image.asset(
+                                'assets/images/write.jpg',
+                                height: 200,
                               ),
-                              MyDivider(),
+                              Text(
+                                'It\'s good if you try solving first yourself.\nRead again and again.',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .display1
+                                    .copyWith(fontSize: 14),
+                                textAlign: TextAlign.center,
+                              ),
                             ],
                           ),
-                      ],
+                        ],
+                      ),
                     ),
-              if (!_showSolution && checkIfListIsNotEmpty(item.solutions))
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(
-                      'assets/images/write.jpg',
-                      height: 200,
-                    ),
-                    Text(
-                      'It\'s good if you try solving first yourself.\nRead again and again.',
-                      style: Theme.of(context)
-                          .textTheme
-                          .display1
-                          .copyWith(fontSize: 14),
-                      textAlign: TextAlign.center,
+                    SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          if (!checkIfListIsNotEmpty(item.solutions))
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.symmetric(vertical: 16),
+                                  child: PrimaryRaisedButton(
+                                    icon: Icons.code,
+                                    text: "NO SOLUTIONS",
+                                    onTap: null,
+                                  ),
+                                ),
+                                Image.asset(
+                                  'assets/images/empty.png',
+                                  height: 200,
+                                ),
+                                Text(
+                                  'Don\'t worry! We will update\nthe answer update soon.',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .display1
+                                      .copyWith(fontSize: 14),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            )
+                          else
+                            for (final soln in item.solutions)
+                              if (checkIfListIsNotEmpty(soln.images))
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    if (checkIfNotEmpty(soln.video))
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            bottom: 16, top: 16),
+                                        child: PrimaryRaisedButton(
+                                          icon: Icons.videocam,
+                                          color: Colors.green,
+                                          text: "VIDEO SOLUTION",
+                                          onTap: () async {
+                                            if (await canLaunch(soln.video)) {
+                                              await launch(soln.video);
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    MyDivider(),
+                                    for (String image in soln.images)
+                                      Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          if (isDebugMode)
+                                            Text(
+                                              image,
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          GestureDetector(
+                                            onLongPress: isDebugMode &&
+                                                    checkIfNotEmpty(item.id)
+                                                ? () async {
+                                                    await removeImage(
+                                                        soln, image);
+                                                  }
+                                                : null,
+                                            child: MyImage(
+                                              image,
+                                              tapEnabled: true,
+                                            ),
+                                          ),
+                                          MyDivider(),
+                                        ],
+                                      ),
+                                  ],
+                                ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
+              ),
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: StreamBuilder<User>(
-          stream: injector<UserRepository>().getUserStream(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData && snapshot.data != null) {
-              final user = snapshot.data;
-              return BottomAppBar(
-                child: InkWell(
-                  onTap: () {
-                    if (checkIfListIsNotEmpty(user.bookmarks) &&
-                        user.bookmarks.contains(item.id)) {
-                      injector<UserRepository>().removeBookmark(item.id);
-                    } else {
-                      injector<UserRepository>().saveBookmark(item.id);
-                    }
-                  },
-                  child: checkIfListIsNotEmpty(user.bookmarks) &&
-                          user.bookmarks.contains(item.id)
-                      ? Container(
-                          height: 48,
-                          alignment: Alignment.center,
-                          color: Theme.of(context).primaryColor,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.bookmark,
-                                size: 20,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                "Added to Bookmarks",
-                                style: TextStyle(
+        bottomNavigationBar: StreamBuilder<User>(
+            stream: injector<UserRepository>().getUserStream(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data != null) {
+                final user = snapshot.data;
+                return BottomAppBar(
+                  child: InkWell(
+                    onTap: () {
+                      if (checkIfListIsNotEmpty(user.bookmarks) &&
+                          user.bookmarks.contains(item.id)) {
+                        injector<UserRepository>().removeBookmark(item.id);
+                      } else {
+                        injector<UserRepository>().saveBookmark(item.id);
+                      }
+                    },
+                    child: checkIfListIsNotEmpty(user.bookmarks) &&
+                            user.bookmarks.contains(item.id)
+                        ? Container(
+                            height: 48,
+                            alignment: Alignment.center,
+                            color: Theme.of(context).primaryColor,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.bookmark,
+                                  size: 20,
                                   color: Colors.white,
-                                  fontWeight: FontWeight.bold,
                                 ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : Container(
-                          height: 48,
-                          alignment: Alignment.center,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.bookmark_border,
-                                size: 20,
-                                color:
-                                    MediaQuery.of(context).platformBrightness ==
-                                            Brightness.light
-                                        ? Theme.of(context).primaryColor
-                                        : null,
-                              ),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                "Add to Bookmarks",
-                                style: TextStyle(
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  "Added to Bookmarks",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Container(
+                            height: 48,
+                            alignment: Alignment.center,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.bookmark_border,
+                                  size: 20,
                                   color: MediaQuery.of(context)
                                               .platformBrightness ==
                                           Brightness.light
                                       ? Theme.of(context).primaryColor
                                       : null,
-                                  fontWeight: FontWeight.bold,
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  "Add to Bookmarks",
+                                  style: TextStyle(
+                                    color: MediaQuery.of(context)
+                                                .platformBrightness ==
+                                            Brightness.light
+                                        ? Theme.of(context).primaryColor
+                                        : null,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                ),
-              );
-            } else {
-              return SizedBox(
-                height: 0,
-                width: 0,
-              );
-            }
-          }),
+                  ),
+                );
+              } else {
+                return SizedBox(
+                  height: 0,
+                  width: 0,
+                );
+              }
+            }),
+      ),
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -219,13 +220,33 @@ class HomePageState extends State<HomePage> {
             title: Text("Notes"),
           ),
           BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Icon(
-                SimpleLineIcons.user,
-                size: 20,
-              ),
-            ),
+            icon: StreamBuilder<User>(
+                stream: injector<UserRepository>().getUserStream(),
+                builder: (context, snapshot) {
+                  return Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Stack(
+                      children: [
+                        Icon(
+                          SimpleLineIcons.user,
+                          size: 20,
+                        ),
+                        if (!(snapshot.hasData && snapshot.data != null))
+                          Positioned(
+                            right: 0,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.redAccent,
+                              ),
+                              height: 8,
+                              width: 8,
+                            ),
+                          )
+                      ],
+                    ),
+                  );
+                }),
             title: Text("Profile"),
           ),
         ],

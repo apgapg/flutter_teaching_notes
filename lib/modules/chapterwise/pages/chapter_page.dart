@@ -4,14 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_teaching_notes/modules/chapterwise/models/chapter.dart';
 import 'package:flutter_teaching_notes/modules/questions/models/question_model.dart';
 import 'package:flutter_teaching_notes/modules/questions/widgets/question_card.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/error_widget.dart';
 import 'package:flutter_teaching_notes/widgets/loading_widget.dart';
-import 'package:flutter_teaching_notes/widgets/primary_raised_button.dart';
 import 'package:flutter_teaching_notes/widgets/responsive_container.dart';
 import 'package:flutter_teaching_notes/widgets/search/search_text_field.dart';
 import 'package:rxdart/rxdart.dart';
@@ -133,9 +131,10 @@ class _ChapterPageState extends State<ChapterPage> {
                   else
                     Expanded(
                       child: ListView(
-                        padding: EdgeInsets.symmetric(vertical: 8),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                         children: [
-                          if (checkIfNotEmpty(widget.item.video))
+                          /*if (checkIfNotEmpty(widget.item.video))
                             Column(
                               children: [
                                 PrimaryRaisedButton(
@@ -145,7 +144,7 @@ class _ChapterPageState extends State<ChapterPage> {
                                   onTap: () {},
                                 ),
                               ],
-                            ),
+                            ),*/
                           Container(
                             child: SearchTextField(
                               _controller,
@@ -153,7 +152,7 @@ class _ChapterPageState extends State<ChapterPage> {
                                   'Search among ${snapshot.data.length} questions',
                             ),
                             margin: EdgeInsets.symmetric(
-                              horizontal: 12,
+                              horizontal: 4,
                               vertical: 4,
                             ),
                           ),

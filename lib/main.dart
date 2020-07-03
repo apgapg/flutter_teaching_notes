@@ -73,6 +73,13 @@ class MyApp extends StatelessWidget {
             size: 20,
           ),
         ),
+        tabBarTheme: TabBarTheme(
+          labelStyle: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+          ),
+          labelColor: Colors.black87,
+        ),
       ),
       darkTheme: ThemeData(
         primarySwatch: Colors.blue,
