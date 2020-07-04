@@ -1,0 +1,5 @@
+{
+    "ignoredFiles": [
+        "extra/teaching/*", // ignore by folderpath
+    ],
+}
