@@ -33,6 +33,7 @@ class CourseItem {
   final String videoLink;
   final List<NotesItem> notes;
   final List<String> images;
+  final List<Topic> topics;
 
   CourseItem(
     this.name,
@@ -45,6 +46,7 @@ class CourseItem {
     this.notes,
     this.videoLink,
     this.images,
+    this.topics,
   );
 
   factory CourseItem.fromJson(Map<dynamic, dynamic> json) =>
@@ -60,4 +62,21 @@ class NotesItem {
 
   factory NotesItem.fromJson(Map<dynamic, dynamic> json) =>
       _$NotesItemFromJson(json);
+}
+
+@JsonSerializable()
+class Topic {
+  final String id;
+  final String title;
+  final String video;
+  final List<String> images;
+
+  Topic(
+    this.id,
+    this.title,
+    this.images,
+    this.video,
+  );
+
+  factory Topic.fromJson(Map<dynamic, dynamic> json) => _$TopicFromJson(json);
 }

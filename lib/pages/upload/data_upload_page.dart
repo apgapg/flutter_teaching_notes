@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_teaching_notes/di/injector.dart';
+import 'package:flutter_teaching_notes/model/course_model.dart';
 import 'package:flutter_teaching_notes/modules/questions/models/question_model.dart';
 import 'package:flutter_teaching_notes/utils/log_utils.dart';
 import 'package:flutter_teaching_notes/utils/toast_utils.dart';
@@ -26,7 +28,8 @@ class _DataUploadPageState extends State<DataUploadPage> {
     //initCourseScrap();
     //initSolutionsImageCopy();
     //initImageUrlsOfChapter(chapterId: "M5KOIVB52U4RBO9YVCMY");
-    initCourseImagesScrap();
+    //initCourseImagesScrap();
+    initCourseChaptersScrap();
   }
 
   @override
@@ -359,6 +362,65 @@ class _DataUploadPageState extends State<DataUploadPage> {
       print(uuid);
 
       return uuid;
+    }
+  }
+
+  void initCourseChaptersScrap() async {
+    final rawUrl =
+        'https://unacademy.com/course/circular-motion-for-iit-jee/JOIESRBC';
+
+    //
+    //
+
+    final webScraper = WebScraper('https://unacademy.com');
+    if (await webScraper
+        .loadWebPage(rawUrl.replaceAll(r'https://unacademy.com', ''))) {
+      List<Map<String, dynamic>> elements = webScraper.getElement(
+          'div.Week__Wrapper-sc-1qeje5a-2 > a.Link__StyledAnchor-sc-1n9f3wx-0',
+          ['href']);
+      List<Map<String, dynamic>> titleElements = webScraper.getElement(
+          'div.Week__Wrapper-sc-1qeje5a-2 > a.Link__StyledAnchor-sc-1n9f3wx-0 > div.ItemCard__ItemInfo-xrh60s-1 > h6.H6-sc-1gn2suh-0',
+          []);
+      print(titleElements);
+      final listUrls = <String>[];
+      final titleUrls = <String>[];
+      elements.forEach((element) {
+        final url = element['attributes']['href'];
+        print(url);
+        listUrls.add('https://unacademy.com$url');
+      });
+      titleElements.forEach((element) {
+        final title = element['title'];
+        print(title);
+        titleUrls.add('$title');
+      });
+      final document = await injector<Firestore>()
+          .document('courses/${rawUrl.split('/').last}')
+          .get();
+      final course = CourseItem.fromJson(document.data);
+      final topics = [];
+
+      for (final url in listUrls) {
+        await Future.delayed(Duration(seconds: 1));
+        final uid = await initChapterUidScrap(chapterUrl: url);
+        topics.add({
+          'id': uid,
+          'title': titleUrls[listUrls.indexOf(url)],
+          'images': course.images
+              .where((element) => element.contains('$uid'))
+              .toList(),
+          'video': '$url'
+        });
+      }
+      await document.reference.setData(
+        {
+          'topics': topics,
+        },
+        merge: true,
+      );
+      /*   listUrls.forEach((element) async {
+        //await initChapterScrap(chapterUrl: 'https://unacademy.com' + element);
+      });*/
     }
   }
 }

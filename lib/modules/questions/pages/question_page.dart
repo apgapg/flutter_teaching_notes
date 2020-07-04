@@ -166,7 +166,7 @@ class _QuestionPageState extends State<QuestionPage> {
                                   height: 200,
                                 ),
                                 Text(
-                                  'Don\'t worry! We will update\nthe answer update soon.',
+                                  'Don\'t worry! We will update\nthe solution soon.',
                                   style: Theme.of(context)
                                       .textTheme
                                       .display1

@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_teaching_notes/di/injector.dart';
 import 'package:flutter_teaching_notes/model/course_model.dart';
+import 'package:flutter_teaching_notes/modules/course/pages/topic_page.dart';
 import 'package:flutter_teaching_notes/utils/toast_utils.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
+import 'package:flutter_teaching_notes/widgets/border_container.dart';
 import 'package:flutter_teaching_notes/widgets/note_card.dart';
 import 'package:flutter_teaching_notes/widgets/responsive_container.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -63,52 +66,134 @@ class _CoursePageState extends State<CoursePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        elevation: 2.0,
-        title: Text(item?.name ?? "NA"),
-        actions: <Widget>[
-          Tooltip(
-            message: "Download PDF",
-            child: IconButton(
-              icon: Icon(Icons.arrow_downward),
-              onPressed: onDownloadTap,
-            ),
-          )
-        ],
-      ),
-      body: ResponsiveContainer(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: ListView.builder(
-          padding: EdgeInsets.symmetric(
-            vertical: 4.0,
-            horizontal: 8.0,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          elevation: 2.0,
+          title: Text(item?.name ?? "NA"),
+          actions: <Widget>[
+            Tooltip(
+              message: "Download PDF",
+              child: IconButton(
+                icon: Icon(Icons.arrow_downward),
+                onPressed: onDownloadTap,
+              ),
+            )
+          ],
+          bottom: TabBar(
+            indicatorWeight: 3,
+            tabs: [
+              Tab(
+                text: "TOPICs".toUpperCase(),
+              ),
+              Tab(
+                text: "ALL".toUpperCase(),
+              ),
+            ],
           ),
-          // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, childAspectRatio: 1.5),
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onLongPress: isDebugMode &&
-                      checkIfNotEmpty(item.videoLink) &&
-                      checkIfListIsNotEmpty(item.images)
-                  ? () async {
-                      await removeImage(_imagesList[index]);
-                    }
-                  : null,
-              child: NoteCard(index, _imagesList[index]),
-            );
-          },
-          itemCount: _imagesList.length,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.videocam),
-        onPressed: () async {
-          if (await canLaunch(item.videoLink)) {
-            await launch(item.videoLink);
-          }
-        },
+        body: ResponsiveContainer(
+          child: TabBarView(
+            children: [
+              if (!checkIfListIsNotEmpty(widget.item.topics))
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/empty.png',
+                      height: 200,
+                    ),
+                    Text(
+                      'Don\'t worry! We will update\nthe topics soon.',
+                      style: Theme.of(context)
+                          .textTheme
+                          .display1
+                          .copyWith(fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                )
+              else
+                ListView(
+                  physics: BouncingScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 4.0,
+                    horizontal: 8.0,
+                  ),
+                  children: [
+                    ...widget.item.topics.map(
+                      (e) => BorderContainer(
+                        margin: EdgeInsets.symmetric(vertical: 4),
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => TopicPage(e),
+                              ),
+                            );
+                          },
+                          leading: Container(
+                            height: 28,
+                            width: 28,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Text(
+                              "${widget.item.topics.indexOf(e) + 1}",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                          title: Text(
+                            e.title ?? "--",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ListView.builder(
+                physics: BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(
+                  vertical: 4.0,
+                  horizontal: 8.0,
+                ),
+                // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, childAspectRatio: 1.5),
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onLongPress: isDebugMode &&
+                            checkIfNotEmpty(item.videoLink) &&
+                            checkIfListIsNotEmpty(item.images)
+                        ? () async {
+                            await removeImage(_imagesList[index]);
+                          }
+                        : null,
+                    child: NoteCard(index, _imagesList[index]),
+                  );
+                },
+                itemCount: _imagesList.length,
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.videocam),
+          onPressed: () async {
+            if (await canLaunch(item.videoLink)) {
+              await launch(item.videoLink);
+            }
+          },
+        ),
       ),
     );
   }
