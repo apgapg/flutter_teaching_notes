@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_teaching_notes/data/model/user.dart';
 import 'package:flutter_teaching_notes/data/repo/user/base/user_repository.dart';
 import 'package:flutter_teaching_notes/di/injector.dart';
+import 'package:flutter_teaching_notes/main.dart';
 import 'package:flutter_teaching_notes/modules/bookmark/pages/bookmark_page.dart';
 import 'package:flutter_teaching_notes/modules/chapterwise/index.dart';
 import 'package:flutter_teaching_notes/modules/course/pages/course_list_page.dart';
@@ -160,6 +162,7 @@ class HomePageState extends State<HomePage> {
             if (kIsWeb)
               GestureDetector(
                 onTap: () {
+                  analytics.logEvent(name: 'open_in_app');
                   launch('https://play.google.com/store/apps/'
                       'details?id=com.coddu.flutter.iitjee.notes');
                 },
@@ -195,6 +198,10 @@ class HomePageState extends State<HomePage> {
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
         onTap: (index) {
+          analytics.logEvent(name: 'home_tab_change', parameters: {
+            "index": index,
+          });
+
           setState(() {
             currentIndex = index;
           });
@@ -255,6 +262,8 @@ class HomePageState extends State<HomePage> {
   }
 
   void onInfoTap() {
+    FirebaseAnalytics().logEvent(name: 'about_tap');
+
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => ContactPage()));
   }

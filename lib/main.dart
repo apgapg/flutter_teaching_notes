@@ -32,9 +32,9 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  final analytics = FirebaseAnalytics();
+FirebaseAnalytics analytics = FirebaseAnalytics();
 
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

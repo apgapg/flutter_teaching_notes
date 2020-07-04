@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_teaching_notes/data/repo/user/base/user_repository.dart';
 import 'package:flutter_teaching_notes/di/injector.dart';
+import 'package:flutter_teaching_notes/main.dart';
 import 'package:flutter_teaching_notes/modules/questions/models/question_model.dart';
 import 'package:flutter_teaching_notes/modules/questions/pages/question_page.dart';
 import 'package:flutter_teaching_notes/widgets/border_container.dart';
@@ -175,6 +176,13 @@ class QuestionCard extends StatelessWidget {
   }
 
   void onTap() {
+    analytics.logEvent(
+      name: "question_tap",
+      parameters: {
+        "id": item.title,
+      },
+    );
+
     FocusScope.of(context).requestFocus(FocusNode());
     Navigator.of(context).push(
       MaterialPageRoute(

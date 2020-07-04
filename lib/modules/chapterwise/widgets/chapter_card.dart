@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_teaching_notes/main.dart';
 import 'package:flutter_teaching_notes/modules/chapterwise/models/chapter.dart';
 import 'package:flutter_teaching_notes/modules/chapterwise/pages/chapter_page.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
@@ -64,6 +65,12 @@ class ChapterCard extends StatelessWidget {
   }
 
   void onCourseTap() {
+    analytics.logEvent(
+      name: "question_tap",
+      parameters: {
+        "id": item.title,
+      },
+    );
     FocusScope.of(context).requestFocus(FocusNode());
     Navigator.of(context).push(
       MaterialPageRoute(

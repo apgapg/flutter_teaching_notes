@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_teaching_notes/main.dart';
 import 'package:flutter_teaching_notes/model/course_model.dart';
 import 'package:flutter_teaching_notes/widgets/border_container.dart';
 import 'package:flutter_teaching_notes/widgets/images/my_image.dart';
@@ -77,6 +78,12 @@ class CourseCard extends StatelessWidget {
   }
 
   void onCourseTap() {
+    analytics.logEvent(
+      name: "question_tap",
+      parameters: {
+        "id": _item.name,
+      },
+    );
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => CoursePage(_item),
