@@ -32,15 +32,15 @@ const RESOURCES = {
 "assets/packages/font_awesome_flutter/lib/fonts/fa-brands-400.ttf": "5a37ae808cf9f652198acde612b5328d",
 "assets/assets/images/auth.png": "16350be1284e433c0421b6d31c8929ea",
 "assets/assets/images/avatar.png": "db28132bdd863ff7ab2a74b45b4d94ae",
-"assets/assets/images/logo.png": "ccae26cc4ee5770b0f6aa882e37dc323",
+"assets/assets/images/logo.png": "05fe50bffe43766c5bab3fef558705cf",
 "assets/assets/images/write.jpg": "e1e39483e20a8cb3a54c19fc1b6663e9",
 "assets/assets/images/google_logo.png": "138e8e7c1b7cbaf2aac66e76c83fd487",
 "assets/assets/images/review.png": "613db31016429e96c23ae16e34904764",
 "assets/assets/images/empty.png": "5787500c137019c87f18b46dcf333c0c",
 "assets/assets/images/share.png": "952417bfe29eb9596399a1dab5fc220d",
 "assets/AssetManifest.json": "7b0d02487f7413d1e01d1ec7fcf2816b",
-"icons/Icon-512.png": "dc093dab78690cb4be58e3bddcf7e719",
-"icons/Icon-192.png": "ccae26cc4ee5770b0f6aa882e37dc323",
+"icons/Icon-512.png": "cf84c2ef60391bf5a455b752f8c3b8ee",
+"icons/Icon-192.png": "764db0fc6e35789bc20993b2b1eeca69",
 "index.html": "feee55d463cd830a9cc0f4a594ab2776",
 "/": "feee55d463cd830a9cc0f4a594ab2776"
 };
