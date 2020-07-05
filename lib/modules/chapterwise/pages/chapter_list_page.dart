@@ -44,6 +44,7 @@ class _ChapterListPageState extends State<ChapterListPage>
             children: [
               Expanded(
                 child: ListView(
+                  physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
                   children: [
 /*                    Padding(
@@ -65,7 +66,12 @@ class _ChapterListPageState extends State<ChapterListPage>
                     Align(
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Text("Solve chapter wise numericals"),
+                        child: Text(
+                          "Solve chapter wise numericals",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                     ...snapshot.data.map(

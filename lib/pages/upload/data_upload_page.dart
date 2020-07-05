@@ -367,7 +367,7 @@ class _DataUploadPageState extends State<DataUploadPage> {
 
   void initCourseChaptersScrap() async {
     final rawUrl =
-        'https://unacademy.com/course/circular-motion-for-iit-jee/JOIESRBC';
+        'https://unacademy.com/course/electromagnetic-induction-13/ABIAQ5B1';
 
     //
     //

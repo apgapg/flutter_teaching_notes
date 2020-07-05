@@ -87,12 +87,16 @@ class _QuestionsListPageState extends State<QuestionsListPage>
                         margin: const EdgeInsets.only(
                           left: 16,
                           right: 8,
-                          top: 2,
                           bottom: 2,
                         ),
                         child: Row(
                           children: [
-                            Text("Subject  "),
+                            Text(
+                              "Subject  ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             Container(
                               decoration: BoxDecoration(
                                 color: Colors.blue,
@@ -213,6 +217,7 @@ class _QuestionsListPageState extends State<QuestionsListPage>
                       else
                         Expanded(
                           child: GridView.builder(
+                            physics: BouncingScrollPhysics(),
                             gridDelegate:
                                 SliverGridDelegateWithMaxCrossAxisExtent(
                               maxCrossAxisExtent: 500,
@@ -230,18 +235,26 @@ class _QuestionsListPageState extends State<QuestionsListPage>
               else
                 Expanded(
                   child: ListView(
-                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                    physics: BouncingScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: 4,
+                    ),
                     children: [
                       Container(
                         margin: const EdgeInsets.only(
                           left: 16,
                           right: 8,
-                          top: 2,
                           bottom: 2,
                         ),
                         child: Row(
                           children: [
-                            Text("Subject  "),
+                            Text(
+                              "Subject  ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             Container(
                               decoration: BoxDecoration(
                                 color: Colors.blue,
@@ -292,7 +305,12 @@ class _QuestionsListPageState extends State<QuestionsListPage>
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
                                   children: [
-                                    Text("Level  "),
+                                    Text(
+                                      "Level  ",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                     Container(
                                       decoration: BoxDecoration(
                                         color: getLevelColor(_selectedLevel),

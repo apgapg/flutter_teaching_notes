@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         FirebaseAnalyticsObserver(analytics: analytics),
       ],
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: Colors.grey[50],
         primarySwatch: Colors.blue,
         textTheme: GoogleFonts.notoSansTextTheme(
           Theme.of(context).textTheme,
@@ -64,6 +64,7 @@ class MyApp extends StatelessWidget {
             color: Colors.black87,
           ),
           unselectedItemColor: Colors.black87,
+          backgroundColor: Colors.white,
         ),
         appBarTheme: AppBarTheme(
           color: Colors.white,

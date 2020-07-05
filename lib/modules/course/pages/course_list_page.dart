@@ -25,12 +25,21 @@ class _CourseListPageState extends State<CourseListPage>
           list.sort((a, b) => a.name.compareTo(b.name));
 
           return ListView(
-            padding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 8),
+            physics: BouncingScrollPhysics(),
+            padding: EdgeInsets.symmetric(
+              vertical: 6.0,
+              horizontal: 8,
+            ),
             children: [
-              Align(
+              const Align(
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: Text("Study chapter wise notes"),
+                  child: Text(
+                    "Study chapter wise notes",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
               ...list.map((e) => CourseCard(e))

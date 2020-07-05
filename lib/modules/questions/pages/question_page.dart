@@ -1,15 +1,19 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart' as es;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_teaching_notes/data/model/user.dart';
 import 'package:flutter_teaching_notes/data/repo/user/base/user_repository.dart';
 import 'package:flutter_teaching_notes/di/injector.dart';
 import 'package:flutter_teaching_notes/modules/questions/models/question_model.dart';
 import 'package:flutter_teaching_notes/utils/toast_utils.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
+import 'package:flutter_teaching_notes/widgets/border_container.dart';
 import 'package:flutter_teaching_notes/widgets/images/my_image.dart';
 import 'package:flutter_teaching_notes/widgets/my_divider.dart';
 import 'package:flutter_teaching_notes/widgets/primary_raised_button.dart';
@@ -102,6 +106,7 @@ class _QuestionPageState extends State<QuestionPage> {
                 child: TabBarView(
                   children: [
                     SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -121,7 +126,7 @@ class _QuestionPageState extends State<QuestionPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Image.asset(
-                                'assets/images/write.jpg',
+                                'assets/images/write.png',
                                 height: 200,
                               ),
                               Text(
@@ -133,6 +138,99 @@ class _QuestionPageState extends State<QuestionPage> {
                                 textAlign: TextAlign.center,
                               ),
                             ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          BorderContainer(
+                            margin: EdgeInsets.symmetric(
+                              vertical: 12,
+                              horizontal: 8,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                ListTile(
+                                  title: Text(
+                                    "Ask your friends to try!",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  isThreeLine: true,
+                                  subtitle: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Share this numerical with your friend circle.",
+                                      ),
+                                      Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            if (kIsWeb) {
+                                              launch(
+                                                  'https://play.google.com/store/apps/'
+                                                  'details?id=com.coddu.flutter.iitjee.notes');
+                                            } else {
+                                              final rawfile =
+                                                  await DefaultCacheManager()
+                                                      .getSingleFile(
+                                                          item.images[0]);
+                                              final bytes =
+                                                  rawfile.readAsBytesSync();
+                                              await es.Share.file(
+                                                  'esys image',
+                                                  '${widget.item.title}.png',
+                                                  bytes,
+                                                  'image/jpeg',
+                                                  text:
+                                                      'Hey! Try out this numerical from ${widget.item.topic}.'
+                                                      '\n\nVisit: http://iitjeenotes.web.app/'
+                                                      '\n\n©IIT-JEE Notes by APG');
+                                            }
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(12.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 4.0),
+                                                  child: Icon(
+                                                    SimpleLineIcons.share,
+                                                    size: 14,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Text(
+                                                  "Share this Question",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline4
+                                                      .copyWith(
+                                                        fontSize: 14,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),

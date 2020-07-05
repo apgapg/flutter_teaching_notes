@@ -16,9 +16,16 @@ class SearchTextField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(8),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6),
+          borderSide: BorderSide(
+            color: Theme.of(context).dividerColor,
+          ),
+        ),
         hintText: hint ?? 'Search here...',
         prefixIcon: Icon(Icons.search),
+        fillColor: Theme.of(context).cardColor,
+        filled: true,
       ),
     );
   }

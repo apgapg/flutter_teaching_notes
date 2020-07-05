@@ -45,7 +45,7 @@ class _TopicPageState extends State<TopicPage> {
                 child: PrimaryRaisedButton(
                   icon: Icons.videocam,
                   color: Colors.green,
-                  text: "VIDEO SOLUTION",
+                  text: "UNACADEMY VIDEO",
                   onTap: () async {
                     if (await canLaunch(widget.item.video)) {
                       await launch(widget.item.video);

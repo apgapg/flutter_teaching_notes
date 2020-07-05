@@ -52,296 +52,302 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
-    return kIsWeb
-        ? SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ReviewCard(),
-                MyDivider(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      height: 150,
-                      child: Image.asset('assets/images/share.png'),
-                    ),
-                    ListTile(
-                      title: Text("Share App with Friends"),
-                      subtitle:
-                          Text("Let your freinds know about this awesome app."),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        if (kIsWeb) {
-                          launch('https://play.google.com/store/apps/'
-                              'details?id=com.coddu.flutter.iitjee.notes');
-                        } else {
-                          Share.share(
-                              'https://play.google.com/store/apps/'
-                              'details?id=com.coddu.flutter.iitjee.notes',
-                              subject: "Share App Link");
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 4.0),
-                              child: Icon(
-                                SimpleLineIcons.share,
-                                size: 14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              "Share App Link",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline4
-                                  .copyWith(
-                                    fontSize: 14,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                MyDivider(),
-              ],
-            ),
-          )
-        : StreamBuilder<User>(
-            stream: injector<UserRepository>().getUserStream(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return LoadingPage();
-              }
-              if (snapshot.hasData && snapshot.data != null) {
-                final user = snapshot.data;
-                return SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+    return Container(
+      color: Theme.of(context).cardColor,
+      child: kIsWeb
+          ? SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ReviewCard(),
+                  MyDivider(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      ProfileHeader(
-                        user: user,
-                      ),
-                      MyDivider(),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 4.0),
-                              child: Icon(
-                                FontAwesomeIcons.user,
-                                size: 14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              "Member since ${DateFormat('MMM yyyy').format(DateTime.fromMillisecondsSinceEpoch(user.createdAt * 1000))}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline4
-                                  .copyWith(
-                                    fontSize: 14,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      MyDivider(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => BookmarkPage(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.all(14.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    "${user.bookmarks?.length ?? 0}",
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 2.0),
-                                    child: Icon(
-                                      FontAwesomeIcons.bookmark,
-                                      size: 14,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    "Bookmark(s)",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline4
-                                        .copyWith(
-                                          fontSize: 14,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      MyDivider(),
-                      ReviewCard(),
-                      MyDivider(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Container(
-                            height: 150,
-                            child: Image.asset('assets/images/share.png'),
-                          ),
-                          ListTile(
-                            title: Text("Share App with Friends"),
-                            subtitle: Text(
-                                "Let your freinds know about this awesome app."),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              if (kIsWeb) {
-                                launch('https://play.google.com/store/apps/'
-                                    'details?id=com.coddu.flutter.iitjee.notes');
-                              } else {
-                                Share.share(
-                                    'https://play.google.com/store/apps/'
-                                    'details?id=com.coddu.flutter.iitjee.notes',
-                                    subject: "Share App Link");
-                              }
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 4.0),
-                                    child: Icon(
-                                      SimpleLineIcons.share,
-                                      size: 14,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    "Share App Link",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline4
-                                        .copyWith(
-                                          fontSize: 14,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      MyDivider(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              injector<UserRepository>().logoutUser();
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.all(14.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    "LOGOUT",
-                                    style: TextStyle(color: Colors.red[300]),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      MyDivider(),
-                    ],
-                  ),
-                );
-              } else if (snapshot.hasError) {
-                return ErrorPage(snapshot.error.toString());
-              } else {
-                return Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        'assets/images/auth.png',
+                      Container(
                         height: 150,
+                        child: Image.asset('assets/images/share.png'),
                       ),
-                      SizedBox(
-                        height: 8,
+                      ListTile(
+                        title: Text("Share App with Friends"),
+                        subtitle:
+                            Text("Let your freinds know about this awesome app."),
                       ),
-                      Text("Unlock premium set of features"),
-                      SizedBox(
-                        height: 24,
+                      InkWell(
+                        onTap: () {
+                          if (kIsWeb) {
+                            launch('https://play.google.com/store/apps/'
+                                'details?id=com.coddu.flutter.iitjee.notes');
+                          } else {
+                            Share.share(
+                                'https://play.google.com/store/apps/'
+                                'details?id=com.coddu.flutter.iitjee.notes',
+                                subject: "Share App Link");
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 4.0),
+                                child: Icon(
+                                  SimpleLineIcons.share,
+                                  size: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                "Share App Link",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline4
+                                    .copyWith(
+                                      fontSize: 14,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      RaisedButton(
-                        color: Colors.white,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
+                    ],
+                  ),
+                  MyDivider(),
+                ],
+              ),
+            )
+          : StreamBuilder<User>(
+              stream: injector<UserRepository>().getUserStream(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return LoadingPage();
+                }
+                if (snapshot.hasData && snapshot.data != null) {
+                  final user = snapshot.data;
+                  return SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ProfileHeader(
+                          user: user,
+                        ),
+                        MyDivider(),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 4.0),
+                                child: Icon(
+                                  FontAwesomeIcons.user,
+                                  size: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                "Member since ${DateFormat('MMM yyyy').format(DateTime.fromMillisecondsSinceEpoch(user.createdAt * 1000))}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline4
+                                    .copyWith(
+                                      fontSize: 14,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        MyDivider(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Image.asset(
-                              'assets/images/google_logo.png',
-                              height: 24,
-                            ),
-                            SizedBox(
-                              width: 12,
-                            ),
-                            Text(
-                              "Sign in with Google",
-                              style: TextStyle(
-                                color: Colors.black87,
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => BookmarkPage(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.all(14.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "${user.bookmarks?.length ?? 0}",
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 2.0),
+                                      child: Icon(
+                                        FontAwesomeIcons.bookmark,
+                                        size: 14,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      "Bookmark(s)",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline4
+                                          .copyWith(
+                                            fontSize: 14,
+                                          ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
                         ),
-                        onPressed: _login,
-                      ),
-                    ],
-                  ),
-                );
-              }
-            });
+                        MyDivider(),
+                        ReviewCard(),
+                        MyDivider(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Container(
+                              height: 150,
+                              child: Image.asset('assets/images/share.png'),
+                            ),
+                            ListTile(
+                              title: Text("Share App with Friends"),
+                              subtitle: Text(
+                                "Let your friends know about this awesome app.",
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                if (kIsWeb) {
+                                  launch('https://play.google.com/store/apps/'
+                                      'details?id=com.coddu.flutter.iitjee.notes');
+                                } else {
+                                  Share.share(
+                                      'https://play.google.com/store/apps/'
+                                      'details?id=com.coddu.flutter.iitjee.notes',
+                                      subject: "Share App Link");
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 4.0),
+                                      child: Icon(
+                                        SimpleLineIcons.share,
+                                        size: 14,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      "Share App Link",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline4
+                                          .copyWith(
+                                            fontSize: 14,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        MyDivider(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                injector<UserRepository>().logoutUser();
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.all(14.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "LOGOUT",
+                                      style: TextStyle(color: Colors.red[300]),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        MyDivider(),
+                      ],
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return ErrorPage(snapshot.error.toString());
+                } else {
+                  return Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          'assets/images/auth.png',
+                          height: 150,
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text("Unlock premium set of features"),
+                        SizedBox(
+                          height: 24,
+                        ),
+                        RaisedButton(
+                          color: Colors.white,
+                          padding:
+                              EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.asset(
+                                'assets/images/google_logo.png',
+                                height: 24,
+                              ),
+                              SizedBox(
+                                width: 12,
+                              ),
+                              Text(
+                                "Sign in with Google",
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                ),
+                              ),
+                            ],
+                          ),
+                          onPressed: _login,
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              }),
+    );
   }
 
   void _onLoginSuccess() {

@@ -123,6 +123,19 @@ class _CoursePageState extends State<CoursePage> {
                     horizontal: 8.0,
                   ),
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 4.0,
+                        horizontal: 2,
+                      ),
+                      child: Text(
+                        "Total: ${widget.item.topics.length}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                     ...widget.item.topics.map(
                       (e) => BorderContainer(
                         margin: EdgeInsets.symmetric(vertical: 4),

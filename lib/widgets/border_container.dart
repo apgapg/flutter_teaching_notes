@@ -24,6 +24,7 @@ class BorderContainer extends StatelessWidget {
         border: Border.all(
           color: Theme.of(context).dividerColor,
         ),
+        color: Theme.of(context).cardColor,
       ),
       child: child,
       clipBehavior: Clip.antiAlias,
