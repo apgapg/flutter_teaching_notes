@@ -184,7 +184,7 @@ class _QuestionPageState extends State<QuestionPage> {
                                               final bytes =
                                                   rawfile.readAsBytesSync();
                                               await es.Share.file(
-                                                  'esys image',
+                                                  'Solve numerical',
                                                   '${widget.item.title}.png',
                                                   bytes,
                                                   'image/jpeg',
