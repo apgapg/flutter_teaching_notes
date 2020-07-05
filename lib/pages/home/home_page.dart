@@ -48,104 +48,104 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/images/logo.png',
-              height: 36,
-              width: 36,
+    return ResponsiveContainer(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Row(
+            children: [
+              Image.asset(
+                'assets/images/logo.png',
+                height: 36,
+                width: 36,
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    isTab(context)
+                        ? "IIT-JEE Notes by Ayush P Gupta"
+                        : "IIT-JEE Notes",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  Text(
+                    "by Ayush P Gupta",
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+          elevation: 2.0,
+          actions: <Widget>[
+            if (isDebugMode)
+              IconButton(
+                icon: Icon(
+                  SimpleLineIcons.bulb,
+                ),
+                iconSize: 20,
+                onPressed: onUploadTap,
+              ),
+            Tooltip(
+              message: "Share App",
+              child: IconButton(
+                icon: Icon(Icons.share),
+                onPressed: () {
+                  if (kIsWeb) {
+                    launch('https://play.google.com/store/apps/'
+                        'details?id=com.coddu.flutter.iitjee.notes');
+                  } else {
+                    Share.share(
+                        'https://play.google.com/store/apps/'
+                        'details?id=com.coddu.flutter.iitjee.notes',
+                        subject: "Share App Link");
+                  }
+                },
+                iconSize: 24,
+              ),
+            ),
+            StreamBuilder<User>(
+                stream: injector<UserRepository>().getUserStream(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData && snapshot.data != null) {
+                    return Tooltip(
+                      message: "Bookmarks",
+                      child: IconButton(
+                        icon: Icon(FontAwesomeIcons.bookmark),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => BookmarkPage(),
+                            ),
+                          );
+                        },
+                        iconSize: 20,
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
+                }),
+            Tooltip(
+              message: "About",
+              child: IconButton(
+                icon: Icon(Icons.info_outline),
+                onPressed: onInfoTap,
+                iconSize: 26,
+              ),
             ),
             SizedBox(
               width: 8,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  isTab(context)
-                      ? "IIT-JEE Notes by Ayush P Gupta"
-                      : "IIT-JEE Notes",
-                  style: TextStyle(fontSize: 16),
-                ),
-                Text(
-                  "by Ayush P Gupta",
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w300,
-                  ),
-                )
-              ],
-            ),
+            )
           ],
         ),
-        elevation: 2.0,
-        actions: <Widget>[
-          if (isDebugMode)
-            IconButton(
-              icon: Icon(
-                SimpleLineIcons.bulb,
-              ),
-              iconSize: 20,
-              onPressed: onUploadTap,
-            ),
-          Tooltip(
-            message: "Share App",
-            child: IconButton(
-              icon: Icon(Icons.share),
-              onPressed: () {
-                if (kIsWeb) {
-                  launch('https://play.google.com/store/apps/'
-                      'details?id=com.coddu.flutter.iitjee.notes');
-                } else {
-                  Share.share(
-                      'https://play.google.com/store/apps/'
-                      'details?id=com.coddu.flutter.iitjee.notes',
-                      subject: "Share App Link");
-                }
-              },
-              iconSize: 24,
-            ),
-          ),
-          StreamBuilder<User>(
-              stream: injector<UserRepository>().getUserStream(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData && snapshot.data != null) {
-                  return Tooltip(
-                    message: "Bookmarks",
-                    child: IconButton(
-                      icon: Icon(FontAwesomeIcons.bookmark),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => BookmarkPage(),
-                          ),
-                        );
-                      },
-                      iconSize: 20,
-                    ),
-                  );
-                } else {
-                  return Container();
-                }
-              }),
-          Tooltip(
-            message: "About",
-            child: IconButton(
-              icon: Icon(Icons.info_outline),
-              onPressed: onInfoTap,
-              iconSize: 26,
-            ),
-          ),
-          SizedBox(
-            width: 8,
-          )
-        ],
-      ),
-      body: ResponsiveContainer(
-        child: Column(
+        body: Column(
           children: [
             Expanded(
               child: PageView(
@@ -193,70 +193,70 @@ class HomePageState extends State<HomePage> {
               ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: currentIndex,
-        onTap: (index) {
-          analytics.logEvent(name: 'home_tab_change', parameters: {
-            "index": index,
-          });
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: currentIndex,
+          onTap: (index) {
+            analytics.logEvent(name: 'home_tab_change', parameters: {
+              "index": index,
+            });
 
-          setState(() {
-            currentIndex = index;
-          });
-          _controller.jumpToPage(index);
-        },
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Octicons.question),
-            title: Text("Mixed"),
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Icon(
-                SimpleLineIcons.docs,
-                size: 20,
-              ),
+            setState(() {
+              currentIndex = index;
+            });
+            _controller.jumpToPage(index);
+          },
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Octicons.question),
+              title: Text("Mixed"),
             ),
-            title: Text("Chapterwise"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Octicons.book),
-            title: Text("Notes"),
-          ),
-          BottomNavigationBarItem(
-            icon: StreamBuilder<User>(
-                stream: injector<UserRepository>().getUserStream(),
-                builder: (context, snapshot) {
-                  return Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Stack(
-                      children: [
-                        Icon(
-                          SimpleLineIcons.user,
-                          size: 20,
-                        ),
-                        if (!(snapshot.hasData && snapshot.data != null))
-                          Positioned(
-                            right: 0,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.redAccent,
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Icon(
+                  SimpleLineIcons.docs,
+                  size: 20,
+                ),
+              ),
+              title: Text("Chapterwise"),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Octicons.book),
+              title: Text("Notes"),
+            ),
+            BottomNavigationBarItem(
+              icon: StreamBuilder<User>(
+                  stream: injector<UserRepository>().getUserStream(),
+                  builder: (context, snapshot) {
+                    return Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Stack(
+                        children: [
+                          Icon(
+                            SimpleLineIcons.user,
+                            size: 20,
+                          ),
+                          if (!(snapshot.hasData && snapshot.data != null))
+                            Positioned(
+                              right: 0,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.redAccent,
+                                ),
+                                height: 8,
+                                width: 8,
                               ),
-                              height: 8,
-                              width: 8,
-                            ),
-                          )
-                      ],
-                    ),
-                  );
-                }),
-            title: Text("Profile"),
-          ),
-        ],
+                            )
+                        ],
+                      ),
+                    );
+                  }),
+              title: Text("Profile"),
+            ),
+          ],
+        ),
       ),
     );
   }

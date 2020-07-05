@@ -9,11 +9,21 @@ class ResponsiveContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
+    return Container(
       alignment: Alignment.topCenter,
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: 900),
-        child: child,
+        child: Container(
+          child: child,
+          decoration: BoxDecoration(
+            border: Border.symmetric(
+              horizontal: BorderSide(
+                color: Colors.grey[200],
+                width: 4,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

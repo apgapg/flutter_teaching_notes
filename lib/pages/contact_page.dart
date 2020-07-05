@@ -7,13 +7,13 @@ import 'package:uuid/uuid.dart';
 class ContactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 2.0,
-        title: Text("About Me"),
-      ),
-      body: ResponsiveContainer(
-        child: Container(
+    return ResponsiveContainer(
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 2.0,
+          title: Text("About Me"),
+        ),
+        body: Container(
           padding: EdgeInsets.symmetric(
             horizontal: 16.0,
             vertical: 4.0,
@@ -29,7 +29,8 @@ class ContactPage extends StatelessWidget {
                       shape: CircleBorder(),
                       color: Colors.transparent,
                       child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/images/avatar.png'),
+                        backgroundImage:
+                            AssetImage('assets/images/avatar.png'),
                         radius: 44.0,
                       ),
                     ),

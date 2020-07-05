@@ -71,36 +71,36 @@ class _QuestionPageState extends State<QuestionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          elevation: 2.0,
-          title: Text(item?.title ?? "NA"),
-          bottom: TabBar(
-            indicatorWeight: 3,
-            tabs: [
-              Tab(
-                text: "Numerical".toUpperCase(),
-              ),
-              Tab(
-                text: "Solution".toUpperCase(),
-              ),
-            ],
+    return ResponsiveContainer(
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          key: _scaffoldKey,
+          appBar: AppBar(
+            elevation: 2.0,
+            title: Text(item?.title ?? "NA"),
+            bottom: TabBar(
+              indicatorWeight: 3,
+              tabs: [
+                Tab(
+                  text: "Numerical".toUpperCase(),
+                ),
+                Tab(
+                  text: "Solution".toUpperCase(),
+                ),
+              ],
+            ),
+            /* actions: <Widget>[
+              Tooltip(
+                message: "Download PDF",
+                child: IconButton(
+                  icon: Icon(Icons.arrow_downward),
+                  onPressed: onDownloadTap,
+                ),
+              )
+            ],*/
           ),
-          /* actions: <Widget>[
-            Tooltip(
-              message: "Download PDF",
-              child: IconButton(
-                icon: Icon(Icons.arrow_downward),
-                onPressed: onDownloadTap,
-              ),
-            )
-          ],*/
-        ),
-        body: ResponsiveContainer(
-          child: Column(
+          body: Column(
             children: [
               Expanded(
                 child: TabBarView(
@@ -332,90 +332,90 @@ class _QuestionPageState extends State<QuestionPage> {
               ),
             ],
           ),
-        ),
-        bottomNavigationBar: StreamBuilder<User>(
-            stream: injector<UserRepository>().getUserStream(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData && snapshot.data != null) {
-                final user = snapshot.data;
-                return BottomAppBar(
-                  child: InkWell(
-                    onTap: () {
-                      if (checkIfListIsNotEmpty(user.bookmarks) &&
-                          user.bookmarks.contains(item.id)) {
-                        injector<UserRepository>().removeBookmark(item.id);
-                      } else {
-                        injector<UserRepository>().saveBookmark(item.id);
-                      }
-                    },
-                    child: checkIfListIsNotEmpty(user.bookmarks) &&
-                            user.bookmarks.contains(item.id)
-                        ? Container(
-                            height: 48,
-                            alignment: Alignment.center,
-                            color: Theme.of(context).primaryColor,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.bookmark,
-                                  size: 20,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  "Added to Bookmarks",
-                                  style: TextStyle(
+          bottomNavigationBar: StreamBuilder<User>(
+              stream: injector<UserRepository>().getUserStream(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData && snapshot.data != null) {
+                  final user = snapshot.data;
+                  return BottomAppBar(
+                    child: InkWell(
+                      onTap: () {
+                        if (checkIfListIsNotEmpty(user.bookmarks) &&
+                            user.bookmarks.contains(item.id)) {
+                          injector<UserRepository>().removeBookmark(item.id);
+                        } else {
+                          injector<UserRepository>().saveBookmark(item.id);
+                        }
+                      },
+                      child: checkIfListIsNotEmpty(user.bookmarks) &&
+                              user.bookmarks.contains(item.id)
+                          ? Container(
+                              height: 48,
+                              alignment: Alignment.center,
+                              color: Theme.of(context).primaryColor,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.bookmark,
+                                    size: 20,
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold,
                                   ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : Container(
-                            height: 48,
-                            alignment: Alignment.center,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.bookmark_border,
-                                  size: 20,
-                                  color: MediaQuery.of(context)
-                                              .platformBrightness ==
-                                          Brightness.light
-                                      ? Theme.of(context).primaryColor
-                                      : null,
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  "Add to Bookmarks",
-                                  style: TextStyle(
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    "Added to Bookmarks",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Container(
+                              height: 48,
+                              alignment: Alignment.center,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.bookmark_border,
+                                    size: 20,
                                     color: MediaQuery.of(context)
                                                 .platformBrightness ==
                                             Brightness.light
                                         ? Theme.of(context).primaryColor
                                         : null,
-                                    fontWeight: FontWeight.bold,
                                   ),
-                                ),
-                              ],
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    "Add to Bookmarks",
+                                    style: TextStyle(
+                                      color: MediaQuery.of(context)
+                                                  .platformBrightness ==
+                                              Brightness.light
+                                          ? Theme.of(context).primaryColor
+                                          : null,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                  ),
-                );
-              } else {
-                return SizedBox(
-                  height: 0,
-                  width: 0,
-                );
-              }
-            }),
+                    ),
+                  );
+                } else {
+                  return SizedBox(
+                    height: 0,
+                    width: 0,
+                  );
+                }
+              }),
+        ),
       ),
     );
   }

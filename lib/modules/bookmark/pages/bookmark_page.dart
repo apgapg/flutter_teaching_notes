@@ -80,12 +80,12 @@ class _BookmarkPageState extends State<BookmarkPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Bookmarks'),
-      ),
-      body: ResponsiveContainer(
-        child: StreamBuilder<List<Question>>(
+    return ResponsiveContainer(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Bookmarks'),
+        ),
+        body: StreamBuilder<List<Question>>(
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
               return Column(
