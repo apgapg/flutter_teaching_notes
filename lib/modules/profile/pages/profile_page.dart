@@ -71,46 +71,49 @@ class _ProfilePageState extends State<ProfilePage>
                       ),
                       ListTile(
                         title: Text("Share App with Friends"),
-                        subtitle:
-                            Text("Let your freinds know about this awesome app."),
+                        subtitle: Text(
+                            "Let your freinds know about this awesome app."),
                       ),
-                      InkWell(
-                        onTap: () {
-                          if (kIsWeb) {
-                            launch('https://play.google.com/store/apps/'
-                                'details?id=com.coddu.flutter.iitjee.notes');
-                          } else {
-                            Share.share(
-                                'https://play.google.com/store/apps/'
-                                'details?id=com.coddu.flutter.iitjee.notes',
-                                subject: "Share App Link");
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 4.0),
-                                child: Icon(
-                                  SimpleLineIcons.share,
-                                  size: 14,
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            if (kIsWeb) {
+                              launch('https://play.google.com/store/apps/'
+                                  'details?id=com.coddu.flutter.iitjee.notes');
+                            } else {
+                              Share.share(
+                                  'https://play.google.com/store/apps/'
+                                  'details?id=com.coddu.flutter.iitjee.notes',
+                                  subject: "Share App Link");
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                  child: Icon(
+                                    SimpleLineIcons.share,
+                                    size: 14,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                "Share App Link",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline4
-                                    .copyWith(
-                                      fontSize: 14,
-                                    ),
-                              ),
-                            ],
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  "Share App Link",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline4
+                                      .copyWith(
+                                        fontSize: 14,
+                                      ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -168,47 +171,51 @@ class _ProfilePageState extends State<ProfilePage>
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) => BookmarkPage(),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                padding: const EdgeInsets.all(14.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      "${user.bookmarks?.length ?? 0}",
-                                      style: TextStyle(fontSize: 18),
+                            Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => BookmarkPage(),
                                     ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 2.0),
-                                      child: Icon(
-                                        FontAwesomeIcons.bookmark,
-                                        size: 14,
+                                  );
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.all(14.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        "${user.bookmarks?.length ?? 0}",
+                                        style: TextStyle(fontSize: 18),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                      "Bookmark(s)",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline4
-                                          .copyWith(
-                                            fontSize: 14,
-                                          ),
-                                    ),
-                                  ],
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 2.0),
+                                        child: Icon(
+                                          FontAwesomeIcons.bookmark,
+                                          size: 14,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        "Bookmark(s)",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4
+                                            .copyWith(
+                                              fontSize: 14,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -230,43 +237,47 @@ class _ProfilePageState extends State<ProfilePage>
                                 "Let your friends know about this awesome app.",
                               ),
                             ),
-                            InkWell(
-                              onTap: () {
-                                if (kIsWeb) {
-                                  launch('https://play.google.com/store/apps/'
-                                      'details?id=com.coddu.flutter.iitjee.notes');
-                                } else {
-                                  Share.share(
-                                      'https://play.google.com/store/apps/'
-                                      'details?id=com.coddu.flutter.iitjee.notes',
-                                      subject: "Share App Link");
-                                }
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 4.0),
-                                      child: Icon(
-                                        SimpleLineIcons.share,
-                                        size: 14,
+                            Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  if (kIsWeb) {
+                                    launch('https://play.google.com/store/apps/'
+                                        'details?id=com.coddu.flutter.iitjee.notes');
+                                  } else {
+                                    Share.share(
+                                        'https://play.google.com/store/apps/'
+                                        'details?id=com.coddu.flutter.iitjee.notes',
+                                        subject: "Share App Link");
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 4.0),
+                                        child: Icon(
+                                          SimpleLineIcons.share,
+                                          size: 14,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                      "Share App Link",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline4
-                                          .copyWith(
-                                            fontSize: 14,
-                                          ),
-                                    ),
-                                  ],
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        "Share App Link",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4
+                                            .copyWith(
+                                              fontSize: 14,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
