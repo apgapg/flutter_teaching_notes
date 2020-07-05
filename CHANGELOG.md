@@ -1,3 +1,13 @@
+## [3.11.0] 05/07/20
+- Hardcode flutter version in CI/CDAdd description
+- Add google site verification tag
+- Add topics in courses
+- Add analytics at different clicks
+- Add share question feature
+- Add splash screen on web
+- Fix UI for web
+- Fix ripple in some buttons
+
 ## [3.10.0] 03/07/20
 - Add description
 - Do not invert colors of course card
