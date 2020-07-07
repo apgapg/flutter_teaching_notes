@@ -2,12 +2,12 @@
 
 ### Flutter📱 + Firebase🔥
 
-<img src="https://raw.githubusercontent.com/apgapg/flutter_teaching_notes/master/res/logo.png"  height = "200" alt="iitjee">
+<img src="https://raw.githubusercontent.com/apgapg/flutter_teaching_notes/master/assets/images/logo.png" alt="iitjeenotes">
+
+<a href="https://www.producthunt.com/posts/iit-jee-questions-bank-by-ayush-p-gupta?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-iit-jee-questions-bank-by-ayush-p-gupta" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=213571&theme=light" alt="IIT-JEE Questions Bank by Ayush P Gupta - Collection of quality questions for Physics preparation | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px" /></a>
 
 A Flutter project containing questions/answers and notes of IIT JEE preparation prepared by Ayush P Gupta.
-
 These notes are published as video on Unacademy platform.
-
 This app serves the slides/notes used in those videos.
 
 Playstore App: [https://play.google.com/store/apps/details?id=com.coddu.flutter.iitjee.notes](https://play.google.com/store/apps/details?id=com.coddu.flutter.iitjee.notes)
