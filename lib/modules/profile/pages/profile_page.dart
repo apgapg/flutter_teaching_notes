@@ -54,7 +54,8 @@ class _ProfilePageState extends State<ProfilePage>
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).cardColor,
-      child: kIsWeb
+      child:
+          /* kIsWeb
           ? SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Column(
@@ -123,7 +124,8 @@ class _ProfilePageState extends State<ProfilePage>
                 ],
               ),
             )
-          : StreamBuilder<User>(
+          : */
+          StreamBuilder<User>(
               stream: injector<UserRepository>().getUserStream(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
