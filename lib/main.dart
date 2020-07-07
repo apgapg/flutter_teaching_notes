@@ -68,6 +68,7 @@ class MyApp extends StatelessWidget {
         ),
         appBarTheme: AppBarTheme(
           color: Colors.white,
+          elevation: 2,
           textTheme: Theme.of(context).textTheme,
           iconTheme: IconThemeData(
             color: Colors.blueGrey[900],
