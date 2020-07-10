@@ -10,4 +10,8 @@ class ToastUtils {
   static void showToast(String message) {
     BotToast.showText(text: message);
   }
+
+  static void showLoginToast() {
+    show("Login to use this feature!");
+  }
 }

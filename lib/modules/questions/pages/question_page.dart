@@ -18,10 +18,10 @@ import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/border_container.dart';
 import 'package:flutter_teaching_notes/widgets/images/my_image.dart';
 import 'package:flutter_teaching_notes/widgets/my_divider.dart';
+import 'package:flutter_teaching_notes/widgets/pdf_widget.dart';
 import 'package:flutter_teaching_notes/widgets/primary_raised_button.dart';
 import 'package:flutter_teaching_notes/widgets/responsive_container.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class QuestionPage extends StatefulWidget {
@@ -149,6 +149,14 @@ class _QuestionPageState extends State<QuestionPage> {
                           SizedBox(
                             height: 12,
                           ),
+                          if (checkIfNotEmpty(_pdfPath))
+                            BorderContainer(
+                              margin: EdgeInsets.symmetric(
+                                vertical: 6,
+                                horizontal: 8,
+                              ),
+                              child: PdfWidget(_pdfPath),
+                            ),
                           BorderContainer(
                             margin: EdgeInsets.symmetric(
                               vertical: 4,
@@ -239,82 +247,8 @@ class _QuestionPageState extends State<QuestionPage> {
                               ],
                             ),
                           ),
-                          if (checkIfNotEmpty(_pdfPath))
-                            BorderContainer(
-                              margin: EdgeInsets.symmetric(
-                                vertical: 6,
-                                horizontal: 8,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  ListTile(
-                                    title: Text(
-                                      "Download as PDF!",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    isThreeLine: true,
-                                    subtitle: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Save a copy of this question on your device",
-                                        ),
-                                        Material(
-                                          color: Colors.transparent,
-                                          child: InkWell(
-                                            onTap: () {
-                                              launch(_pdfPath);
-                                            },
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(12.0),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding: EdgeInsets.only(
-                                                      bottom: 4.0,
-                                                    ),
-                                                    child: Icon(
-                                                      FontAwesomeIcons
-                                                          .solidFilePdf,
-                                                      size: 18,
-                                                      color: Colors.red[700],
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 8,
-                                                  ),
-                                                  Text(
-                                                    "Save PDF",
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline4
-                                                        .copyWith(
-                                                          fontSize: 14,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                           SizedBox(
-                            height: 4,
+                            height: 8,
                           ),
                         ],
                       ),
@@ -380,7 +314,6 @@ class _QuestionPageState extends State<QuestionPage> {
                                           },
                                         ),
                                       ),
-                                    MyDivider(),
                                     for (String image in soln.images)
                                       Column(
                                         mainAxisSize: MainAxisSize.min,
@@ -390,6 +323,7 @@ class _QuestionPageState extends State<QuestionPage> {
                                               image,
                                               style: TextStyle(fontSize: 12),
                                             ),
+                                          MyDivider(),
                                           GestureDetector(
                                             onLongPress: isDebugMode &&
                                                     checkIfNotEmpty(item.id)
@@ -404,6 +338,7 @@ class _QuestionPageState extends State<QuestionPage> {
                                             ),
                                           ),
                                           MyDivider(),
+                                          SizedBox(height: 8,),
                                         ],
                                       ),
                                   ],
@@ -419,7 +354,86 @@ class _QuestionPageState extends State<QuestionPage> {
           bottomNavigationBar: StreamBuilder<User>(
               stream: injector<UserRepository>().getUserStream(),
               builder: (context, snapshot) {
-                if (snapshot.hasData && snapshot.data != null) {
+                final user = snapshot.data;
+
+                return BottomAppBar(
+                  child: InkWell(
+                    onTap: user == null
+                        ? () {
+                            ToastUtils.showLoginToast();
+                          }
+                        : () {
+                            if (checkIfListIsNotEmpty(user.bookmarks) &&
+                                user.bookmarks.contains(item.id)) {
+                              injector<UserRepository>()
+                                  .removeBookmark(item.id);
+                            } else {
+                              injector<UserRepository>().saveBookmark(item.id);
+                            }
+                          },
+                    child: user != null &&
+                            checkIfListIsNotEmpty(user.bookmarks) &&
+                            user.bookmarks.contains(item.id)
+                        ? Container(
+                            height: 48,
+                            alignment: Alignment.center,
+                            color: Theme.of(context).primaryColor,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.bookmark,
+                                  size: 20,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  "Added to Bookmarks",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Container(
+                            height: 48,
+                            alignment: Alignment.center,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.bookmark_border,
+                                  size: 20,
+                                  color: MediaQuery.of(context)
+                                              .platformBrightness ==
+                                          Brightness.light
+                                      ? Theme.of(context).primaryColor
+                                      : null,
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  "Add to Bookmarks",
+                                  style: TextStyle(
+                                    color: MediaQuery.of(context)
+                                                .platformBrightness ==
+                                            Brightness.light
+                                        ? Theme.of(context).primaryColor
+                                        : null,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                  ),
+                );
+                /*if (snapshot.hasData && snapshot.data != null) {
                   final user = snapshot.data;
                   return BottomAppBar(
                     child: InkWell(
@@ -497,7 +511,7 @@ class _QuestionPageState extends State<QuestionPage> {
                     height: 0,
                     width: 0,
                   );
-                }
+                }*/
               }),
         ),
       ),

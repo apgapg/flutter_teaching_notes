@@ -14,6 +14,7 @@ import 'package:flutter_teaching_notes/modules/profile/index.dart';
 import 'package:flutter_teaching_notes/modules/questions/pages/questions_list_page.dart';
 import 'package:flutter_teaching_notes/pages/contact_page.dart';
 import 'package:flutter_teaching_notes/pages/upload/data_upload_page.dart';
+import 'package:flutter_teaching_notes/utils/toast_utils.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/responsive_container.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -113,24 +114,25 @@ class HomePageState extends State<HomePage> {
             StreamBuilder<User>(
                 stream: injector<UserRepository>().getUserStream(),
                 builder: (context, snapshot) {
-                  if (snapshot.hasData && snapshot.data != null) {
-                    return Tooltip(
-                      message: "Bookmarks",
-                      child: IconButton(
-                        icon: Icon(FontAwesomeIcons.bookmark),
-                        onPressed: () {
+                  final user = snapshot.data;
+                  return Tooltip(
+                    message: "Bookmarks",
+                    child: IconButton(
+                      icon: Icon(FontAwesomeIcons.bookmark),
+                      onPressed: () {
+                        if (user == null) {
+                          ToastUtils.showLoginToast();
+                        } else {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (_) => BookmarkPage(),
                             ),
                           );
-                        },
-                        iconSize: 20,
-                      ),
-                    );
-                  } else {
-                    return Container();
-                  }
+                        }
+                      },
+                      iconSize: 20,
+                    ),
+                  );
                 }),
             Tooltip(
               message: "About",

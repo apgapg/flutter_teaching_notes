@@ -1,10 +1,14 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_teaching_notes/model/course_model.dart';
+import 'package:flutter_teaching_notes/utils/log_utils.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
+import 'package:flutter_teaching_notes/widgets/border_container.dart';
 import 'package:flutter_teaching_notes/widgets/images/my_image.dart';
 import 'package:flutter_teaching_notes/widgets/my_divider.dart';
+import 'package:flutter_teaching_notes/widgets/pdf_widget.dart';
 import 'package:flutter_teaching_notes/widgets/primary_raised_button.dart';
 import 'package:flutter_teaching_notes/widgets/responsive_container.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -12,14 +16,23 @@ import 'package:url_launcher/url_launcher.dart';
 
 class TopicPage extends StatefulWidget {
   final Topic item;
+  final CourseItem course;
 
-  TopicPage(this.item);
+  TopicPage(this.item, this.course);
 
   @override
   _TopicPageState createState() => _TopicPageState();
 }
 
 class _TopicPageState extends State<TopicPage> {
+  String _pdfPath;
+
+  @override
+  void initState() {
+    super.initState();
+    getpdf();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ResponsiveContainer(
@@ -55,6 +68,11 @@ class _TopicPageState extends State<TopicPage> {
                     },
                   ),
                 ),
+              if (checkIfNotEmpty(_pdfPath))
+                BorderContainer(
+                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  child: PdfWidget(_pdfPath),
+                ),
               if (checkIfListIsNotEmpty(widget.item.images))
                 for (final image in widget.item.images)
                   Column(
@@ -65,11 +83,15 @@ class _TopicPageState extends State<TopicPage> {
                           image,
                           style: TextStyle(fontSize: 12),
                         ),
+                      MyDivider(),
                       MyImage(
                         image,
                         tapEnabled: true,
                       ),
                       MyDivider(),
+                      SizedBox(
+                        height: 8,
+                      ),
                     ],
                   ),
             ],
@@ -77,5 +99,21 @@ class _TopicPageState extends State<TopicPage> {
         ),
       ),
     );
+  }
+
+  void getpdf() async {
+    try {
+      final storageReference = FirebaseStorage().ref().child(
+          'chapter-pdf/${widget.course.name}/${widget.item.title.replaceAll('Quality Numerical ', '')} ${widget.item.id}.pdf');
+      final path = await storageReference.getDownloadURL();
+      print(path);
+      if (mounted) {
+        setState(() {
+          _pdfPath = path;
+        });
+      }
+    } catch (e, s) {
+      logger.e(s, s);
+    }
   }
 }

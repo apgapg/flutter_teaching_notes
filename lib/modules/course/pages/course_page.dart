@@ -74,7 +74,7 @@ class _CoursePageState extends State<CoursePage> {
           appBar: AppBar(
             elevation: 2.0,
             title: Text(item?.name ?? "NA"),
-            actions: <Widget>[
+            /* actions: <Widget>[
               Tooltip(
                 message: "Download PDF",
                 child: IconButton(
@@ -82,7 +82,7 @@ class _CoursePageState extends State<CoursePage> {
                   onPressed: onDownloadTap,
                 ),
               )
-            ],
+            ],*/
             bottom: TabBar(
               indicatorWeight: 3,
               tabs: [
@@ -130,7 +130,7 @@ class _CoursePageState extends State<CoursePage> {
                           horizontal: 2,
                         ),
                         child: Text(
-                          "Total: ${widget.item.topics.length}",
+                          "Total Units: ${widget.item.topics.length}",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -144,7 +144,10 @@ class _CoursePageState extends State<CoursePage> {
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (_) => TopicPage(e),
+                                  builder: (_) => TopicPage(
+                                    e,
+                                    widget.item,
+                                  ),
                                 ),
                               );
                             },
@@ -200,14 +203,14 @@ class _CoursePageState extends State<CoursePage> {
               ],
             ),
           ),
-          floatingActionButton: FloatingActionButton(
+          /* floatingActionButton: FloatingActionButton(
             child: Icon(Icons.videocam),
             onPressed: () async {
               if (await canLaunch(item.videoLink)) {
                 await launch(item.videoLink);
               }
             },
-          ),
+          ),*/
         ),
       ),
     );
