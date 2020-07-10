@@ -12098,6 +12098,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 --------------------------------------------------------------------------------
 path_provider_platform_interface
+shared_preferences_linux
+url_launcher_linux
 
 // Copyright 2020 The Chromium Authors. All rights reserved.
 //
