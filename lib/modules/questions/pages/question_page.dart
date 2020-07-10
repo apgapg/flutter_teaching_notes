@@ -338,7 +338,9 @@ class _QuestionPageState extends State<QuestionPage> {
                                             ),
                                           ),
                                           MyDivider(),
-                                          SizedBox(height: 8,),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
                                         ],
                                       ),
                                   ],

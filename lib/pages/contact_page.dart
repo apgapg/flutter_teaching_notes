@@ -29,8 +29,7 @@ class ContactPage extends StatelessWidget {
                       shape: CircleBorder(),
                       color: Colors.transparent,
                       child: CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/avatar.png'),
+                        backgroundImage: AssetImage('assets/images/avatar.png'),
                         radius: 44.0,
                       ),
                     ),
