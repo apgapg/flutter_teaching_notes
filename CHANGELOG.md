@@ -1,3 +1,8 @@
+## [3.12.0] 10/07/20
+- Add download pdf button
+- Add pdf buttons everywhere
+- Remove download action button in courses
+
 ## [3.11.0] 05/07/20
 - Hardcode flutter version in CI/CDAdd description
 - Add google site verification tag
