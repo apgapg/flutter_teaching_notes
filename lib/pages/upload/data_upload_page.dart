@@ -367,7 +367,7 @@ class _DataUploadPageState extends State<DataUploadPage> {
 
   void initCourseChaptersScrap() async {
     final rawUrl =
-        'https://unacademy.com/course/fluid-mechanics-for-iit-jee/W9DYJ1LF';
+        'https://unacademy.com/course/thermodynamics-for-iit-jee-138/P4H68HSQ';
 
     //
     //
@@ -401,7 +401,7 @@ class _DataUploadPageState extends State<DataUploadPage> {
       final topics = [];
 
       for (final url in listUrls) {
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(Duration(seconds: 2));
         final uid = await initChapterUidScrap(chapterUrl: url);
         topics.add({
           'id': uid,

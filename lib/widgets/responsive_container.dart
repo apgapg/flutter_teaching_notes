@@ -15,14 +15,16 @@ class ResponsiveContainer extends StatelessWidget {
         constraints: BoxConstraints(maxWidth: 900),
         child: Container(
           child: child,
-          decoration: BoxDecoration(
-            border: Border.symmetric(
-              horizontal: BorderSide(
-                color: Colors.grey[200],
-                width: 4,
-              ),
-            ),
-          ),
+          decoration: MediaQuery.of(context).size.width >= 900
+              ? BoxDecoration(
+                  border: Border.symmetric(
+                    horizontal: BorderSide(
+                      color: Colors.grey[200],
+                      width: 4,
+                    ),
+                  ),
+                )
+              : null,
         ),
       ),
     );
