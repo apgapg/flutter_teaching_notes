@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart' as es;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_teaching_notes/data/model/user.dart';
 import 'package:flutter_teaching_notes/data/repo/user/base/user_repository.dart';
 import 'package:flutter_teaching_notes/di/injector.dart';
 import 'package:flutter_teaching_notes/modules/questions/models/question_model.dart';
+import 'package:flutter_teaching_notes/utils/log_utils.dart';
 import 'package:flutter_teaching_notes/utils/toast_utils.dart';
 import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:flutter_teaching_notes/widgets/border_container.dart';
@@ -19,6 +21,7 @@ import 'package:flutter_teaching_notes/widgets/my_divider.dart';
 import 'package:flutter_teaching_notes/widgets/primary_raised_button.dart';
 import 'package:flutter_teaching_notes/widgets/responsive_container.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class QuestionPage extends StatefulWidget {
@@ -40,6 +43,8 @@ class _QuestionPageState extends State<QuestionPage> {
 
   StreamSubscription<DocumentSnapshot> subs;
 
+  String _pdfPath;
+
   @override
   void initState() {
     super.initState();
@@ -59,6 +64,8 @@ class _QuestionPageState extends State<QuestionPage> {
         }
       });
     }
+
+    getpdf();
   }
 
   @override
@@ -140,11 +147,11 @@ class _QuestionPageState extends State<QuestionPage> {
                             ],
                           ),
                           SizedBox(
-                            height: 8,
+                            height: 12,
                           ),
                           BorderContainer(
                             margin: EdgeInsets.symmetric(
-                              vertical: 12,
+                              vertical: 4,
                               horizontal: 8,
                             ),
                             child: Column(
@@ -231,6 +238,83 @@ class _QuestionPageState extends State<QuestionPage> {
                                 ),
                               ],
                             ),
+                          ),
+                          if (checkIfNotEmpty(_pdfPath))
+                            BorderContainer(
+                              margin: EdgeInsets.symmetric(
+                                vertical: 6,
+                                horizontal: 8,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  ListTile(
+                                    title: Text(
+                                      "Download as PDF!",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    isThreeLine: true,
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Save a copy of this question on your device",
+                                        ),
+                                        Material(
+                                          color: Colors.transparent,
+                                          child: InkWell(
+                                            onTap: () {
+                                              launch(_pdfPath);
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(12.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                      bottom: 4.0,
+                                                    ),
+                                                    child: Icon(
+                                                      FontAwesomeIcons
+                                                          .solidFilePdf,
+                                                      size: 18,
+                                                      color: Colors.red[700],
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 8,
+                                                  ),
+                                                  Text(
+                                                    "Save PDF",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline4
+                                                        .copyWith(
+                                                          fontSize: 14,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          SizedBox(
+                            height: 4,
                           ),
                         ],
                       ),
@@ -443,5 +527,22 @@ class _QuestionPageState extends State<QuestionPage> {
                 )
               ],
             ));
+  }
+
+  void getpdf() async {
+    try {
+      final storageReference = FirebaseStorage()
+          .ref()
+          .child('chapter-pdf/${item.topic}/${item.title} ${item.id}.pdf');
+      final path = await storageReference.getDownloadURL();
+      print(path);
+      if (mounted) {
+        setState(() {
+          _pdfPath = path;
+        });
+      }
+    } catch (e, s) {
+      logger.e(s, s);
+    }
   }
 }
