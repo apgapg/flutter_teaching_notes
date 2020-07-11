@@ -88,6 +88,7 @@ class _QuestionsListPageState extends State<QuestionsListPage>
                           left: 16,
                           right: 8,
                           bottom: 2,
+                          top: 2,
                         ),
                         child: Row(
                           children: [
@@ -217,11 +218,14 @@ class _QuestionsListPageState extends State<QuestionsListPage>
                       else
                         Expanded(
                           child: GridView.builder(
+                            padding: EdgeInsets.symmetric(horizontal: 8),
                             physics: BouncingScrollPhysics(),
                             gridDelegate:
                                 SliverGridDelegateWithMaxCrossAxisExtent(
                               maxCrossAxisExtent: 500,
                               childAspectRatio: 1.4,
+                              crossAxisSpacing: 4,
+                              mainAxisSpacing: 4,
                             ),
                             scrollDirection: Axis.vertical,
                             itemBuilder: (_, index) =>

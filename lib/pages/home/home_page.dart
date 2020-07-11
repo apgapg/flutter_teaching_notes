@@ -154,9 +154,9 @@ class HomePageState extends State<HomePage> {
                 controller: _controller,
                 physics: NeverScrollableScrollPhysics(),
                 children: [
+                  CourseListPage(),
                   QuestionsListPage(),
                   ChapterListPage(),
-                  CourseListPage(),
                   ProfilePage(),
                 ],
               ),
@@ -210,6 +210,10 @@ class HomePageState extends State<HomePage> {
           },
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
+              icon: Icon(Octicons.book),
+              title: Text("Notes"),
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Octicons.question),
               title: Text("Mixed"),
             ),
@@ -222,10 +226,6 @@ class HomePageState extends State<HomePage> {
                 ),
               ),
               title: Text("Chapterwise"),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Octicons.book),
-              title: Text("Notes"),
             ),
             BottomNavigationBarItem(
               icon: StreamBuilder<User>(

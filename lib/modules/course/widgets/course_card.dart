@@ -67,6 +67,16 @@ class CourseCard extends StatelessWidget {
                             fontSize: 14,
                           ),
                     ),
+                    SizedBox(
+                      height: 4.0,
+                    ),
+                    Text(
+                      '${_item.topics.length} Videos',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                   ],
                 ),
               )

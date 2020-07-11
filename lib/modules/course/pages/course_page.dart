@@ -95,113 +95,111 @@ class _CoursePageState extends State<CoursePage> {
               ],
             ),
           ),
-          body: ResponsiveContainer(
-            child: TabBarView(
-              children: [
-                if (!checkIfListIsNotEmpty(widget.item.topics))
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/empty.png',
-                        height: 200,
-                      ),
-                      Text(
-                        'Don\'t worry! We will update\nthe topics soon.',
-                        style: Theme.of(context)
-                            .textTheme
-                            .display1
-                            .copyWith(fontSize: 14),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  )
-                else
-                  ListView(
-                    physics: BouncingScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 4.0,
-                      horizontal: 8.0,
+          body: TabBarView(
+            children: [
+              if (!checkIfListIsNotEmpty(widget.item.topics))
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/empty.png',
+                      height: 200,
                     ),
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 4.0,
-                          horizontal: 2,
-                        ),
-                        child: Text(
-                          "Total Units: ${widget.item.topics.length}",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      ...widget.item.topics.map(
-                        (e) => BorderContainer(
-                          margin: EdgeInsets.symmetric(vertical: 4),
-                          child: ListTile(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => TopicPage(
-                                    e,
-                                    widget.item,
-                                  ),
-                                ),
-                              );
-                            },
-                            leading: Container(
-                              height: 28,
-                              width: 28,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Text(
-                                "${widget.item.topics.indexOf(e) + 1}",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                            title: Text(
-                              e.title ?? "--",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ListView.builder(
+                    Text(
+                      'Don\'t worry! We will update\nthe topics soon.',
+                      style: Theme.of(context)
+                          .textTheme
+                          .display1
+                          .copyWith(fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                )
+              else
+                ListView(
                   physics: BouncingScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     vertical: 4.0,
                     horizontal: 8.0,
                   ),
-                  // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, childAspectRatio: 1.5),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onLongPress: isDebugMode &&
-                              checkIfNotEmpty(item.videoLink) &&
-                              checkIfListIsNotEmpty(item.images)
-                          ? () async {
-                              await removeImage(_imagesList[index]);
-                            }
-                          : null,
-                      child: NoteCard(index, _imagesList[index]),
-                    );
-                  },
-                  itemCount: _imagesList.length,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 4.0,
+                        horizontal: 2,
+                      ),
+                      child: Text(
+                        "Total Units: ${widget.item.topics.length}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    ...widget.item.topics.map(
+                      (e) => BorderContainer(
+                        margin: EdgeInsets.symmetric(vertical: 4),
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => TopicPage(
+                                  e,
+                                  widget.item,
+                                ),
+                              ),
+                            );
+                          },
+                          leading: Container(
+                            height: 28,
+                            width: 28,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Text(
+                              "${widget.item.topics.indexOf(e) + 1}",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                          title: Text(
+                            e.title ?? "--",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-              ],
-            ),
+              ListView.builder(
+                physics: BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(
+                  vertical: 4.0,
+                  horizontal: 8.0,
+                ),
+                // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, childAspectRatio: 1.5),
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onLongPress: isDebugMode &&
+                            checkIfNotEmpty(item.videoLink) &&
+                            checkIfListIsNotEmpty(item.images)
+                        ? () async {
+                            await removeImage(_imagesList[index]);
+                          }
+                        : null,
+                    child: NoteCard(index, _imagesList[index]),
+                  );
+                },
+                itemCount: _imagesList.length,
+              ),
+            ],
           ),
           /* floatingActionButton: FloatingActionButton(
             child: Icon(Icons.videocam),

@@ -522,27 +522,28 @@ class _QuestionPageState extends State<QuestionPage> {
 
   Future<void> removeImage(Solution soln, String image) async {
     await showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-              title: Text("Remove image?"),
-              content: Text("$image"),
-              actions: [
-                FlatButton(
-                  child: Text("YES"),
-                  onPressed: () async {
-                    final newSoln = soln.images;
-                    newSoln.remove(image);
-                    injector<Firestore>()
-                        .document('numericals/${item.id}')
-                        .updateData({
-                      'solutions': [soln.toJson()]
-                    });
-                    ToastUtils.show("Removed");
-                    Navigator.pop(context);
-                  },
-                )
-              ],
-            ));
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text("Remove image?"),
+        content: Text("$image"),
+        actions: [
+          FlatButton(
+            child: Text("YES"),
+            onPressed: () async {
+              final newSoln = soln.images;
+              newSoln.remove(image);
+              injector<Firestore>()
+                  .document('numericals/${item.id}')
+                  .updateData({
+                'solutions': [soln.toJson()]
+              });
+              ToastUtils.show("Removed");
+              Navigator.pop(context);
+            },
+          )
+        ],
+      ),
+    );
   }
 
   void getpdf() async {
