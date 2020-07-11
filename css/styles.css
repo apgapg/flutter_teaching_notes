@@ -1,6 +1,6 @@
 .center {
-  width: 192px;
-  height: 192px;
+  width: 150px;
+  height: 150px;
   position: absolute;
   top: 45%;
   left: 50%;
@@ -9,7 +9,7 @@
 }
 
 .loader {
-  border: 3px solid #f3f3f3; /* Light grey */
+  border: 3px solid whitesmoke;
   border-top: 3px solid #3498db; /* Blue */
   border-radius: 50%;
   width: 32px;
