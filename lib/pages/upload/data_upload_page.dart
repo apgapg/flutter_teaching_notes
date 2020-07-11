@@ -29,7 +29,10 @@ class _DataUploadPageState extends State<DataUploadPage> {
     //initSolutionsImageCopy();
     //initImageUrlsOfChapter(chapterId: "M5KOIVB52U4RBO9YVCMY");
     //initCourseImagesScrap();
-    initCourseChaptersScrap();
+    //initCourseChaptersScrap();
+
+    //copyVideoQuestionToStorage();
+    copyVideoSolutionToStorage();
   }
 
   @override
@@ -92,79 +95,6 @@ class _DataUploadPageState extends State<DataUploadPage> {
     }
   }
 */
-
-  Future<void> initCoverImageCopy() async {
-    final firestore = Firestore.instance;
-
-    final doc = await firestore.collection('numericals').getDocuments();
-
-    doc.documents.forEach((element) async {
-      final q = Question.fromJson(element.data);
-      logger.d(element.documentID);
-      logger.d(q.title);
-      final newImages = <String>[];
-      for (final image in q.images) {
-        final rawfile = await DefaultCacheManager().getSingleFile(image);
-
-        final StorageReference storageReference = FirebaseStorage().ref().child(
-            '${q.subject}/${q.topic}/${element.documentID}/question_${q.images.indexOf(image)}.jpeg');
-        final uploadTask = storageReference.putFile(rawfile);
-        await uploadTask.onComplete;
-        logger.d('File Uploaded');
-        final imageurl = await storageReference.getDownloadURL();
-        newImages.add(imageurl);
-      }
-      if (checkIfListIsNotEmpty(newImages)) {
-        await element.reference.updateData({'images': newImages});
-        logger.d("Updated ${element.documentID}");
-      } else {
-        throw Exception("newImages cannot be empty");
-      }
-    });
-  }
-
-  Future<void> initSolutionsImageCopy() async {
-    final firestore = Firestore.instance;
-
-    final doc = await firestore.collection('numericals').getDocuments();
-
-    doc.documents.sublist(115, 126).forEach((element) async {
-      await Future.delayed(Duration(milliseconds: 500));
-      final q = Question.fromJson(element.data);
-      logger.d(element.documentID);
-      logger.d(q.title);
-      if (q.solutions?.elementAt(0)?.images?.isNotEmpty ?? false) {
-        final newImages = <String>[];
-        for (final image in q.solutions.elementAt(0).images) {
-          try {
-            final rawfile = await DefaultCacheManager().getSingleFile(image);
-            final StorageReference storageReference = FirebaseStorage().ref().child(
-                '${q.subject}/${q.topic}/${element.documentID}/solution_${q.solutions.elementAt(0).images.indexOf(image)}.jpeg');
-            final uploadTask = storageReference.putFile(rawfile);
-            await uploadTask.onComplete;
-            logger.d('File Uploaded');
-            final imageurl = await storageReference.getDownloadURL();
-            newImages.add(imageurl);
-          } catch (e, s) {
-            logger.e(e, s);
-          }
-        }
-        if (checkIfListIsNotEmpty(newImages)) {
-          logger.d(newImages);
-          final soln = q.solutions[0];
-          final newSoln = soln.copyWith(images: newImages);
-          await element.reference.updateData({
-            'solutions': [newSoln.toJson()]
-          });
-          logger.d("Updated ${element.documentID}");
-        } else {
-          throw Exception("newImages cannot be empty");
-        }
-      } else {
-        return;
-      }
-    });
-  }
 
   Future<void> initChapterScrap({String chapterUrl}) async {
     final level = 2;
@@ -422,5 +352,84 @@ class _DataUploadPageState extends State<DataUploadPage> {
         //await initChapterScrap(chapterUrl: 'https://unacademy.com' + element);
       });*/
     }
+  }
+
+  Future<void> copyVideoQuestionToStorage() async {
+    final firestore = Firestore.instance;
+
+    final doc = await firestore.collection('numericals').getDocuments();
+
+    doc.documents.forEach((element) async {
+      final q = Question.fromJson(element.data);
+      logger.d(element.documentID);
+      logger.d(q.title);
+      final newImages = <String>[];
+      for (final image in q.images) {
+        final rawfile = await DefaultCacheManager().getSingleFile(image);
+
+        final StorageReference storageReference = FirebaseStorage().ref().child(
+            '${q.subject}/${q.topic}/${element.documentID}/question_${q.images.indexOf(image)}.jpeg');
+        final uploadTask = storageReference.putFile(rawfile);
+        await uploadTask.onComplete;
+        logger.d('File Uploaded');
+        final imageurl = await storageReference.getDownloadURL();
+        newImages.add(imageurl);
+      }
+      if (checkIfListIsNotEmpty(newImages)) {
+        await element.reference.updateData({'images': newImages});
+        logger.d("Updated ${element.documentID}");
+      } else {
+        throw Exception("newImages cannot be empty");
+      }
+    });
+  }
+
+  Future<void> copyVideoSolutionToStorage() async {
+    final firestore = Firestore.instance;
+
+    final doc = await firestore.collection('numericals').getDocuments();
+
+    doc.documents.forEach((element) async {
+      await Future.delayed(Duration(milliseconds: 500));
+      final q = Question.fromJson(element.data);
+      logger.d(element.documentID);
+      logger.d(q.title);
+      if (q.solutions?.elementAt(0)?.images?.isNotEmpty ?? false) {
+        final img = q.solutions[0].images[0];
+        if (img.contains('firebasestorage')) {
+          return;
+        }
+      }
+      if (q.solutions?.elementAt(0)?.images?.isNotEmpty ?? false) {
+        final newImages = <String>[];
+        for (final image in q.solutions.elementAt(0).images) {
+          try {
+            final rawfile = await DefaultCacheManager().getSingleFile(image);
+            final StorageReference storageReference = FirebaseStorage().ref().child(
+                '${q.subject}/${q.topic}/${element.documentID}/solution_${q.solutions.elementAt(0).images.indexOf(image)}.jpeg');
+            final uploadTask = storageReference.putFile(rawfile);
+            await uploadTask.onComplete;
+            logger.d('File Uploaded');
+            final imageurl = await storageReference.getDownloadURL();
+            newImages.add(imageurl);
+          } catch (e, s) {
+            logger.e(e, s);
+          }
+        }
+        if (checkIfListIsNotEmpty(newImages)) {
+          logger.d(newImages);
+          final soln = q.solutions[0];
+          final newSoln = soln.copyWith(images: newImages);
+          await element.reference.updateData({
+            'solutions': [newSoln.toJson()]
+          });
+          logger.d("Updated ${element.documentID}");
+        } else {
+          throw Exception("newImages cannot be empty");
+        }
+      } else {
+        return;
+      }
+    });
   }
 }

@@ -122,9 +122,17 @@ class _QuestionPageState extends State<QuestionPage> {
                               Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  MyImage(
-                                    image,
-                                    tapEnabled: true,
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.orange[300],
+                                        width: 4,
+                                      ),
+                                    ),
+                                    child: MyImage(
+                                      image,
+                                      tapEnabled: true,
+                                    ),
                                   ),
                                   MyDivider(),
                                 ],
