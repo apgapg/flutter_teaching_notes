@@ -19,15 +19,19 @@ class BorderContainer extends StatelessWidget {
     return Container(
       padding: padding,
       margin: margin,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(
-          color: Theme.of(context).dividerColor,
-        ),
+      child: Card(
+        elevation: 0,
+        child: child,
         color: Theme.of(context).cardColor,
+        clipBehavior: Clip.antiAlias,
+        margin: EdgeInsets.all(0),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: Theme.of(context).dividerColor,
+          ),
+          borderRadius: BorderRadius.circular(4),
+        ),
       ),
-      child: child,
-      clipBehavior: Clip.antiAlias,
     );
   }
 }

@@ -55,8 +55,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.grey[50],
         primarySwatch: Colors.blue,
-        textTheme: GoogleFonts.notoSansTextTheme(
+        textTheme: GoogleFonts.muliTextTheme(
           Theme.of(context).textTheme,
+        ).apply(
+          displayColor: Color(0xFF3C4852),
+          bodyColor: Colors.blueGrey[900],
         ),
         bottomAppBarColor: Colors.white,
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
