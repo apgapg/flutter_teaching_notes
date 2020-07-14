@@ -34,8 +34,12 @@ This repo uses Github action CI/CD whose workflow file can be seen below
 
 Building Android app bundle 
 
-```flutter clean && flutter build appbundle```
+```
+flutter clean && flutter build appbundle
+```
 
 Building json
 
-```flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs```
+```
+flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs
+```

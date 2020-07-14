@@ -1,3 +1,12 @@
+## [3.14.0] 14/07/20
+- Add mail btn on large screen
+- Fix UI stuffs; Move Course page to first
+- Change font to muli
+- Fix splash screen on web
+- Add border to question image
+- Fix exception when topics in course are null
+- Fix error widget not shown
+
 ## [3.12.0] 10/07/20
 - Add download pdf button
 - Add pdf buttons everywhere
