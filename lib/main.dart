@@ -104,20 +104,18 @@ class MyApp extends StatelessWidget {
   }
 
   Widget buildError(BuildContext context, FlutterErrorDetails error) {
-    return Scaffold(
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              "--Error Occurred--\n\n${error.exceptionAsString()}",
-              style: const TextStyle(color: Colors.red),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "--Error Occurred--\n\n${error.exceptionAsString()}",
+            style: const TextStyle(color: Colors.red),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }
