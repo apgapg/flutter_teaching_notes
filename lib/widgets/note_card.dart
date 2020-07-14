@@ -36,11 +36,10 @@ class NoteCard extends StatelessWidget {
           Positioned(
             bottom: 4.0,
             child: Text(
-              "©ayushpgupta",
+              "© IIT-JEE by Ayush P Gupta",
               style: TextStyle(
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.blueGrey[500].withOpacity(0.7)),
+                fontSize: 12.0,
+              ),
             ),
           ),
           Positioned(
@@ -50,15 +49,26 @@ class NoteCard extends StatelessWidget {
               height: 18.0,
               width: 18.0,
               alignment: Alignment.center,
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: Colors.black26),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.black38,
+              ),
               child: Text(
                 (index + 1).toString(),
-                style: TextStyle(fontSize: 10.0, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 10.0,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
-          if (isDebugMode) Positioned.fill(top: 0, child: Text(url))
+          if (isDebugMode)
+            Positioned.fill(
+              top: 0,
+              child: Text(
+                url,
+              ),
+            )
         ],
       ),
     );
