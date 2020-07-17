@@ -75,7 +75,8 @@ class ResponsiveContainer extends StatelessWidget {
                         PrimaryRaisedButton(
                           text: " Send Mail ".toUpperCase(),
                           onTap: () {
-                            launch('mailto:ayushpguptaapg@gmail.com?subject=Feedback'
+                            launch('mailto:ayushpguptaapg@gmail.com?'
+                                    'subject=Feedback'
                                     '&body=Hello Team,%0A%0AGreetings of the ' +
                                 'day%0A%0A...%0A%0ARegards,%0A---');
                           },

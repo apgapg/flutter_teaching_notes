@@ -89,7 +89,7 @@ class CourseCard extends StatelessWidget {
 
   void onCourseTap() {
     analytics.logEvent(
-      name: "question_tap",
+      name: "course_tap",
       parameters: {
         "id": _item.name,
       },
