@@ -66,7 +66,7 @@ class ChapterCard extends StatelessWidget {
 
   void onCourseTap() {
     analytics.logEvent(
-      name: "question_tap",
+      name: "chapter_tap",
       parameters: {
         "id": item.title,
       },
