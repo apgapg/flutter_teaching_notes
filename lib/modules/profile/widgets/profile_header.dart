@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_teaching_notes/data/model/user.dart';
+import 'package:flutter_teaching_notes/data/model/my_user.dart';
 
 class ProfileHeader extends StatelessWidget {
-  final User user;
+  final MyUser user;
   final bool showEmail;
 
   const ProfileHeader({

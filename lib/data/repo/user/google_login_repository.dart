@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_teaching_notes/data/model/my_user.dart';
 import 'package:flutter_teaching_notes/data/model/result.dart';
-import 'package:flutter_teaching_notes/data/model/user.dart';
 import 'package:flutter_teaching_notes/data/model/void_result.dart';
 import 'package:flutter_teaching_notes/utils/log_utils.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -15,7 +15,7 @@ class GoogleLoginRepository extends LoginRepository {
       : _googleSignIn = googleSignIn;
 
   @override
-  Future<Result<User>> login() async {
+  Future<Result<MyUser>> login() async {
     try {
       final googleUser = await _googleSignIn.signIn();
 
@@ -27,7 +27,7 @@ class GoogleLoginRepository extends LoginRepository {
       );
 
       final firebaseUser = await getFirebaseUser(credential);
-      final user = User(
+      final user = MyUser(
         id: firebaseUser.uid,
         name: firebaseUser.displayName,
         email: firebaseUser.email ?? googleUser.email,

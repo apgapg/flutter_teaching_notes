@@ -1,14 +1,14 @@
 import 'package:rxdart/rxdart.dart';
 
+import '../../../model/my_user.dart';
 import '../../../model/result.dart';
-import '../../../model/user.dart';
 
 abstract class UserRepository {
-  Future<Result<User>> register(User user);
+  Future<Result<MyUser>> register(MyUser user);
 
-  BehaviorSubject<User> getUserStream();
+  BehaviorSubject<MyUser> getUserStream();
 
-  User getLoggedInUser();
+  MyUser getLoggedInUser();
 
   String getFcmToken();
 

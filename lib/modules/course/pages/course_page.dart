@@ -35,7 +35,7 @@ class _CoursePageState extends State<CoursePage> {
     item = widget.item;
 //    if (item.images != null) {
 //      subs = injector<Firestore>()
-//          .document('courses/${item.videoLink.split('/').last}')
+//          .doc('courses/${item.videoLink.split('/').last}')
 //          .snapshots()
 //          .listen((event) {
 //        if (event?.data != null) {
@@ -217,7 +217,7 @@ class _CoursePageState extends State<CoursePage> {
               print(uid);
               final newSoln = item.images;
               newSoln.remove(image);
-              injector<Firestore>().document('courses/${uid}').updateData({
+              injector<Firestore>().doc('courses/${uid}').updateData({
                 'images': newSoln,
               });
               ToastUtils.show("Removed");

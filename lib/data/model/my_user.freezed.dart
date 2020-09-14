@@ -1,21 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named
+// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
-part of 'user.dart';
+part of 'my_user.dart';
 
 // **************************************************************************
 // FreezedGenerator
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
-User _$UserFromJson(Map<String, dynamic> json) {
-  return _User.fromJson(json);
+MyUser _$MyUserFromJson(Map<String, dynamic> json) {
+  return _MyUser.fromJson(json);
 }
 
-class _$UserTearOff {
-  const _$UserTearOff();
+class _$MyUserTearOff {
+  const _$MyUserTearOff();
 
-  _User call(
+// ignore: unused_element
+  _MyUser call(
       {String id,
       @JsonKey(includeIfNull: false) String name,
       String email,
@@ -26,7 +27,7 @@ class _$UserTearOff {
       @JsonKey(includeIfNull: false) String tagline,
       @JsonKey(includeIfNull: false, defaultValue: false) bool isVerified,
       List<String> bookmarks}) {
-    return _User(
+    return _MyUser(
       id: id,
       name: name,
       email: email,
@@ -42,9 +43,9 @@ class _$UserTearOff {
 }
 
 // ignore: unused_element
-const $User = _$UserTearOff();
+const $MyUser = _$MyUserTearOff();
 
-mixin _$User {
+mixin _$MyUser {
   String get id;
   @JsonKey(includeIfNull: false)
   String get name;
@@ -61,12 +62,12 @@ mixin _$User {
   List<String> get bookmarks;
 
   Map<String, dynamic> toJson();
-  $UserCopyWith<User> get copyWith;
+  $MyUserCopyWith<MyUser> get copyWith;
 }
 
-abstract class $UserCopyWith<$Res> {
-  factory $UserCopyWith(User value, $Res Function(User) then) =
-      _$UserCopyWithImpl<$Res>;
+abstract class $MyUserCopyWith<$Res> {
+  factory $MyUserCopyWith(MyUser value, $Res Function(MyUser) then) =
+      _$MyUserCopyWithImpl<$Res>;
   $Res call(
       {String id,
       @JsonKey(includeIfNull: false) String name,
@@ -80,12 +81,12 @@ abstract class $UserCopyWith<$Res> {
       List<String> bookmarks});
 }
 
-class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
-  _$UserCopyWithImpl(this._value, this._then);
+class _$MyUserCopyWithImpl<$Res> implements $MyUserCopyWith<$Res> {
+  _$MyUserCopyWithImpl(this._value, this._then);
 
-  final User _value;
+  final MyUser _value;
   // ignore: unused_field
-  final $Res Function(User) _then;
+  final $Res Function(MyUser) _then;
 
   @override
   $Res call({
@@ -117,9 +118,9 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
   }
 }
 
-abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$UserCopyWith(_User value, $Res Function(_User) then) =
-      __$UserCopyWithImpl<$Res>;
+abstract class _$MyUserCopyWith<$Res> implements $MyUserCopyWith<$Res> {
+  factory _$MyUserCopyWith(_MyUser value, $Res Function(_MyUser) then) =
+      __$MyUserCopyWithImpl<$Res>;
   @override
   $Res call(
       {String id,
@@ -134,13 +135,13 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       List<String> bookmarks});
 }
 
-class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
-    implements _$UserCopyWith<$Res> {
-  __$UserCopyWithImpl(_User _value, $Res Function(_User) _then)
-      : super(_value, (v) => _then(v as _User));
+class __$MyUserCopyWithImpl<$Res> extends _$MyUserCopyWithImpl<$Res>
+    implements _$MyUserCopyWith<$Res> {
+  __$MyUserCopyWithImpl(_MyUser _value, $Res Function(_MyUser) _then)
+      : super(_value, (v) => _then(v as _MyUser));
 
   @override
-  _User get _value => super._value as _User;
+  _MyUser get _value => super._value as _MyUser;
 
   @override
   $Res call({
@@ -155,7 +156,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object isVerified = freezed,
     Object bookmarks = freezed,
   }) {
-    return _then(_User(
+    return _then(_MyUser(
       id: id == freezed ? _value.id : id as String,
       name: name == freezed ? _value.name : name as String,
       email: email == freezed ? _value.email : email as String,
@@ -173,8 +174,8 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 }
 
 @JsonSerializable()
-class _$_User implements _User {
-  _$_User(
+class _$_MyUser implements _MyUser {
+  _$_MyUser(
       {this.id,
       @JsonKey(includeIfNull: false) this.name,
       this.email,
@@ -186,8 +187,8 @@ class _$_User implements _User {
       @JsonKey(includeIfNull: false, defaultValue: false) this.isVerified,
       this.bookmarks});
 
-  factory _$_User.fromJson(Map<String, dynamic> json) =>
-      _$_$_UserFromJson(json);
+  factory _$_MyUser.fromJson(Map<String, dynamic> json) =>
+      _$_$_MyUserFromJson(json);
 
   @override
   final String id;
@@ -216,13 +217,13 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email, avatar: $avatar, provider: $provider, updatedAt: $updatedAt, createdAt: $createdAt, tagline: $tagline, isVerified: $isVerified, bookmarks: $bookmarks)';
+    return 'MyUser(id: $id, name: $name, email: $email, avatar: $avatar, provider: $provider, updatedAt: $updatedAt, createdAt: $createdAt, tagline: $tagline, isVerified: $isVerified, bookmarks: $bookmarks)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _User &&
+        (other is _MyUser &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
@@ -266,17 +267,17 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(bookmarks);
 
   @override
-  _$UserCopyWith<_User> get copyWith =>
-      __$UserCopyWithImpl<_User>(this, _$identity);
+  _$MyUserCopyWith<_MyUser> get copyWith =>
+      __$MyUserCopyWithImpl<_MyUser>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_UserToJson(this);
+    return _$_$_MyUserToJson(this);
   }
 }
 
-abstract class _User implements User {
-  factory _User(
+abstract class _MyUser implements MyUser {
+  factory _MyUser(
       {String id,
       @JsonKey(includeIfNull: false) String name,
       String email,
@@ -286,9 +287,9 @@ abstract class _User implements User {
       int createdAt,
       @JsonKey(includeIfNull: false) String tagline,
       @JsonKey(includeIfNull: false, defaultValue: false) bool isVerified,
-      List<String> bookmarks}) = _$_User;
+      List<String> bookmarks}) = _$_MyUser;
 
-  factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
+  factory _MyUser.fromJson(Map<String, dynamic> json) = _$_MyUser.fromJson;
 
   @override
   String get id;
@@ -315,5 +316,5 @@ abstract class _User implements User {
   @override
   List<String> get bookmarks;
   @override
-  _$UserCopyWith<_User> get copyWith;
+  _$MyUserCopyWith<_MyUser> get copyWith;
 }

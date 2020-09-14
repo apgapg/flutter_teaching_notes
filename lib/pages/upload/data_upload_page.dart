@@ -64,17 +64,17 @@ class _DataUploadPageState extends State<DataUploadPage> {
     //
     //
     //
-    final firestore = Firestore.instance;
+    final firestore = FirebaseFirestore.instance;
 
     final doc =
-        await firestore.collection('numericals').document(id.toString()).get();
+        await firestore.collection('numericals').doc(id.toString()).get();
     if (doc != null && doc.exists) {
       debugPrint("Document $id already exist!");
       return;
     } else {
       final value = await firestore
           .collection('numericals')
-          .document(id.toString())
+          .doc(id.toString())
           .setData({
         'title': title,
         'level': level,
@@ -130,21 +130,17 @@ class _DataUploadPageState extends State<DataUploadPage> {
 
       final video = rawUrl;
 
-      final firestore = Firestore.instance;
+      final firestore = FirebaseFirestore.instance;
 
-      final doc = await firestore
-          .collection('numericals')
-          .document(id.toString())
-          .get();
+      final doc =
+          await firestore.collection('numericals').doc(id.toString()).get();
       if (doc != null && doc.exists) {
         debugPrint("Document $id already exist!");
         ToastUtils.showToast("Document $id already exist!");
         return;
       } else {
-        final value = await firestore
-            .collection('numericals')
-            .document(id.toString())
-            .setData(
+        final value =
+            await firestore.collection('numericals').doc(id.toString()).set(
           {
             'title': title,
             'level': level,
@@ -163,7 +159,7 @@ class _DataUploadPageState extends State<DataUploadPage> {
             ],
             'createdAt': DateTime.now().millisecondsSinceEpoch,
           },
-          merge: true,
+          SetOptions(merge: true),
         );
         ToastUtils.showToast("Added $id successfully!");
       }
@@ -257,7 +253,10 @@ class _DataUploadPageState extends State<DataUploadPage> {
         chapterImages.addAll(imagesList);
       }
       print(chapterImages);
-      await Firestore.instance.collection('courses').document(courseId).setData(
+      await FirebaseFirestore.instance
+          .collection('courses')
+          .doc(courseId)
+          .setData(
         {
           'name': '$courseName',
           'topic': '$courseName',
@@ -269,7 +268,7 @@ class _DataUploadPageState extends State<DataUploadPage> {
           'cover': 'https://edge.uacdn.net/M5KOIVB52U4RBO9YVCMY/images/4.jpeg',
           'createdAt': DateTime.now().millisecondsSinceEpoch,
         },
-        merge: true,
+        SetOptions(merge: true),
       );
       ToastUtils.showToast("Added $rawUrl successfully!");
     }
@@ -325,9 +324,9 @@ class _DataUploadPageState extends State<DataUploadPage> {
         titleUrls.add('$title');
       });
       final document = await injector<Firestore>()
-          .document('courses/${rawUrl.split('/').last}')
+          .doc('courses/${rawUrl.split('/').last}')
           .get();
-      final course = CourseItem.fromJson(document.data);
+      final course = CourseItem.fromJson(document.data());
       final topics = [];
 
       for (final url in listUrls) {
@@ -346,7 +345,7 @@ class _DataUploadPageState extends State<DataUploadPage> {
         {
           'topics': topics,
         },
-        merge: true,
+        SetOptions(merge: true),
       );
       /*   listUrls.forEach((element) async {
         //await initChapterScrap(chapterUrl: 'https://unacademy.com' + element);
@@ -355,12 +354,12 @@ class _DataUploadPageState extends State<DataUploadPage> {
   }
 
   Future<void> copyVideoQuestionToStorage() async {
-    final firestore = Firestore.instance;
+    final firestore = FirebaseFirestore.instance;
 
     final doc = await firestore.collection('numericals').getDocuments();
 
     doc.documents.forEach((element) async {
-      final q = Question.fromJson(element.data);
+      final q = Question.fromJson(element.data());
       logger.d(element.documentID);
       logger.d(q.title);
       final newImages = <String>[];
@@ -385,13 +384,13 @@ class _DataUploadPageState extends State<DataUploadPage> {
   }
 
   Future<void> copyVideoSolutionToStorage() async {
-    final firestore = Firestore.instance;
+    final firestore = FirebaseFirestore.instance;
 
     final doc = await firestore.collection('numericals').getDocuments();
 
     doc.documents.forEach((element) async {
       await Future.delayed(Duration(milliseconds: 500));
-      final q = Question.fromJson(element.data);
+      final q = Question.fromJson(element.data());
       logger.d(element.documentID);
       logger.d(q.title);
       if (q.solutions?.elementAt(0)?.images?.isNotEmpty ?? false) {

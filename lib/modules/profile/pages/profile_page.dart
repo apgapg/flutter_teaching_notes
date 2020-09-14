@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_teaching_notes/data/model/user.dart';
+import 'package:flutter_teaching_notes/data/model/my_user.dart';
 import 'package:flutter_teaching_notes/data/repo/user/base/user_repository.dart';
 import 'package:flutter_teaching_notes/data/repo/user/google_login_repository.dart';
 import 'package:flutter_teaching_notes/di/injector.dart';
@@ -125,7 +125,7 @@ class _ProfilePageState extends State<ProfilePage>
               ),
             )
           : */
-          StreamBuilder<User>(
+          StreamBuilder<MyUser>(
               stream: injector<UserRepository>().getUserStream(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {

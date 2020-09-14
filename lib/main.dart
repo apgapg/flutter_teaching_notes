@@ -6,7 +6,6 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'di/injector.dart';
@@ -22,11 +21,7 @@ void _enablePlatformOverrideForDesktop() {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   _enablePlatformOverrideForDesktop();
-  if (isDebugMode) {
-    await FirebaseAnalytics().setAnalyticsCollectionEnabled(false);
-  }
   await Injector().init();
 
   runApp(MyApp());

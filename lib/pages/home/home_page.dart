@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_teaching_notes/data/model/user.dart';
+import 'package:flutter_teaching_notes/data/model/my_user.dart';
 import 'package:flutter_teaching_notes/data/repo/user/base/user_repository.dart';
 import 'package:flutter_teaching_notes/di/injector.dart';
 import 'package:flutter_teaching_notes/main.dart';
@@ -111,7 +111,7 @@ class HomePageState extends State<HomePage> {
                 iconSize: 24,
               ),
             ),
-            StreamBuilder<User>(
+            StreamBuilder<MyUser>(
                 stream: injector<UserRepository>().getUserStream(),
                 builder: (context, snapshot) {
                   final user = snapshot.data;
@@ -228,7 +228,7 @@ class HomePageState extends State<HomePage> {
               title: Text("Chapterwise"),
             ),
             BottomNavigationBarItem(
-              icon: StreamBuilder<User>(
+              icon: StreamBuilder<MyUser>(
                   stream: injector<UserRepository>().getUserStream(),
                   builder: (context, snapshot) {
                     return Padding(

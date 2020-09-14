@@ -32,7 +32,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
           return sink.add([]);
         } else {
           var list = query.documents
-              .map((document) => Question.fromJson(document.data)
+              .map((document) => Question.fromJson(document.data())
                   .copyWith(id: document.documentID))
               .toList();
           list.sort((a, b) => (b.createdAt ?? 0).compareTo(a.createdAt ?? 0));
@@ -197,7 +197,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
   }
 
   Stream<QuerySnapshot> _getStream() {
-    final query = Firestore.instance.collection('numericals');
+    final query = FirebaseFirestore.instance.collection('numericals');
     return query.snapshots();
   }
 }

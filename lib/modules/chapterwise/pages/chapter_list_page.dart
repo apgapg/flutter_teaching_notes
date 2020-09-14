@@ -27,7 +27,7 @@ class _ChapterListPageState extends State<ChapterListPage>
             return sink.add([]);
           } else {
             var list = query.documents
-                .map((document) => Chapter.fromJson(document.data))
+                .map((document) => Chapter.fromJson(document.data()))
                 .toList();
             list.sort((a, b) => a.title.compareTo(b.title));
             return sink.add(list);
@@ -104,7 +104,7 @@ class _ChapterListPageState extends State<ChapterListPage>
           return LoadingPage();
         }
       },
-      stream: Firestore.instance
+      stream: FirebaseFirestore.instance
           .collection('chapters')
           .snapshots()
           .transform(parseTransformer),

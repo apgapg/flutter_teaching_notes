@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_teaching_notes/data/model/my_user.dart';
 import 'package:flutter_teaching_notes/data/model/result.dart';
-import 'package:flutter_teaching_notes/data/model/user.dart';
 import 'package:flutter_teaching_notes/data/model/void_result.dart';
 import 'package:flutter_teaching_notes/di/injector.dart';
 
@@ -19,10 +19,10 @@ abstract class LoginRepository {
 
   @protected
   // ignore: lines_longer_than_80_chars
-  Future<Result<User>> registerUser(User user) =>
+  Future<Result<MyUser>> registerUser(MyUser user) =>
       _userRepository.register(user);
 
-  Future<Result<User>> login();
+  Future<Result<MyUser>> login();
 
   Future<VoidResult> logout();
 

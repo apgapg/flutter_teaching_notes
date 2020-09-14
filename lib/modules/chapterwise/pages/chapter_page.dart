@@ -35,7 +35,7 @@ class _ChapterPageState extends State<ChapterPage> {
           return sink.add([]);
         } else {
           var list = query.documents
-              .map((document) => Question.fromJson(document.data)
+              .map((document) => Question.fromJson(document.data())
                   .copyWith(id: document.documentID))
               .toList();
           list.sort((a, b) => (a.level ?? 0).compareTo(b.level ?? 0));
@@ -200,7 +200,7 @@ class _ChapterPageState extends State<ChapterPage> {
   }
 
   Stream<QuerySnapshot> _getStream() {
-    final query = Firestore.instance.collection('numericals').where(
+    final query = FirebaseFirestore.instance.collection('numericals').where(
           'topic',
           isEqualTo: widget.item.topic,
         );

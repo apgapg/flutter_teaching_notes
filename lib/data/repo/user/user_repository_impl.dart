@@ -5,8 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_teaching_notes/data/local/prefs/prefs_helper.dart';
+import 'package:flutter_teaching_notes/data/model/my_user.dart';
 import 'package:flutter_teaching_notes/data/model/result.dart';
-import 'package:flutter_teaching_notes/data/model/user.dart';
 import 'package:flutter_teaching_notes/di/injector.dart';
 import 'package:flutter_teaching_notes/utils/log_utils.dart';
 import 'package:flutter_teaching_notes/utils/toast_utils.dart';
@@ -16,8 +16,8 @@ import 'base/user_repository.dart';
 import 'google_login_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
-  final Firestore firestore;
-  final _userSubject = BehaviorSubject<User>.seeded(null);
+  final FirebaseFirestore firestore;
+  final _userSubject = BehaviorSubject<MyUser>.seeded(null);
 
   String _fcmToken;
 
@@ -25,16 +25,16 @@ class UserRepositoryImpl implements UserRepository {
     init();
   }
 
-  StreamTransformer<DocumentSnapshot, User> get _streamTransformer =>
+  StreamTransformer<DocumentSnapshot, MyUser> get _streamTransformer =>
       StreamTransformer.fromHandlers(handleData: (data, sink) {
-        sink.add(User.fromJson(data.data));
+        sink.add(MyUser.fromJson(data.data()));
       });
 
   @override
-  Future<Result<User>> register(User user) async {
+  Future<Result<MyUser>> register(MyUser user) async {
     try {
       final userDocument =
-          await firestore.collection('users').document(user.id).get();
+          await firestore.collection('users').doc(user.id).get();
       if (userDocument != null && userDocument.exists) {
         //Do nothing
       } else {
@@ -58,25 +58,22 @@ class UserRepositoryImpl implements UserRepository {
 
   Future<void> init() async {
     try {
-      final firebaseUser = await FirebaseAuth.instance.currentUser();
+      final firebaseUser = FirebaseAuth.instance.currentUser;
       if (firebaseUser == null) {
         _userSubject.add(null);
         return;
       }
       firestore
           .collection('users')
-          .document(firebaseUser.uid)
+          .doc(firebaseUser.uid)
           .snapshots()
           .listen((event) async {
         if (event?.data != null) {
-          _userSubject.add(User.fromJson(event.data));
+          _userSubject.add(MyUser.fromJson(event.data()));
           final _firebaseMessaging = FirebaseMessaging();
           _firebaseMessaging.setAutoInitEnabled(true);
           _fcmToken = await _firebaseMessaging.getToken();
-          await firestore
-              .collection('users')
-              .document(firebaseUser.uid)
-              .updateData({
+          await firestore.collection('users').doc(firebaseUser.uid).updateData({
             'fcmToken': _fcmToken,
             'updatedAt': _getCurrentEpoch(),
           });
@@ -91,12 +88,12 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  User getLoggedInUser() {
+  MyUser getLoggedInUser() {
     return _userSubject.value;
   }
 
   @override
-  BehaviorSubject<User> getUserStream() {
+  BehaviorSubject<MyUser> getUserStream() {
     return _userSubject;
   }
 
@@ -126,14 +123,14 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   void saveBookmark(String id) {
-    firestore.collection('users').document(_userSubject.value.id).updateData({
+    firestore.collection('users').doc(_userSubject.value.id).updateData({
       'bookmarks': FieldValue.arrayUnion([id]),
     });
   }
 
   @override
   void removeBookmark(String id) {
-    firestore.collection('users').document(_userSubject.value.id).updateData({
+    firestore.collection('users').doc(_userSubject.value.id).updateData({
       'bookmarks': FieldValue.arrayRemove([id]),
     });
   }

@@ -36,7 +36,7 @@ class _QuestionsListPageState extends State<QuestionsListPage>
           return null;
         } else {
           var list = query.documents
-              .map((document) => Question.fromJson(document.data)
+              .map((document) => Question.fromJson(document.data())
                   .copyWith(id: document.documentID))
               .toList();
           if (_selectedLevel != 0) {
@@ -400,7 +400,7 @@ class _QuestionsListPageState extends State<QuestionsListPage>
         }
       },
       stream: Rx.combineLatest2<QuerySnapshot, String, QuerySnapshot>(
-          Firestore.instance.collection('numericals').snapshots(),
+          FirebaseFirestore.instance.collection('numericals').snapshots(),
           _textSubject,
           (a, b) => a).transform(levelTransformer).transform(searchTransformer),
     );

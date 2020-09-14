@@ -20,7 +20,7 @@ class _CourseListPageState extends State<CourseListPage>
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
           final list = snapshot.data.documents
-              .map((document) => CourseItem.fromJson(document.data))
+              .map((document) => CourseItem.fromJson(document.data()))
               .toList();
           list.sort((a, b) => a.name.compareTo(b.name));
 
@@ -51,7 +51,7 @@ class _CourseListPageState extends State<CourseListPage>
           return LoadingPage();
         }
       },
-      stream: Firestore.instance.collection('courses').snapshots(),
+      stream: FirebaseFirestore.instance.collection('courses').snapshots(),
     );
   }
 

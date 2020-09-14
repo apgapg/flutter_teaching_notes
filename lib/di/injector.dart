@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_teaching_notes/data/local/prefs/prefs_helper.dart';
 import 'package:flutter_teaching_notes/data/local/prefs/shared_prefs.dart';
 import 'package:flutter_teaching_notes/data/repo/user/base/user_repository.dart';
 import 'package:flutter_teaching_notes/data/repo/user/google_login_repository.dart';
 import 'package:flutter_teaching_notes/data/repo/user/user_repository_impl.dart';
+import 'package:flutter_teaching_notes/utils/top_level_utils.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -21,6 +27,11 @@ class Injector {
   }
 
   Future<void> _initRepos() async {
+    await Firebase.initializeApp();
+    if (!kIsWeb && !Platform.isMacOS && isDebugMode) {
+      await FirebaseAnalytics().setAnalyticsCollectionEnabled(false);
+    }
+
     // SharedPreferences
     final prefs = SharedPrefs();
 
@@ -29,7 +40,7 @@ class Injector {
       prefsHelper,
     );
 
-    injector.registerSingleton<Firestore>(Firestore.instance);
+    injector.registerSingleton<FirebaseFirestore>(FirebaseFirestore.instance);
     // UserRepository
     injector.registerSingleton<UserRepository>(UserRepositoryImpl(
       firestore: injector(),

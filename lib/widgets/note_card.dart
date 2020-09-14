@@ -17,6 +17,7 @@ class NoteCard extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         children: <Widget>[
           Container(
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.blueGrey[100],

@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'user.freezed.dart';
-part 'user.g.dart';
+part 'my_user.freezed.dart';
+part 'my_user.g.dart';
 
 @freezed
-abstract class User with _$User {
-  factory User({
+abstract class MyUser with _$MyUser {
+  factory MyUser({
     String id,
     @JsonKey(includeIfNull: false) String name,
     String email,
@@ -16,7 +16,7 @@ abstract class User with _$User {
     @JsonKey(includeIfNull: false) String tagline,
     @JsonKey(includeIfNull: false, defaultValue: false) bool isVerified,
     List<String> bookmarks,
-  }) = _User;
+  }) = _MyUser;
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory MyUser.fromJson(Map<String, dynamic> json) => _$MyUserFromJson(json);
 }
